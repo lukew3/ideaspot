@@ -24,10 +24,11 @@ class Idea(db.Document):
                 "details": self.details}
 
 
-@app.route('/api/new_idea', methods=['POST'])
-def new_idea():
-    title = request.form.get('title')
-    details = request.form.get('details')
+@app.route('/api/create_idea', methods=['POST'])
+def create_idea():
+    data = request.get_json(silent=True)
+    title = data.get('title')
+    details = data.get('details')
     new_idea = Idea(title=title, details=details).save()
     return new_idea.to_json()
 

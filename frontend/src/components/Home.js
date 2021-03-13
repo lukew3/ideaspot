@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import axios from 'axios';
 //import Cookie from 'js-cookie';
 import {Link} from 'react-router-dom';
+import ReactMarkdown from 'react-markdown';
 
 class Home extends Component {
   constructor(props){
@@ -22,10 +23,11 @@ class Home extends Component {
       <div className="ideaFeed">
         {this.state.ideasList.map(idea => (
         <Link to={`/idea/${idea._id}`} key={idea._id}>
-        {console.log(idea._id)}
-        <div key={idea._id} className='homeIdeaBox'>
+        <div key={idea._id} className='ideaBox'>
           <h2>{idea.title}</h2>
-          <p>{idea.details}</p>
+          <ReactMarkdown >
+            {idea.details}
+          </ReactMarkdown >
         </div>
         </Link>
       ))}

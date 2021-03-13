@@ -2,6 +2,7 @@ import './styles/App.css';
 import Nav from './components/Nav.js';
 import Home from './components/Home.js';
 import ViewIdea from './components/ViewIdea.js';
+import CreateIdea from './components/CreateIdea.js'
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 
 function App() {
@@ -12,6 +13,7 @@ function App() {
         <Switch>
           <Route path="/" exact component={Home} />
           <Route path="/idea/:ideaId" component={ViewIdea} />
+          <Route path="/newIdea" component={CreateIdea} />
         </Switch>
       </div>
     </Router>
