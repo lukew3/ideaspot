@@ -1,1 +1,1 @@
-# buildmyidea
+# Build My Idea server
