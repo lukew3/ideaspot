@@ -1,0 +1,25 @@
+.createIdeaBox {
+  width: 50vw;
+  margin-left: 22.5vw;
+}
+
+.createIdeaBox * {
+  margin-top: 10px;
+}
+
+.createIdeaTitle {
+  width: calc(100% - 16px);
+}
+
+.createIdeaForSale {
+  position: relative;
+  top: 2px;
+  left: 2px;
+}
+
+.createIdeaDetails {
+  width: calc(100% - 16px);
+  height: 20vh;
+  resize: none;
+  padding: 8px;
+}

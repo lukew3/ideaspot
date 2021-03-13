@@ -18,10 +18,12 @@ class Idea(db.Document):
     #id = db.StringField()
     title = db.StringField()
     details = db.StringField()
+    forSale = db.BooleanField()
     def to_json(self):
         return {"_id": str(self.pk),
                 "title": self.title,
-                "details": self.details}
+                "details": self.details,
+                "forSale": self.forSale}
 
 
 @app.route('/api/create_idea', methods=['POST'])
@@ -29,7 +31,8 @@ def create_idea():
     data = request.get_json(silent=True)
     title = data.get('title')
     details = data.get('details')
-    new_idea = Idea(title=title, details=details).save()
+    forSale = data.get('forSale')
+    new_idea = Idea(title=title, details=details, forSale=forSale).save()
     return new_idea.to_json()
 
 

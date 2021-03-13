@@ -9,28 +9,11 @@
 .ideaBox {
   color: white;
   background-color: rgba(26,26,27,0.8);
-  width: 90vw;
-  margin-left: 2.5vw;
+  width: 90%;
+  margin: 0;
+  margin-left: 2.5%;
   margin-top: 20px;
   border-radius: 5px;
   border: #686868 1px solid;
   padding: 2vw;
-}
-
-.createIdeaBox {
-  width: 50vw;
-  margin-left: 22.5vw;
-}
-
-.createIdeaBox * {
-  margin-top: 10px;
-}
-
-.createIdeaTitle {
-  width: calc(100% - 16px);
-}
-
-.createIdeaDetails {
-  width: calc(100% - 16px);
-  padding: 8px;
 }

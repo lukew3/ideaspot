@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import axios from 'axios';
+import '../styles/CreateIdea.css';
 //import Cookie from 'js-cookie';
 
 class CreateIdea extends Component {
@@ -8,7 +9,9 @@ class CreateIdea extends Component {
     this.state = {
       idea: {},
       title: "",
-      details: ""
+      details: "",
+      forSale: false,
+      price: 0
     }
     this.handleInputChange = this.handleInputChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
@@ -25,7 +28,8 @@ class CreateIdea extends Component {
     event.preventDefault();
     await axios.post(`/api/create_idea`,
       { title: this.state.title,
-        details: this.state.details }
+        details: this.state.details,
+        forSale: this.state.forSale }
     ).then(response => {
       this.props.history.push(`/idea/${response.data._id}`);
     }).catch(error => {
@@ -54,6 +58,21 @@ class CreateIdea extends Component {
             value={this.state.details}
             onChange={this.handleInputChange} />
           <br/>
+          <label>
+            Is this idea for sale?:
+          <input
+            type="checkbox"
+            name="forSale"
+            className="createIdeaForSale"
+            value={this.state.forSale}
+            onChange={this.handleInputChange} />
+          </label>
+          <br/>
+          {
+            //set your price
+            //add up to 3 tags
+            //checkbox for show prime first(checked by default)
+          }
           <input type="submit" value="Submit"/>
         </form>
       </div>
