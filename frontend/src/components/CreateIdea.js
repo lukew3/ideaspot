@@ -1,7 +1,5 @@
 import React, { Component } from "react";
-import "easymde/dist/easymde.min.css";
 import axios from 'axios';
-//import { Redirect } from 'react-router-dom';
 //import Cookie from 'js-cookie';
 
 class CreateIdea extends Component {
@@ -29,7 +27,7 @@ class CreateIdea extends Component {
       { title: this.state.title,
         details: this.state.details }
     ).then(response => {
-      console.log("Should be redirecting");
+      this.props.history.push(`/idea/${response.data._id}`);
     }).catch(error => {
       console.log("Error");
     });

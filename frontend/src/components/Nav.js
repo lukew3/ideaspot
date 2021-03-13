@@ -11,7 +11,7 @@ class Nav extends Component {
       <div className="navbar">
         <div className="innerNav">
           <Link to={'/'}>
-            <p>Build My Idea</p>
+            <p><strong>Build My Idea</strong></p>
           </Link>
 
           <Link to={'/newIdea'}>
