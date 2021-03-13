@@ -35,9 +35,9 @@ def create_idea():
 
 @app.route('/api/get_ideas', methods=['GET'])
 def get_ideas():
-    ideas = (Idea.objects().all())
     json_ideas = {}
     json_ideas['ideas'] = []
+    ideas = (Idea.objects().all())
     for idea in ideas:
         idea = idea.to_json()
         json_ideas['ideas'].append(idea)
