@@ -22,6 +22,7 @@ class Home extends Component {
       <div className="ideaFeed">
         {this.state.ideasList.map(idea => (
         <Link to={`/idea/${idea._id}`} key={idea._id}>
+        {console.log(idea._id)}
         <div key={idea._id} className='homeIdeaBox'>
           <h2>{idea.title}</h2>
           <p>{idea.details}</p>

@@ -35,9 +35,18 @@ def new_idea():
 @app.route('/api/get_ideas', methods=['GET'])
 def get_ideas():
     ideas = (Idea.objects().all())
-    for object in ideas:
-        object = object.to_json()
-    return jsonify(ideas=ideas)
+    json_ideas = {}
+    json_ideas['ideas'] = []
+    for idea in ideas:
+        idea = idea.to_json()
+        json_ideas['ideas'].append(idea)
+    return json_ideas
+
+
+@app.route('/api/get_idea/<ideaId>', methods=['GET'])
+def get_idea(ideaId):
+    idea = (Idea.objects(id=ideaId).first()).to_json()
+    return jsonify(idea=idea)
 
 
 if __name__ == "__main__":

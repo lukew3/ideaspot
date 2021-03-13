@@ -1,6 +1,7 @@
 import './styles/App.css';
-import Home from './components/Home.js';
 import Nav from './components/Nav.js';
+import Home from './components/Home.js';
+import ViewIdea from './components/ViewIdea.js';
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 
 function App() {
@@ -10,6 +11,7 @@ function App() {
         <Nav />
         <Switch>
           <Route path="/" exact component={Home} />
+          <Route path="/idea/:ideaId" component={ViewIdea} />
         </Switch>
       </div>
     </Router>
