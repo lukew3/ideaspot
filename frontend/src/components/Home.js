@@ -19,9 +19,7 @@ class Home extends Component {
 
   render() {
     return (
-      <div>
-        <h1>Idea Homepage</h1>
-        <h2>Ideas</h2>
+      <div className="ideaFeed">
         {this.state.ideasList.map(idea => (
         <Link to={`/idea/${idea._id}`} key={idea._id}>
         <div key={idea._id} className='homeIdeaBox'>

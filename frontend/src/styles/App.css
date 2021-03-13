@@ -1,4 +1,9 @@
 .App {
+  color: white;
+}
+
+.ideaFeed {
+  margin-top: 50px;
 }
 
 .homeIdeaBox {
@@ -6,7 +11,8 @@
   background-color: rgba(26,26,27,0.8);
   width: 90vw;
   margin-left: 2.5vw;
+  margin-top: 20px;
   border-radius: 5px;
-  border: #D7DADC 1px solid;
+  border: #686868 1px solid;
   padding: 2vw;
 }
