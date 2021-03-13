@@ -12,11 +12,8 @@ class Home extends Component {
   }
   // on mount, load subscriptions
   async componentDidMount() {
-    const domain = "127.0.0.1";
-    await axios.get(`${domain}/api/get_ideas`).then(response => {
-      console.log(response);
-      this.setState({ ideasList: response.data.data});
-      console.log(this.state.ideasList);
+    await axios.get(`/api/get_ideas`, {}).then(response => {
+      this.setState({ ideasList: response.data.ideas });
     });
   }
 
@@ -27,9 +24,9 @@ class Home extends Component {
         <h2>Ideas</h2>
         {this.state.ideasList.map(idea => (
         <Link to={`/idea/${idea._id}`} key={idea._id}>
-        <div key={idea._id} className='boxContainer'>
+        <div key={idea._id} className='homeIdeaBox'>
           <h2>{idea.title}</h2>
-          <p>{idea.content}</p>
+          <p>{idea.details}</p>
         </div>
         </Link>
       ))}
