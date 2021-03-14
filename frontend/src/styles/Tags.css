@@ -1,0 +1,16 @@
+.tag {
+  background-color: grey;
+  display:inline-block;
+  padding: 7px 10px 7px 10px;
+  border-radius: 15px;
+}
+
+.forSaleTag {
+  background-color: #2e8a5f;
+}
+
+.tagleft {
+  width: calc(1em + 20px);
+  height: calc(1em + 20px);
+  border-radius: 100%;
+}

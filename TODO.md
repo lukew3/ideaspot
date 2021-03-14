@@ -1,4 +1,6 @@
-* Add tags
+* Enable private ideas
+
+* Figure out why idea item is passed as prop in ViewIdea
 
 * Add ability to see your ideas
 

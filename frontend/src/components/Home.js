@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import axios from 'axios';
 //import Cookie from 'js-cookie';
 import {Link} from 'react-router-dom';
+import Tags from './Tags.js';
 import ReactMarkdown from 'react-markdown';
 
 class Home extends Component {
@@ -28,6 +29,7 @@ class Home extends Component {
           <ReactMarkdown >
             {idea.details}
           </ReactMarkdown >
+          <Tags idea={idea}/>
         </div>
         </Link>
       ))}

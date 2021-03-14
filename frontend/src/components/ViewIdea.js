@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import axios from 'axios';
 import ReactMarkdown from 'react-markdown';
+import Tags from './Tags.js';
 //import Cookie from 'js-cookie';
 
 class Home extends Component {
@@ -14,18 +15,19 @@ class Home extends Component {
   // on mount, load subscriptions
   async componentDidMount() {
     await axios.get(`/api/get_idea/${this.state.ideaId}`, {}).then(response => {
-      console.log(response);
       this.setState({ idea: response.data.idea });
     });
   }
 
   render() {
+    const idea = this.state.idea;
     return (
       <div className="ideaBox">
-        <h1>{this.state.idea.title}</h1>
+        <h1>{idea.title}</h1>
         <ReactMarkdown >
-          {this.state.idea.details}
+          {idea.details}
         </ReactMarkdown >
+        <Tags idea={idea}/>
       </div>
     );
   }
