@@ -10,6 +10,7 @@ class CreateIdea extends Component {
       idea: {},
       title: "",
       details: "",
+      private: false,
       forSale: false,
       price: 0
     }
@@ -26,15 +27,18 @@ class CreateIdea extends Component {
 
   async handleSubmit(event) {
     event.preventDefault();
-    const token = Cookie.get("token") ? Cookie.get("token") : null;
+    //const token = Cookie.get("token") ? Cookie.get("token") : null;
+    const token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJmcmVzaCI6ZmFsc2UsImlhdCI6MTYxNTcwMjMwOCwianRpIjoiOTI5ZWYzNzQtMDdmZS00MzgyLWJhOWQtMTcxZWYyYmM3Yzc0IiwibmJmIjoxNjE1NzAyMzA4LCJ0eXBlIjoiYWNjZXNzIiwic3ViIjoibHVrZXczIiwiZXhwIjoxNjE1NzAzMjA4fQ.T9cHMgPaKllxUN8j0YiV3f9OBxeV-YylYRggBDzH5AE";
     await axios.post(`/api/create_idea`,
       { title: this.state.title,
         details: this.state.details,
-        forSale: this.state.forSale },
+        forSale: this.state.forSale,
+        private: this.state.private },
       { headers: { Authorization: `Bearer ${token}` }}
     ).then(response => {
       this.props.history.push(`/idea/${response.data._id}`);
     }).catch(error => {
+      console.log(error);
       console.log("Error");
     });
   }
@@ -65,8 +69,18 @@ class CreateIdea extends Component {
           <input
             type="checkbox"
             name="forSale"
-            className="createIdeaForSale"
+            className="createIdeaForSale createIdeaCheckbox"
             value={this.state.forSale}
+            onChange={this.handleInputChange} />
+          </label>
+          <br/>
+          <label>
+            Do you wish to keep this idea private?:
+          <input
+            type="checkbox"
+            name="private"
+            className="createIdeaPrivate createIdeaCheckbox"
+            value={this.state.private}
             onChange={this.handleInputChange} />
           </label>
           <br/>

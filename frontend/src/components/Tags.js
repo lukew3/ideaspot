@@ -13,6 +13,7 @@ class Tags extends Component {
     return (
       <div className="tagsContainer">
         <ForSaleTag forSale={this.state.idea.forSale}/>
+        <PrivateTag private={this.state.idea.private}/>
       </div>
     );
   }
@@ -24,6 +25,16 @@ function ForSaleTag(props) {
   if (forSale) {
     return(
       <Tag tagClass="forSale" text="For sale" />
+    );
+  };
+  return ""
+}
+
+function PrivateTag(props) {
+  const privateTag = props.private;
+  if (privateTag) {
+    return(
+      <Tag tagClass="privateTag" text="Private" />
     );
   };
   return ""

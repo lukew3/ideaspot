@@ -35,6 +35,7 @@ class Idea(db.Document):
     title = db.StringField()
     details = db.StringField()
     forSale = db.BooleanField()
+    private = db.BooleanField()
     creator = db.StringField()
 
     def to_json(self):
@@ -42,6 +43,7 @@ class Idea(db.Document):
                 "title": self.title,
                 "details": self.details,
                 "forSale": self.forSale,
+				"private": self.private,
 				"creator": self.creator}
 
 
@@ -92,20 +94,21 @@ def refresh():
 @app.route('/api/create_idea', methods=['POST'])
 @jwt_required()
 def create_idea():
-    data = request.get_json(silent=True)
-    title = data.get('title')
-    details = data.get('details')
-    forSale = data.get('forSale')
-    current_user = get_jwt_identity()
-    new_idea = Idea(title=title, details=details, forSale=forSale, creator=current_user).save()
-    return new_idea.to_json()
+	data = request.get_json(silent=True)
+	title = data.get('title')
+	details = data.get('details')
+	forSale = data.get('forSale')
+	private = data.get('private')
+	current_user = get_jwt_identity()
+	new_idea = Idea(title=title, details=details, forSale=forSale, creator=current_user, private=private).save()
+	return new_idea.to_json()
 
 
 @app.route('/api/get_ideas', methods=['GET'])
 def get_ideas():
     json_ideas = {}
     json_ideas['ideas'] = []
-    ideas = (Idea.objects().all())
+    ideas = (Idea.objects(private=False).all())
     ideas = reversed(ideas)
     for idea in ideas:
         idea = idea.to_json()
