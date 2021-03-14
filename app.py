@@ -41,6 +41,7 @@ def get_ideas():
     json_ideas = {}
     json_ideas['ideas'] = []
     ideas = (Idea.objects().all())
+    ideas = reversed(ideas)
     for idea in ideas:
         idea = idea.to_json()
         json_ideas['ideas'].append(idea)
