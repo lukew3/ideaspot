@@ -22,7 +22,7 @@ jwt = JWTManager(app)
 
 #initialize database connection
 app.config['MONGODB_SETTINGS'] = {
-    "db": config.get('MONGODB_DB'),
+    "db": config.get('MONGODB_DB', 'buildmyidea'),
     "host": config.get('MONGODB_HOST', 'localhost'),
     "port": config.get("MONGODB_PORT", 27017)
 }
@@ -41,7 +41,8 @@ class Idea(db.Document):
         return {"_id": str(self.pk),
                 "title": self.title,
                 "details": self.details,
-                "forSale": self.forSale}
+                "forSale": self.forSale,
+				"creator": self.creator}
 
 
 class User(db.Document):

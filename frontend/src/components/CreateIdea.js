@@ -26,7 +26,7 @@ class CreateIdea extends Component {
 
   async handleSubmit(event) {
     event.preventDefault();
-    const token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJmcmVzaCI6ZmFsc2UsImlhdCI6MTYxNTY5Mjc1NiwianRpIjoiODdjNzg0MjItYTg5MC00YTZjLTkxMTUtMGFkZjE3NmQ2ZTZmIiwibmJmIjoxNjE1NjkyNzU2LCJ0eXBlIjoiYWNjZXNzIiwic3ViIjoia2luZ29mcnViaWsiLCJleHAiOjE2MTU2OTM2NTZ9.pRNvTmzK_2CkDd9fmBQDG6X6-w7Y51uYl0IYAgvmT94";
+    const token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJmcmVzaCI6ZmFsc2UsImlhdCI6MTYxNTY5NTAyNCwianRpIjoiMjVhYWI2OWQtZjZmOC00MTg2LWE2OTgtYWFlODllY2ZmZWQzIiwibmJmIjoxNjE1Njk1MDI0LCJ0eXBlIjoiYWNjZXNzIiwic3ViIjoibHVrZXczIiwiZXhwIjoxNjE1Njk1OTI0fQ.i7hC-v2hpF0lxVPF9Sr9hh7Ub-SwXQhFAweZ8bcqVOc";
     await axios.post(`/api/create_idea`,
       { title: this.state.title,
         details: this.state.details,

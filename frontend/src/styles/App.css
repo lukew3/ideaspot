@@ -17,3 +17,12 @@
   border: #686868 1px solid;
   padding: 2vw;
 }
+
+.ideaBoxCreator {
+  color: darkgrey;
+}
+
+.ideaBoxCreator a {
+  text-decoration: none;
+  color: darkgrey;
+}
