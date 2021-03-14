@@ -4,6 +4,7 @@ import Home from './components/Home.js';
 import ViewIdea from './components/ViewIdea.js';
 import CreateIdea from './components/CreateIdea.js';
 import Login from './components/Login.js';
+import MyIdeas from './components/MyIdeas.js'
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 
 function App() {
@@ -13,6 +14,7 @@ function App() {
         <Nav />
         <Switch>
           <Route path="/" exact component={Home} />
+          <Route path="/myIdeas" exact component={MyIdeas} />
           <Route path="/idea/:ideaId" component={ViewIdea} />
           <Route path="/login" component={Login} />
           <Route path="/newIdea" component={CreateIdea} />

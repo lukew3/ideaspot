@@ -28,7 +28,7 @@ class CreateIdea extends Component {
   async handleSubmit(event) {
     event.preventDefault();
     //const token = Cookie.get("token") ? Cookie.get("token") : null;
-    const token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJmcmVzaCI6ZmFsc2UsImlhdCI6MTYxNTcwMjMwOCwianRpIjoiOTI5ZWYzNzQtMDdmZS00MzgyLWJhOWQtMTcxZWYyYmM3Yzc0IiwibmJmIjoxNjE1NzAyMzA4LCJ0eXBlIjoiYWNjZXNzIiwic3ViIjoibHVrZXczIiwiZXhwIjoxNjE1NzAzMjA4fQ.T9cHMgPaKllxUN8j0YiV3f9OBxeV-YylYRggBDzH5AE";
+    const token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJmcmVzaCI6ZmFsc2UsImlhdCI6MTYxNTcwMjkzNCwianRpIjoiZTBkNWY1ZjYtMDU0Ni00MWI2LWIwODAtMmZlYmQ4ODcyN2M0IiwibmJmIjoxNjE1NzAyOTM0LCJ0eXBlIjoiYWNjZXNzIiwic3ViIjoibHVrZXczIiwiZXhwIjoxNjE1NzAzODM0fQ.12A_s6UuFIyJ_kJm6QXFiwkgbt14XDbiKSY_idRJKTI";
     await axios.post(`/api/create_idea`,
       { title: this.state.title,
         details: this.state.details,

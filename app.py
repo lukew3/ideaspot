@@ -115,6 +115,18 @@ def get_ideas():
         json_ideas['ideas'].append(idea)
     return json_ideas
 
+@app.route('/api/get_my_ideas', methods=['GET'])
+@jwt_required()
+def get_my_ideas():
+    json_ideas = {}
+    json_ideas['ideas'] = []
+    current_user = get_jwt_identity()
+    ideas = (Idea.objects(creator=current_user).all())
+    ideas = reversed(ideas)
+    for idea in ideas:
+        idea = idea.to_json()
+        json_ideas['ideas'].append(idea)
+    return json_ideas
 
 @app.route('/api/get_idea/<ideaId>', methods=['GET'])
 def get_idea(ideaId):
