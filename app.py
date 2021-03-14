@@ -78,7 +78,7 @@ def login():
     user = User.objects(username=username).first()
     if user and bcrypt.check_password_hash(user.password, password):
         access_token = create_access_token(identity=username)
-        return jsonify(access_token=access_token)
+        return jsonify(token=access_token)
     else:
         return jsonify({"msg": "Bad username or password"}), 401
 

@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import axios from 'axios';
-//import Cookie from 'js-cookie';
+import Cookie from 'js-cookie';
 import {Link} from 'react-router-dom';
 import IdeaBox from './IdeaBox.js';
 
@@ -13,11 +13,14 @@ class Home extends Component {
   }
   // on mount, load subscriptions
   componentDidMount() {
-    const token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJmcmVzaCI6ZmFsc2UsImlhdCI6MTYxNTcwMjkzNCwianRpIjoiZTBkNWY1ZjYtMDU0Ni00MWI2LWIwODAtMmZlYmQ4ODcyN2M0IiwibmJmIjoxNjE1NzAyOTM0LCJ0eXBlIjoiYWNjZXNzIiwic3ViIjoibHVrZXczIiwiZXhwIjoxNjE1NzAzODM0fQ.12A_s6UuFIyJ_kJm6QXFiwkgbt14XDbiKSY_idRJKTI";
+    const token = Cookie.get("token") ? Cookie.get("token") : null;
     axios.get(`/api/get_my_ideas`,
       { headers: { Authorization: `Bearer ${token}` }}
     ).then(response => {
       this.setState({ ideasList: response.data.ideas });
+    }).catch(error => {
+      this.props.history.push(`/login`);
+      console.log(error);
     });
   }
 
