@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import axios from 'axios';
 import '../styles/CreateIdea.css';
-//import Cookie from 'js-cookie';
+import Cookie from 'js-cookie';
 
 class CreateIdea extends Component {
   constructor(props){
@@ -26,7 +26,7 @@ class CreateIdea extends Component {
 
   async handleSubmit(event) {
     event.preventDefault();
-    const token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJmcmVzaCI6ZmFsc2UsImlhdCI6MTYxNTY5NTAyNCwianRpIjoiMjVhYWI2OWQtZjZmOC00MTg2LWE2OTgtYWFlODllY2ZmZWQzIiwibmJmIjoxNjE1Njk1MDI0LCJ0eXBlIjoiYWNjZXNzIiwic3ViIjoibHVrZXczIiwiZXhwIjoxNjE1Njk1OTI0fQ.i7hC-v2hpF0lxVPF9Sr9hh7Ub-SwXQhFAweZ8bcqVOc";
+    const token = Cookie.get("token") ? Cookie.get("token") : null;
     await axios.post(`/api/create_idea`,
       { title: this.state.title,
         details: this.state.details,

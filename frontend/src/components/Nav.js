@@ -21,6 +21,16 @@ class Nav extends Component {
           <Link to={'/myIdeas'}>
             <p>My Ideas</p>
           </Link>
+
+          <div class="navRight">
+            <Link to={'/login'}>
+              <p>Login</p>
+            </Link>
+
+            <Link to={'/register'}>
+              <p>Register</p>
+            </Link>
+          </div>
         </div>
       </div>
     );

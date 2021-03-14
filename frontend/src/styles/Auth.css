@@ -1,0 +1,14 @@
+.authBox {
+  background-color: rgba(26,26,27,0.8);
+  border: #686868 1px solid;
+  text-align: center;
+  margin-top: 5vh;
+  width: 25vw;
+  margin-left: 36vw;
+  height: 60vh;
+}
+
+.authBox * {
+  margin-top: 10px;
+  font-size: 16pt;
+}
