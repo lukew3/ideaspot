@@ -68,7 +68,9 @@ def register():
     password = data.get('password')
     hashed_pwd = bcrypt.generate_password_hash(password).decode('utf-8')
     new_user = User(email=email, username=username, password=hashed_pwd).save()
-    return new_user.to_json()
+    #return new_user.to_json()
+    access_token = create_access_token(identity=username)
+    return jsonify(token=access_token)
 
 @app.route('/api/login', methods=['POST'])
 def login():
