@@ -25,7 +25,7 @@ class Register extends Component {
 
   async handleSubmit(event) {
     event.preventDefault();
-    const urlbase = 'localhost:5001';
+    const urlbase = 'http://127.0.0.1:5001';
     await axios.post(`${urlbase}/api/register`,
       { email: this.state.email,
         username: this.state.username,
