@@ -151,12 +151,14 @@ def get_my_ideas():
     return json_ideas
 
 @api.route('/get_idea/<ideaId>', methods=['GET'])
+@jwt_required(optional=True)
 def get_idea(ideaId):
 	idea_obj = Idea.objects(id=ideaId).first()
-	if idea_obj.private == true && idea_obj.creator != get_jwt_identity():
+	if idea_obj.private == True and idea_obj.creator != get_jwt_identity():
 		return "<h1>This idea is private, you must sign in as owner to access</h1>"
-    idea = idea_obj.to_json()
-    return jsonify(idea=idea)
+	else:
+		idea = idea_obj.to_json()
+		return jsonify(idea=idea)
 
 
 app.register_blueprint(api, url_prefix='/api')

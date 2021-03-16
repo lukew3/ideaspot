@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import axios from 'axios';
 import IdeaBox from './IdeaBox.js';
-//import Cookie from 'js-cookie';
+import Cookie from 'js-cookie';
 
 class Home extends Component {
   constructor(props){
@@ -13,8 +13,13 @@ class Home extends Component {
   }
   // on mount, load subscriptions
   componentDidMount() {
-    axios.get(`/api/get_idea/${this.state.ideaId}`, {}).then(response => {
+    const token = Cookie.get("token") ? Cookie.get("token") : null;
+    axios.get(`/api/get_idea/${this.state.ideaId}`,
+      { headers: { Authorization: `Bearer ${token}` }}
+    ).then(response => {
       this.setState({ idea: response.data.idea });
+    }).catch(error => {
+      console.log("Login invalid");
     });
   }
 
