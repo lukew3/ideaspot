@@ -1,11 +1,11 @@
 #!/bin/sh
 
-echo "Switching to branch main"
-git checkout main
-
 echo "Building app"
 npm run build
 
-echo "Deploying files to server"
-rsync -avP build/ luke@lukew3.com:/var/www/buildmyidea.tk/
-echo "Deployment complete"
+echo "Removing old build files"
+rm -rf ../build/*
+echo "Copying build files"
+cp -r ./build/* ../build
+
+echo "Operations complete"
