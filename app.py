@@ -5,7 +5,7 @@ from flask_jwt_extended import create_access_token, get_jwt_identity, jwt_requir
 from flask_bcrypt import Bcrypt
 import json
 
-with open('/etc/config.json') as config_file:
+with open('./config.json') as config_file:
 	config = json.load(config_file)
 
 db = MongoEngine()
