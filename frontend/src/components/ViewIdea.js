@@ -13,8 +13,7 @@ class Home extends Component {
   }
   // on mount, load subscriptions
   componentDidMount() {
-    const urlbase = 'http://127.0.0.1:5001';
-    axios.get(`${urlbase}/api/get_idea/${this.state.ideaId}`, {}).then(response => {
+    axios.get(`/api/get_idea/${this.state.ideaId}`, {}).then(response => {
       this.setState({ idea: response.data.idea });
     });
   }

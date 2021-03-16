@@ -1,4 +1,4 @@
-from flask import Flask, flash, request, redirect, url_for, render_template, send_from_directory, jsonify, Response
+from flask import Flask, Blueprint, flash, request, redirect, url_for, render_template, send_from_directory, jsonify, Response
 from flask_cors import CORS
 from flask_mongoengine import MongoEngine
 from flask_jwt_extended import create_access_token, get_jwt_identity, jwt_required, JWTManager
@@ -14,6 +14,7 @@ bcrypt = Bcrypt()
 
 #initialize flask app
 app = Flask(__name__)
+api = Blueprint('api', __name__)
 app.config['SECRET_KEY'] = config.get('SECRET_KEY')
 
 #initialize jwt
@@ -60,7 +61,7 @@ class User(db.Document):
                 "password": self.password}
 
 
-@app.route('/api/register', methods=['POST'])
+@api.route('/register', methods=['POST'])
 def register():
     data = request.get_json(silent=True)
     email = data.get('email')
@@ -72,7 +73,7 @@ def register():
     access_token = create_access_token(identity=username)
     return jsonify(token=access_token)
 
-@app.route('/api/login', methods=['POST'])
+@api.route('/login', methods=['POST'])
 def login():
     data = request.get_json(silent=True)
     username = data.get('username')
@@ -85,7 +86,7 @@ def login():
         return jsonify({"msg": "Bad username or password"}), 401
 
 """
-@app.route('/api/refresh', methods=['POST'])
+@api.route('/api/refresh', methods=['POST'])
 def refresh():
     old_token = request.get_data()
     new_token = guard.refresh_jwt_token(old_token)
@@ -93,7 +94,7 @@ def refresh():
     return ret, 200
 """
 
-@app.route('/api/create_idea', methods=['POST'])
+@api.route('/create_idea', methods=['POST'])
 @jwt_required()
 def create_idea():
 	data = request.get_json(silent=True)
@@ -106,7 +107,7 @@ def create_idea():
 	return new_idea.to_json()
 
 
-@app.route('/api/get_ideas', methods=['GET'])
+@api.route('/get_ideas', methods=['GET'])
 def get_ideas():
     json_ideas = {}
     json_ideas['ideas'] = []
@@ -117,7 +118,7 @@ def get_ideas():
         json_ideas['ideas'].append(idea)
     return json_ideas
 
-@app.route('/api/get_my_ideas', methods=['GET'])
+@api.route('/get_my_ideas', methods=['GET'])
 @jwt_required()
 def get_my_ideas():
     json_ideas = {}
@@ -130,11 +131,13 @@ def get_my_ideas():
         json_ideas['ideas'].append(idea)
     return json_ideas
 
-@app.route('/api/get_idea/<ideaId>', methods=['GET'])
+@api.route('/get_idea/<ideaId>', methods=['GET'])
 def get_idea(ideaId):
     idea = (Idea.objects(id=ideaId).first()).to_json()
     return jsonify(idea=idea)
 
+
+app.register_blueprint(api, url_prefix='/api')
 
 if __name__ == "__main__":
     app.run(port=5001, debug=True)
