@@ -1,0 +1,181 @@
+{
+	"info": {
+		"_postman_id": "215a4b2f-6197-4e54-8ca3-c4f63ceebc12",
+		"name": "Build My Idea",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "New Idea",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJmcmVzaCI6ZmFsc2UsImlhdCI6MTYxNTY5MTIzOSwianRpIjoiZTBkMDc4OTEtYzkyNS00NzU5LWFhMGUtYzJjY2YzNzk4NDM0IiwibmJmIjoxNjE1NjkxMjM5LCJ0eXBlIjoiYWNjZXNzIiwic3ViIjoia2luZ29mcnViaWsiLCJleHAiOjE2MTU2OTIxMzl9.voqhmD4ZxHJcXMQUzgp2ivL7drFDUDS99cXp3U4T8Yo",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"title\": \"blah2\",\n    \"details\": \"detailsstuff2\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:5001/api/create_idea",
+					"host": [
+						"localhost"
+					],
+					"port": "5001",
+					"path": [
+						"api",
+						"create_idea"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get ideas",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "localhost:5001/api/get_ideas",
+					"host": [
+						"localhost"
+					],
+					"port": "5001",
+					"path": [
+						"api",
+						"get_ideas"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get idea",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "localhost:5001/api/get_idea/6050ca3ee71e342295554dc2",
+					"host": [
+						"localhost"
+					],
+					"port": "5001",
+					"path": [
+						"api",
+						"get_idea",
+						"6050ca3ee71e342295554dc2"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Register",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"email\": \"test2@gmail.com\",\n    \"password\": \"8a9cbor4\",\n    \"username\": \"kingofrubik\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:5001/api/register",
+					"host": [
+						"localhost"
+					],
+					"port": "5001",
+					"path": [
+						"api",
+						"register"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Login",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"password\": \"8a9cbor4\",\n    \"username\": \"lukew3\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:5001/api/login",
+					"host": [
+						"localhost"
+					],
+					"port": "5001",
+					"path": [
+						"api",
+						"login"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "localhost:5001/api/edit_idea/6050ca3ee71e342295554dc2",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJmcmVzaCI6ZmFsc2UsImlhdCI6MTYxNTkxODAwMSwianRpIjoiZjA3OTUyOTctOTUwOS00NmM4LWFhMjgtNGUzYTdjODA0ZDQ3IiwibmJmIjoxNjE1OTE4MDAxLCJ0eXBlIjoiYWNjZXNzIiwic3ViIjoibHVrZXczIiwiZXhwIjoxNjE1OTE4OTAxfQ.p_CEQqwA10tkH-Fw9IJCZA6cOlwcqOGuxk-RImNYbXg",
+							"type": "string"
+						}
+					]
+				},
+				"method": "PATCH",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"forSale\": true\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:5001/api/edit_idea/6050ca3ee71e342295554dc2",
+					"host": [
+						"localhost"
+					],
+					"port": "5001",
+					"path": [
+						"api",
+						"edit_idea",
+						"6050ca3ee71e342295554dc2"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}

@@ -5,7 +5,8 @@ import ViewIdea from './components/ViewIdea.js';
 import CreateIdea from './components/CreateIdea.js';
 import Login from './components/Login.js';
 import Register from './components/Register.js';
-import MyIdeas from './components/MyIdeas.js'
+import MyIdeas from './components/MyIdeas.js';
+import EditIdea from './components/EditIdea.js';
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 
 function App() {
@@ -20,6 +21,7 @@ function App() {
           <Route path="/login" component={Login} />
           <Route path="/register" component={Register} />
           <Route path="/newIdea" component={CreateIdea} />
+          <Route path="/editIdea/:ideaId" component={EditIdea} />
         </Switch>
       </div>
     </Router>

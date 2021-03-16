@@ -3,10 +3,11 @@ import axios from 'axios';
 import '../styles/CreateIdea.css';
 import Cookie from 'js-cookie';
 
-class CreateIdea extends Component {
+class EditIdea extends Component {
   constructor(props){
     super(props);
     this.state = {
+      ideaId: props.match.params.ideaId,
       title: "",
       details: "",
       private: false,
@@ -15,6 +16,16 @@ class CreateIdea extends Component {
     }
     this.handleInputChange = this.handleInputChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
+  }
+
+  componentDidMount() {
+    axios.get(`/api/get_idea/${this.state.ideaId}`, {}).then(response => {
+      this.setState({ title: response.data.idea.title,
+                      details: response.data.idea.details,
+                      private: response.data.idea.private,
+                      forSale: response.data.idea.forSale,
+                    });
+    });
   }
 
   handleInputChange(event) {
@@ -27,7 +38,7 @@ class CreateIdea extends Component {
   async handleSubmit(event) {
     event.preventDefault();
     const token = Cookie.get("token") ? Cookie.get("token") : null;
-    await axios.post(`/api/create_idea`,
+    await axios.patch(`/api/edit_idea/${this.state.ideaId}`,
       { title: this.state.title,
         details: this.state.details,
         forSale: this.state.forSale,
@@ -44,7 +55,7 @@ class CreateIdea extends Component {
   render() {
     return (
       <div className="ideaBox createIdeaBox">
-        <h1>Create an Idea</h1>
+        <h1>Edit Idea</h1>
         <form onSubmit={this.handleSubmit}>
           <input
             name="title"
@@ -94,4 +105,4 @@ class CreateIdea extends Component {
   }
 }
 
-export default CreateIdea;
+export default EditIdea;

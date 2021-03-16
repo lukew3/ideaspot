@@ -111,6 +111,17 @@ def create_idea():
 	return new_idea.to_json()
 
 
+@api.route('/edit_idea/<ideaId>', methods=['PATCH'])
+@jwt_required()
+def edit_idea(ideaId):
+	data = request.get_json(silent=True)
+	current_user = get_jwt_identity()
+	old_idea = Idea.objects(id=ideaId, creator=current_user).first()
+	old_idea.update(**data)
+	new_idea = Idea.objects(id=ideaId, creator=current_user).first()
+	return new_idea.to_json()
+
+
 @api.route('/get_ideas', methods=['GET'])
 def get_ideas():
     json_ideas = {}
