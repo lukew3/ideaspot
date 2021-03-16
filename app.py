@@ -65,8 +65,8 @@ class User(db.Document):
 def index():
     return app.send_static_file('index.html')
 
-@app.errorhandler(404)   
-def not_found(e):   
+@app.errorhandler(404)
+def not_found(e):
   return app.send_static_file('index.html')
 
 @api.route('/register', methods=['POST'])
@@ -152,7 +152,10 @@ def get_my_ideas():
 
 @api.route('/get_idea/<ideaId>', methods=['GET'])
 def get_idea(ideaId):
-    idea = (Idea.objects(id=ideaId).first()).to_json()
+	idea_obj = Idea.objects(id=ideaId).first()
+	if idea_obj.private == true && idea_obj.creator != get_jwt_identity():
+		return "<h1>This idea is private, you must sign in as owner to access</h1>"
+    idea = idea_obj.to_json()
     return jsonify(idea=idea)
 
 
