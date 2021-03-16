@@ -65,6 +65,10 @@ class User(db.Document):
 def index():
     return app.send_static_file('index.html')
 
+@app.errorhandler(404)   
+def not_found(e):   
+  return app.send_static_file('index.html')
+
 @api.route('/register', methods=['POST'])
 def register():
     data = request.get_json(silent=True)
