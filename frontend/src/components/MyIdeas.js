@@ -14,7 +14,8 @@ class Home extends Component {
   // on mount, load subscriptions
   componentDidMount() {
     const token = Cookie.get("token") ? Cookie.get("token") : null;
-    axios.get(`/api/get_my_ideas`,
+    const urlbase = 'localhost:5001';
+    axios.get(`${urlbase}/api/get_my_ideas`,
       { headers: { Authorization: `Bearer ${token}` }}
     ).then(response => {
       this.setState({ ideasList: response.data.ideas });

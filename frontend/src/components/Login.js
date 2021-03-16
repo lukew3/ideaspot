@@ -24,7 +24,8 @@ class Login extends Component {
 
   async handleSubmit(event) {
     event.preventDefault();
-    await axios.post(`/api/login`,
+    const urlbase = 'localhost:5001';
+    await axios.post(`${urlbase}/api/login`,
       { username: this.state.username,
         password: this.state.password }
     ).then(response => {
