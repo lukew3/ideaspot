@@ -19,7 +19,10 @@ class EditIdea extends Component {
   }
 
   componentDidMount() {
-    axios.get(`/api/get_idea/${this.state.ideaId}`, {}).then(response => {
+    const token = Cookie.get("token") ? Cookie.get("token") : null;
+    axios.get(`/api/get_idea/${this.state.ideaId}`,
+      { headers: { Authorization: `Bearer ${token}` }}
+    ).then(response => {
       this.setState({ title: response.data.idea.title,
                       details: response.data.idea.details,
                       private: response.data.idea.private,
