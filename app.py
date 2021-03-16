@@ -13,7 +13,8 @@ cors = CORS()
 bcrypt = Bcrypt()
 
 #initialize flask app
-app = Flask(__name__)
+#app = Flask(__name__)
+app = Flask(__name__, static_folder='./build', static_url_path='/')
 api = Blueprint('api', __name__)
 app.config['SECRET_KEY'] = config.get('SECRET_KEY')
 
@@ -60,6 +61,9 @@ class User(db.Document):
                 "username": self.username,
                 "password": self.password}
 
+@app.route('/')
+def index():
+    return app.send_static_file('index.html')
 
 @api.route('/register', methods=['POST'])
 def register():
