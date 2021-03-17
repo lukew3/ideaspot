@@ -7,6 +7,13 @@ echo "Building app"
 cd frontend
 npm run build
 
-echo "Deploying files to server"
+echo "Deploying build files to server"
 rsync -avP build/ luke@lukew3.com:/home/luke/buildmyidea/build/
+echo "Git pulling on server"
+ssh luke@lukew3.com << DONE
+cd ~/buildmyidea
+git pull
+cd ..
+sudo ./notes
+DONE
 echo "Deployment complete"
