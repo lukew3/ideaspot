@@ -18,6 +18,12 @@
   padding: 2vw;
 }
 
+.editIdeaLink {
+  text-decoration: none;
+  color: orange;
+  float: right;
+}
+
 .ideaBoxCreator {
   color: darkgrey;
 }

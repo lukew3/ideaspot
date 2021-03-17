@@ -15,7 +15,7 @@ class IdeaBox extends Component {
     const idea = this.state.idea;
     return (
       <div className="ideaBox">
-        <Link to={`/editIdea/${idea._id}`}>Edit idea</Link>
+        <Link to={`/editIdea/${idea._id}`} className="editIdeaLink">Edit idea</Link>
         <h1>{idea.title}</h1>
         <ReactMarkdown >
           {idea.details}
