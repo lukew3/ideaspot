@@ -31,32 +31,40 @@ class Nav extends Component {
   }
 }
 
-function LoginNav() {
-  const token = Cookie.get("token") ? Cookie.get("token") : null;
-  if (token == null) {
-    return(
-      <div>
-      <Link to={'/login'}>
-        <p>Login</p>
-      </Link>
+class LoginNav extends Component {
+  constructor(props){
+    super(props);
+    this.state = {
+      token: (Cookie.get("token") ? Cookie.get("token") : null)
+    }
+  }
+  render() {
+    if (this.state.token == null) {
+      return(
+        <div>
+        <Link to={'/login'}>
+          <p>Login</p>
+        </Link>
 
-      <Link to={'/register'}>
-        <p>Register</p>
-      </Link>
-      </div>
-    );
-  };
-  return (
-    <div>
-    <Link onClick={() => {Cookie.remove("token");}}>
-      <p>Logout</p>
-    </Link>
+        <Link to={'/register'}>
+          <p>Register</p>
+        </Link>
+        </div>
+      );
+    } else {
+      return (
+        <div>
+        <Link onClick={() => {Cookie.remove("token"); this.setState({ "token": null });}}>
+          <p>Logout</p>
+        </Link>
 
-    <Link to={'/profile'}>
-      <p>Profile</p>
-    </Link>
-    </div>
-  )
+        <Link to={'/profile'}>
+          <p>Profile</p>
+        </Link>
+        </div>
+      )
+    }
+  }
 }
 
 export default Nav;
