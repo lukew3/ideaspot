@@ -1,0 +1,12 @@
+#!/bin/sh
+
+echo "Switching to branch main"
+git checkout main
+
+echo "Building app"
+cd frontend
+npm run build
+
+echo "Deploying files to server"
+rsync -avP build/ luke@lukew3.com:/home/luke/buildmyidea/build/
+echo "Deployment complete"
