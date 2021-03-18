@@ -1,6 +1,5 @@
 import React, { Component } from "react";
 import '../styles/Nav.css';
-//import axios from 'axios';
 import {Link} from 'react-router-dom';
 import Cookie from 'js-cookie';
 

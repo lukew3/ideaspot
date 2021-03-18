@@ -31,9 +31,9 @@ def deploy():
       cd frontend
       npm run build
       echo "Deploying build files to server"
-      echo {password} | rsync -avPS build/ luke@lukew3.com:/home/luke/buildmyidea/build/
+      rsync -avP build/ luke@lukew3.com:/home/luke/buildmyidea/build/
       echo "Git pulling on server"
-      sshpass -p {password} ssh luke@lukew3.com << DONE
+      ssh luke@lukew3.com << DONE
       cd ~/buildmyidea
       git pull
       cd ..

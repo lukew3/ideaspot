@@ -2,6 +2,8 @@
   * I think I need to use a refresh token
 * Category tag(s) so that builders can find things that they can/want to build
 * Add delete idea
+* Improve profile page
+  * Add edit settings page
 * Fix checkboxes not selected on edit page
 * Remove link decoration on itembox
   * Blue underline
@@ -12,6 +14,7 @@
 * Lost password handling
 * Make home page look different if it's your first time on the site
   * Show an about message box or something
+* Don't show profile of a user if that user doesn't exist
 
 Possible Ideas:
 * If you say that you are planning on building or currently building an app, ask the builder if they would like to thank the creator by sending them a tip

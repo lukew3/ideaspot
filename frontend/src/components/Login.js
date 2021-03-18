@@ -1,7 +1,5 @@
-//Display all boxes, clicking on a box shows releases with urls shown in that div
 import React, { Component } from "react";
 import axios from 'axios';
-import Cookie from 'js-cookie';
 import '../styles/Auth.css';
 
 class Login extends Component {
