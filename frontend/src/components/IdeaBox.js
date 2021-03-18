@@ -39,7 +39,7 @@ function OwnerFeatures(props) {
       { headers: { Authorization: `Bearer ${token}` }}
     ).then(response => {
       //if success, hide the ideaBox
-      document.getElementById(props.ideaId).innerHTML = "Idea " + props.idea.title + " deleted";
+      document.getElementById(props.ideaId).innerHTML = "Idea \"" + props.idea.title + "\" deleted";
     }).catch(error => {
       console.log("Deletion failed");
     });
@@ -49,7 +49,7 @@ function OwnerFeatures(props) {
     return(
       <div className="ownerFeatures">
         <Link to={`/editIdea/${props.ideaId}`} className="editIdeaLink">Edit idea</Link>
-        <a href="#" className="deleteIdea" onClick={() => {deleteIdea()}}>Delete Idea</a>
+        <p className="deleteIdea" onClick={() => {deleteIdea()}}>Delete Idea</p>
       </div>
     );
   } else {

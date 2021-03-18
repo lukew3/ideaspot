@@ -1,12 +1,9 @@
 * Allow users to stay signed in for longer
   * I think I need to use a refresh token
 * Category tag(s) so that builders can find things that they can/want to build
-* Add delete idea
 * Improve profile page
   * Add edit settings page
 * Fix checkboxes not selected on edit page
-* Remove link decoration on itembox
-  * Blue underline
 * Add status options for ideas
   * A user can select "interested", "planning on building", or "building now"
     * Maybe have a status for ideas that you want to keep in the database but no don't have an interest in it anymore.
@@ -38,3 +35,6 @@ Possible Ideas:
   * Maybe show number of ideas written, amount of interests, plan to builds, and builds
 * If you are on the viewidea or edit idea page, the title of the page should be <the title of the idea> - Build My Idea
 * Add ability to subscribe to users?
+* Add undo for delete button
+  * Could also have a trash section for ideas that you deleted but didn't want to actually get rid of
+    * Saved for 30 days or something but could be deleted manually

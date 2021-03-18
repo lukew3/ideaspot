@@ -39,6 +39,7 @@ a {
 
 .deleteIdea {
   color: #c64747;
+  cursor: pointer;
 }
 
 .ideaBoxCreator {
