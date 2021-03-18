@@ -37,9 +37,7 @@ class LoginNav extends Component {
       const username = Cookie.get("username") ? Cookie.get("username") : null;
       return (
         <div>
-        <Link onClick={() => {
-          this.props.globalLogout();
-        }}>
+        <Link onClick={() => {this.props.globalLogout();}}>
           <p>Logout</p>
         </Link>
 

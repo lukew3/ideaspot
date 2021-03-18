@@ -13,7 +13,6 @@ import React, { Component } from "react";
 import Cookie from 'js-cookie';
 
 
-
 class App extends Component {
   constructor(props){
     super(props);
@@ -21,23 +20,25 @@ class App extends Component {
       isLoggedIn: false,
     }
   }
+
   componentDidMount() {
     const token = Cookie.get("token") ? Cookie.get("token") : null;
     if (token) {
       this.setState({ "isLoggedIn": true });
     }
   }
+
   globalLogin = (username, token) => {
     this.setState({ "isLoggedIn": true });
     Cookie.set("token", token, { SameSite: 'lax' });
     Cookie.set("username", username, { SameSite: 'lax' });
   }
+
   globalLogout = () => {
     this.setState({ "isLoggedIn": false });
     Cookie.remove("token");
     Cookie.remove("username");
   }
-
 
   render() {
     //Intermediates are necessary to pass history.push prop for rerouting
