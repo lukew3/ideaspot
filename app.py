@@ -77,9 +77,8 @@ def register():
     password = data.get('password')
     hashed_pwd = bcrypt.generate_password_hash(password).decode('utf-8')
     new_user = User(email=email, username=username, password=hashed_pwd).save()
-    #return new_user.to_json()
     access_token = create_access_token(identity=username)
-    return jsonify(token=access_token)
+    return jsonify(token=access_token, username=username)
 
 @api.route('/login', methods=['POST'])
 def login():
@@ -88,10 +87,10 @@ def login():
     password = data.get('password')
     user = User.objects(username=username).first()
     if user == None:
-        user = User.objectsg(email=username).first()
+        user = User.objects(email=username).first()
     if user and bcrypt.check_password_hash(user.password, password):
-        access_token = create_access_token(identity=username)
-        return jsonify(token=access_token)
+        access_token = create_access_token(identity=user.username)
+        return jsonify(token=access_token, username=user.username)
     else:
         return jsonify({"msg": "Bad username or password"}), 401
 
