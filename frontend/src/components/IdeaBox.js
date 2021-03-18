@@ -18,7 +18,7 @@ class IdeaBox extends Component {
   render() {
     const idea = this.state.idea;
     return (
-      <div id={idea._id} className="ideaBox">
+      <div id={idea._id} key={idea._id} className="ideaBox">
         <OwnerFeatures idea={idea} creator={idea.creator} ideaId={idea._id}/>
         <Link to={`/idea/${idea._id}`} id="titleLink">
           <h1>{idea.title}</h1>

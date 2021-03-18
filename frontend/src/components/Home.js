@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import axios from 'axios';
 import IdeaBox from './IdeaBox.js';
 
+
 class Home extends Component {
   constructor(props){
     super(props);
@@ -17,11 +18,10 @@ class Home extends Component {
   }
 
   render() {
-
     return (
       <div className="ideaFeed">
-        {this.state.ideasList.map(idea => (
-          <IdeaBox idea={idea} key={idea._id}/>
+        {this.state.ideasList.map((idea, index) => (
+          <IdeaBox key={idea._id} idea={idea} />
         ))}
       </div>
     );

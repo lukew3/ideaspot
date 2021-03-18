@@ -4,7 +4,7 @@ import IdeaBox from './IdeaBox.js';
 import { getToken } from '../helper.js';
 
 
-class Home extends Component {
+class MyIdeas extends Component {
   constructor(props){
     super(props);
     this.state = {
@@ -23,15 +23,14 @@ class Home extends Component {
   }
 
   render() {
-
     return (
       <div className="ideaFeed">
-        {this.state.ideasList.map(idea => (
-          <IdeaBox idea={idea} key={idea._id}/>
+        {this.state.ideasList.map((idea, index) => (
+          <IdeaBox key={idea._id} idea={idea} />
         ))}
       </div>
     );
   }
 }
 
-export default Home;
+export default MyIdeas;

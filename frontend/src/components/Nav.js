@@ -21,7 +21,7 @@ class Nav extends Component {
             <p>My Ideas</p>
           </Link>
 
-          <div class="navRight">
+          <div className="navRight">
             <LoginNav isLoggedIn={this.props.isLoggedIn} globalLogout={this.props.globalLogout}/>
           </div>
         </div>
@@ -36,7 +36,7 @@ class LoginNav extends Component {
       const username = Cookie.get("username") ? Cookie.get("username") : null;
       return (
         <div>
-        <Link onClick={() => {this.props.globalLogout();}}>
+        <Link to='/' onClick={() => {this.props.globalLogout();}}>
           <p>Logout</p>
         </Link>
 
