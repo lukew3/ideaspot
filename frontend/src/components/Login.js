@@ -26,7 +26,11 @@ class Login extends Component {
       { username: this.state.username,
         password: this.state.password }
     ).then(response => {
-      this.props.globalLogin(response.data.access_token, response.data.username);
+      this.props.globalLogin(
+        response.data.access_token,
+        response.data.refresh_token,
+        response.data.username
+      );
       this.props.history.push(`/`);
     }).catch(error => {
       console.log(error)
