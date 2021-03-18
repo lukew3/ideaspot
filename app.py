@@ -75,7 +75,7 @@ def register():
 	data = request.get_json(silent=True)
 	email = data.get('email')
 	username = data.get('username')
-	if username in blocked_username:
+	if username in blocked_usernames:
 		return "<p>Invalid username</p>"
 	password = data.get('password')
 	hashed_pwd = bcrypt.generate_password_hash(password).decode('utf-8')

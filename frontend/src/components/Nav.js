@@ -23,7 +23,7 @@ class Nav extends Component {
           </Link>
 
           <div class="navRight">
-            <LoginNav />
+            <LoginNav isLoggedIn={this.props.isLoggedIn} globalLogout={this.props.globalLogout}/>
           </div>
         </div>
       </div>
@@ -39,7 +39,25 @@ class LoginNav extends Component {
     }
   }
   render() {
-    if (this.state.token == null) {
+    if (this.props.isLoggedIn) {
+      const username = Cookie.get("username") ? Cookie.get("username") : null;
+      return (
+        <div>
+        <Link onClick={() => {
+          Cookie.remove("token");
+          Cookie.remove("username");
+          this.setState({ "token": null });
+          this.props.globalLogout();
+        }}>
+          <p>Logout</p>
+        </Link>
+
+        <Link to={`/${username}`}>
+          <p>Profile</p>
+        </Link>
+        </div>
+      )
+    } else {
       return(
         <div>
         <Link to={'/login'}>
@@ -51,23 +69,6 @@ class LoginNav extends Component {
         </Link>
         </div>
       );
-    } else {
-      const username = Cookie.get("username") ? Cookie.get("username") : null;
-      return (
-        <div>
-        <Link onClick={() => {
-          Cookie.remove("token");
-          Cookie.remove("username");
-          this.setState({ "token": null });}
-        }>
-          <p>Logout</p>
-        </Link>
-
-        <Link to={`/${username}`}>
-          <p>Profile</p>
-        </Link>
-        </div>
-      )
     }
   }
 }

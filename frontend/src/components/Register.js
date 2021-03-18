@@ -32,6 +32,7 @@ class Register extends Component {
     ).then(response => {
       Cookie.set("token", response.data.token, { SameSite: 'lax' });
       Cookie.set("username", response.data.username, { SameSite: 'lax' });
+      this.props.globalLogin();
       this.props.history.push(`/`);
     }).catch(error => {
       console.log("Registration invalid");
