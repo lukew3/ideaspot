@@ -22,22 +22,23 @@ class App extends Component {
   }
 
   componentDidMount() {
-    const token = Cookie.get("token") ? Cookie.get("token") : null;
-    if (token) {
+    const access_token = Cookie.get("access_token") ? Cookie.get("access_token") : null;
+    if (access_token) {
       this.setState({ "isLoggedIn": true });
     }
   }
 
-  globalLogin = (token, username) => {
+  globalLogin = (access_token, username) => {
     this.setState({ "isLoggedIn": true });
-    Cookie.set("token", token, { SameSite: 'lax' });
+    Cookie.set("access_token", access_token, { SameSite: 'lax' });
     Cookie.set("username", username, { SameSite: 'lax' });
   }
 
   globalLogout = () => {
     this.setState({ "isLoggedIn": false });
-    Cookie.remove("token");
+    Cookie.remove("access_token");
     Cookie.remove("username");
+    Cookie.remove("token");
   }
 
   render() {

@@ -34,7 +34,7 @@ class IdeaBox extends Component {
 
 function OwnerFeatures(props) {
   function deleteIdea() {
-    const token = Cookie.get("token") ? Cookie.get("token") : null;
+    const token = Cookie.get("access_token") ? Cookie.get("access_token") : null;
     axios.delete(`/api/delete_idea/${props.ideaId}`,
       { headers: { Authorization: `Bearer ${token}` }}
     ).then(response => {

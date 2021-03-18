@@ -1,8 +1,9 @@
 from flask import Flask, Blueprint, flash, request, redirect, url_for, render_template, send_from_directory, jsonify, Response
 from flask_cors import CORS
 from flask_mongoengine import MongoEngine
-from flask_jwt_extended import create_access_token, get_jwt_identity, jwt_required, JWTManager
+from flask_jwt_extended import create_access_token, create_refresh_token, get_jwt_identity, jwt_required, JWTManager
 from flask_bcrypt import Bcrypt
+from datetime import timedelta
 import json
 
 with open('config.json') as config_file:
@@ -20,6 +21,8 @@ app.config['SECRET_KEY'] = config.get('SECRET_KEY')
 
 #initialize jwt
 app.config["JWT_SECRET_KEY"] = config.get('JWT_SECRET_KEY')
+app.config["JWT_ACCESS_TOKEN_EXPIRES"] = timedelta(hours=1)
+app.config["JWT_REFRESH_TOKEN_EXPIRES"] = timedelta(days=30)
 jwt = JWTManager(app)
 
 #initialize database connection
@@ -81,7 +84,8 @@ def register():
 	hashed_pwd = bcrypt.generate_password_hash(password).decode('utf-8')
 	new_user = User(email=email, username=username, password=hashed_pwd).save()
 	access_token = create_access_token(identity=username)
-	return jsonify(token=access_token, username=username)
+	refresh_token = create_refresh_token(identity="example_user")
+	return jsonify(access_token=access_token, refresh_token=refresh_token,username=username)
 
 @api.route('/login', methods=['POST'])
 def login():
@@ -93,18 +97,17 @@ def login():
         user = User.objects(email=username).first()
     if user and bcrypt.check_password_hash(user.password, password):
         access_token = create_access_token(identity=user.username)
-        return jsonify(token=access_token, username=user.username)
+        refresh_token = create_refresh_token(identity="example_user")
+        return jsonify(access_token=access_token, refresh_token=refresh_token,username=user.username)
     else:
         return jsonify({"msg": "Bad username or password"}), 401
 
-"""
-@api.route('/api/refresh', methods=['POST'])
+@api.route("/refresh", methods=["POST"])
+@jwt_required(refresh=True)
 def refresh():
-    old_token = request.get_data()
-    new_token = guard.refresh_jwt_token(old_token)
-    ret = {'access_token': new_token}
-    return ret, 200
-"""
+    identity = get_jwt_identity()
+    access_token = create_access_token(identity=identity)
+    return jsonify(access_token=access_token)
 
 @api.route('/create_idea', methods=['POST'])
 @jwt_required()

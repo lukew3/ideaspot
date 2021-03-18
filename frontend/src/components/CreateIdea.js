@@ -26,7 +26,7 @@ class CreateIdea extends Component {
 
   async handleSubmit(event) {
     event.preventDefault();
-    const token = Cookie.get("token") ? Cookie.get("token") : null;
+    const token = Cookie.get("access_token") ? Cookie.get("access_token") : null;
     await axios.post(`/api/create_idea`,
       { title: this.state.title,
         details: this.state.details,

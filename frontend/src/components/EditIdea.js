@@ -19,7 +19,7 @@ class EditIdea extends Component {
   }
 
   componentDidMount() {
-    const token = Cookie.get("token") ? Cookie.get("token") : null;
+    const token = Cookie.get("access_token") ? Cookie.get("access_token") : null;
     axios.get(`/api/get_idea/${this.state.ideaId}`,
       { headers: { Authorization: `Bearer ${token}` }}
     ).then(response => {
@@ -40,7 +40,7 @@ class EditIdea extends Component {
 
   async handleSubmit(event) {
     event.preventDefault();
-    const token = Cookie.get("token") ? Cookie.get("token") : null;
+    const token = Cookie.get("access_token") ? Cookie.get("access_token") : null;
     await axios.patch(`/api/edit_idea/${this.state.ideaId}`,
       { title: this.state.title,
         details: this.state.details,

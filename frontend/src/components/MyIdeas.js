@@ -12,7 +12,7 @@ class Home extends Component {
   }
   // on mount, load subscriptions
   componentDidMount() {
-    const token = Cookie.get("token") ? Cookie.get("token") : null;
+    const token = Cookie.get("access_token") ? Cookie.get("access_token") : null;
     axios.get(`/api/get_my_ideas`,
       { headers: { Authorization: `Bearer ${token}` }}
     ).then(response => {
