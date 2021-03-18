@@ -71,14 +71,17 @@ def not_found(e):
 
 @api.route('/register', methods=['POST'])
 def register():
-    data = request.get_json(silent=True)
-    email = data.get('email')
-    username = data.get('username')
-    password = data.get('password')
-    hashed_pwd = bcrypt.generate_password_hash(password).decode('utf-8')
-    new_user = User(email=email, username=username, password=hashed_pwd).save()
-    access_token = create_access_token(identity=username)
-    return jsonify(token=access_token, username=username)
+	blocked_usernames = ['myIdeas','idea','login','register','newIdea','editIdea']
+	data = request.get_json(silent=True)
+	email = data.get('email')
+	username = data.get('username')
+	if username in blocked_username:
+		return "<p>Invalid username</p>"
+	password = data.get('password')
+	hashed_pwd = bcrypt.generate_password_hash(password).decode('utf-8')
+	new_user = User(email=email, username=username, password=hashed_pwd).save()
+	access_token = create_access_token(identity=username)
+	return jsonify(token=access_token, username=username)
 
 @api.route('/login', methods=['POST'])
 def login():

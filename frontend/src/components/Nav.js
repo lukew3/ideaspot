@@ -52,13 +52,18 @@ class LoginNav extends Component {
         </div>
       );
     } else {
+      const username = Cookie.get("username") ? Cookie.get("username") : null;
       return (
         <div>
-        <Link onClick={() => {Cookie.remove("token"); this.setState({ "token": null });}}>
+        <Link onClick={() => {
+          Cookie.remove("token");
+          Cookie.remove("username");
+          this.setState({ "token": null });}
+        }>
           <p>Logout</p>
         </Link>
 
-        <Link to={'/profile'}>
+        <Link to={`/${username}`}>
           <p>Profile</p>
         </Link>
         </div>

@@ -20,6 +20,6 @@
 .createIdeaDetails {
   width: calc(100% - 16px);
   height: 20vh;
-  resize: none;
+  resize: vertical;
   padding: 8px;
 }

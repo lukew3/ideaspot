@@ -22,7 +22,7 @@ class IdeaBox extends Component {
           {idea.details}
         </ReactMarkdown >
         <Tags idea={idea}/>
-        <p className="ideaBoxCreator">Created by: <Link to={`/user/${idea.creator}`}>{idea.creator}</Link></p>
+        <p className="ideaBoxCreator">Created by: <Link to={`/${idea.creator}`}>{idea.creator}</Link></p>
       </div>
     );
   }
