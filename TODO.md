@@ -1,4 +1,3 @@
-* Update nav on login
 * Allow users to stay signed in for longer
   * I think I need to use a refresh token
 * Category tag(s) so that builders can find things that they can/want to build

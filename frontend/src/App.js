@@ -27,14 +27,30 @@ class App extends Component {
       this.setState({ "isLoggedIn": true });
     }
   }
-  globalLogin = () => {
+  globalLogin = (username, token) => {
     this.setState({ "isLoggedIn": true });
+    Cookie.set("token", token, { SameSite: 'lax' });
+    Cookie.set("username", username, { SameSite: 'lax' });
   }
   globalLogout = () => {
     this.setState({ "isLoggedIn": false });
+    Cookie.remove("token");
+    Cookie.remove("username");
   }
 
+
   render() {
+    //Intermediates are necessary to pass history.push prop for rerouting
+    const LoginIntermediate = (props) => {
+      return (
+        <Login {...props} globalLogin={this.globalLogin}/>
+      )
+    }
+    const RegisterIntermediate = (props) => {
+      return (
+        <Register {...props} globalLogin={this.globalLogin}/>
+      )
+    }
     return (
       <Router>
         <div className="App">
@@ -43,12 +59,8 @@ class App extends Component {
             <Route path="/" exact component={Home} />
             <Route path="/myIdeas" exact component={MyIdeas} />
             <Route path="/idea/:ideaId" exact component={ViewIdea} />
-            <Route path="/login" exact>
-              <Login globalLogin={this.globalLogin} />
-            </Route>
-            <Route path="/register" exact>
-              <Register globalLogin={this.globalLogin} />
-            </Route>
+            <Route path="/login" exact component={LoginIntermediate} />
+            <Route path="/register" exact component={RegisterIntermediate} />
             <Route path="/newIdea" exact component={CreateIdea} />
             <Route path="/editIdea/:ideaId" exact component={EditIdea} />
             <Route path="/:username" exact component={Profile} />
@@ -58,5 +70,6 @@ class App extends Component {
     );
   }
 }
+
 
 export default App;

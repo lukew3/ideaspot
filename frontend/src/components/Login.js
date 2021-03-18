@@ -28,9 +28,7 @@ class Login extends Component {
       { username: this.state.username,
         password: this.state.password }
     ).then(response => {
-      Cookie.set("token", response.data.token, { SameSite: 'lax' });
-      Cookie.set("username", response.data.username, { SameSite: 'lax' });
-      this.props.globalLogin();
+      this.props.globalLogin(response.data.token, response.data.username);
       this.props.history.push(`/`);
     }).catch(error => {
       console.log(error)

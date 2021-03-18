@@ -32,21 +32,12 @@ class Nav extends Component {
 }
 
 class LoginNav extends Component {
-  constructor(props){
-    super(props);
-    this.state = {
-      token: (Cookie.get("token") ? Cookie.get("token") : null)
-    }
-  }
   render() {
     if (this.props.isLoggedIn) {
       const username = Cookie.get("username") ? Cookie.get("username") : null;
       return (
         <div>
         <Link onClick={() => {
-          Cookie.remove("token");
-          Cookie.remove("username");
-          this.setState({ "token": null });
           this.props.globalLogout();
         }}>
           <p>Logout</p>
