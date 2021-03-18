@@ -4,6 +4,7 @@ import Tags from './Tags.js';
 import { Link } from 'react-router-dom';
 import Cookie from 'js-cookie';
 import axios from 'axios';
+import { getToken } from '../helper.js';
 
 
 class IdeaBox extends Component {
@@ -34,9 +35,8 @@ class IdeaBox extends Component {
 
 function OwnerFeatures(props) {
   function deleteIdea() {
-    const token = Cookie.get("access_token") ? Cookie.get("access_token") : null;
     axios.delete(`/api/delete_idea/${props.ideaId}`,
-      { headers: { Authorization: `Bearer ${token}` }}
+      { headers: { Authorization: `Bearer ${getToken()}` }}
     ).then(response => {
       //if success, hide the ideaBox
       document.getElementById(props.ideaId).innerHTML = "Idea \"" + props.idea.title + "\" deleted";

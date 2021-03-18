@@ -11,6 +11,7 @@ import Profile from './components/Profile.js';
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 import React, { Component } from "react";
 import Cookie from 'js-cookie';
+import { getToken } from './helper.js';
 
 
 class App extends Component {
@@ -22,7 +23,7 @@ class App extends Component {
   }
 
   componentDidMount() {
-    const access_token = Cookie.get("access_token") ? Cookie.get("access_token") : null;
+    const access_token = getToken();
     if (access_token) {
       this.setState({ "isLoggedIn": true });
     }

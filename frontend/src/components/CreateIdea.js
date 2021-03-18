@@ -1,7 +1,8 @@
 import React, { Component } from "react";
 import axios from 'axios';
 import '../styles/CreateIdea.css';
-import Cookie from 'js-cookie';
+import { getToken } from '../helper.js';
+
 
 class CreateIdea extends Component {
   constructor(props){
@@ -26,13 +27,12 @@ class CreateIdea extends Component {
 
   async handleSubmit(event) {
     event.preventDefault();
-    const token = Cookie.get("access_token") ? Cookie.get("access_token") : null;
     await axios.post(`/api/create_idea`,
       { title: this.state.title,
         details: this.state.details,
         forSale: this.state.forSale,
         private: this.state.private },
-      { headers: { Authorization: `Bearer ${token}` }}
+      { headers: { Authorization: `Bearer ${getToken()}` }}
     ).then(response => {
       this.props.history.push(`/idea/${response.data._id}`);
     }).catch(error => {
