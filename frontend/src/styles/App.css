@@ -2,6 +2,11 @@
   color: white;
 }
 
+a {
+  text-decoration: none;
+  color: white;
+}
+
 .ideaFeed {
   margin-top: 50px;
 }
@@ -18,10 +23,22 @@
   padding: 2vw;
 }
 
+.ownerFeatures {
+  float: right;
+}
+
+.ownerFeatures * {
+  display: inline-block;
+  margin: 10px;
+}
+
 .editIdeaLink {
   text-decoration: none;
   color: #b07b19;
-  float: right;
+}
+
+.deleteIdea {
+  color: #c64747;
 }
 
 .ideaBoxCreator {

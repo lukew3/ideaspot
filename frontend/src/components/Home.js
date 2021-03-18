@@ -22,10 +22,8 @@ class Home extends Component {
     return (
       <div className="ideaFeed">
         {this.state.ideasList.map(idea => (
-        <Link to={`/idea/${idea._id}`} key={idea._id}>
-          <IdeaBox idea={idea} />
-        </Link>
-      ))}
+          <IdeaBox idea={idea} key={idea._id}/>
+        ))}
       </div>
     );
   }

@@ -130,6 +130,17 @@ def edit_idea(ideaId):
 	return new_idea.to_json()
 
 
+@api.route('/delete_idea/<ideaId>', methods=['DELETE'])
+@jwt_required()
+def delete_idea(ideaId):
+	data = request.get_json(silent=True)
+	current_user = get_jwt_identity()
+	idea = Idea.objects(id=ideaId, creator=current_user).first()
+	idea.delete()
+	print("deleted")
+	return jsonify(status="idea deleted")
+
+
 @api.route('/get_ideas', methods=['GET'])
 def get_ideas():
     json_ideas = {}
@@ -140,6 +151,7 @@ def get_ideas():
         idea = idea.to_json()
         json_ideas['ideas'].append(idea)
     return json_ideas
+
 
 @api.route('/get_my_ideas', methods=['GET'])
 @jwt_required()
