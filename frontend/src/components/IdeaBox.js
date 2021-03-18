@@ -4,6 +4,7 @@ import Tags from './Tags.js';
 import { Link } from 'react-router-dom';
 import Cookie from 'js-cookie';
 import axios from 'axios';
+import ReactDOM from 'react-dom';
 
 
 class IdeaBox extends Component {
@@ -33,17 +34,28 @@ class IdeaBox extends Component {
 }
 
 function OwnerFeatures(props) {
+
   function deleteIdea() {
     const token = Cookie.get("token") ? Cookie.get("token") : null;
     axios.delete(`/api/delete_idea/${props.ideaId}`,
       { headers: { Authorization: `Bearer ${token}` }}
     ).then(response => {
       //if success, hide the ideaBox
-      document.getElementById(props.ideaId).innerHTML = "Idea " + props.idea.title + " deleted";
+      const savedInner = document.getElementById(props.ideaId).innerHTML;
+      const unDelete = () => {
+        console.log("restored");
+      }
+      const undoLink = `<p>Idea ${props.idea.title} deleted <a onClick=unDelete>undo</a></p>`
+      document.getElementById(props.ideaId).innerHTML = undoLink
     }).catch(error => {
       console.log("Deletion failed");
     });
   }
+
+  function undoDelete(savedInner, ideaId) {
+    document.getElementById(ideaId).innerHTML = savedInner;
+  }
+
   const username = Cookie.get("username") ? Cookie.get("username") : null;
   if (username === props.creator) {
     return(
