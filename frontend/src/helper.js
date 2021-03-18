@@ -28,6 +28,6 @@ function refreshToken() {
     return response.data.access_token;
   }).catch(error => {
     console.log(error);
-    return "Login required, refresh token may be expired";
+    return null;
   });
 }
