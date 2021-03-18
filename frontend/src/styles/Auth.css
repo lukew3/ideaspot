@@ -1,14 +1,29 @@
 .authBox {
+  width: 340px;
+  margin: 0 auto;
   background-color: rgba(26,26,27,0.8);
   border: #686868 1px solid;
   text-align: center;
   margin-top: 5vh;
-  width: 25vw;
-  margin-left: 36vw;
   height: 60vh;
 }
 
 .authBox * {
-  margin-top: 10px;
-  font-size: 16pt;
+  margin: auto 0;
+  margin-bottom: 5px;
+}
+
+.authBox input {
+  padding: 5px 12px;
+  font-size: 14px;
+  line-height: 20px;
+  color: #24292e;
+  vertical-align: middle;
+  background-color: #fff;
+  background-repeat: no-repeat;
+  background-position: right 8px center;
+  border: 1px solid #e1e4e8;
+  border-radius: 6px;
+  width: 290px;
+  outline: none;
 }

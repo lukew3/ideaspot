@@ -87,6 +87,8 @@ def login():
     username = data.get('username')
     password = data.get('password')
     user = User.objects(username=username).first()
+    if user == None:
+        user = User.objectsg(email=username).first()
     if user and bcrypt.check_password_hash(user.password, password):
         access_token = create_access_token(identity=username)
         return jsonify(token=access_token)

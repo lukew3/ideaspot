@@ -43,22 +43,23 @@ class Login extends Component {
       <form className="authBox" onSubmit={this.handleSubmit}>
         <h1>Login</h1>
         <label>
-          Username:
+          Username or Email:
+        </label>
         <input
           name="username"
           type="text"
           value={this.state.username}
           onChange={this.handleInputChange} />
-        </label>
         <br/>
         <label>
           Password:
+        </label>
+        <br/>
         <input
           name="password"
           type="password"
           value={this.state.password}
           onChange={this.handleInputChange} />
-        </label>
         <br/>
         <input type="submit" value="Submit" />
       </form>
