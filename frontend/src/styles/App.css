@@ -2,13 +2,13 @@
   color: white;
 }
 
-a {
+#titleLink {
   text-decoration: none;
   color: white;
 }
 
-.ideaFeed {
-  margin-top: 50px;
+a {
+  color: #2d7de6;
 }
 
 .ideaBox {
