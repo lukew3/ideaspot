@@ -20,7 +20,6 @@ class Home extends Component {
       this.setState({ ideasList: response.data.ideas });
     }).catch(error => {
       this.props.history.push(`/login`);
-      console.log(error);
     });
   }
 

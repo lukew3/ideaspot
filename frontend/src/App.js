@@ -28,7 +28,7 @@ class App extends Component {
     }
   }
 
-  globalLogin = (username, token) => {
+  globalLogin = (token, username) => {
     this.setState({ "isLoggedIn": true });
     Cookie.set("token", token, { SameSite: 'lax' });
     Cookie.set("username", username, { SameSite: 'lax' });
