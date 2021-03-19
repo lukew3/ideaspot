@@ -19,6 +19,7 @@ class App extends Component {
     super(props);
     this.state = {
       isLoggedIn: false,
+      username: "",
     }
   }
 
@@ -30,7 +31,7 @@ class App extends Component {
   }
 
   globalLogin = (access_token, refresh_token, username) => {
-    this.setState({ "isLoggedIn": true });
+    this.setState({ "isLoggedIn": true, "username": username });
     Cookie.set("access_token", access_token, { SameSite: 'lax' });
     Cookie.set("refresh_token", refresh_token, { SameSite: 'lax' });
     Cookie.set("username", username, { SameSite: 'lax' });
@@ -58,7 +59,7 @@ class App extends Component {
     return (
       <Router>
         <div className="App">
-          <Nav isLoggedIn={this.state.isLoggedIn} globalLogout={this.globalLogout}/>
+          <Nav isLoggedIn={this.state.isLoggedIn} globalLogout={this.globalLogout} username={this.state.username}/>
           <Switch>
             <Route path="/" exact component={Home} />
             <Route path="/myIdeas" exact component={MyIdeas} />

@@ -22,7 +22,10 @@ class Nav extends Component {
           </Link>
 
           <div className="navRight">
-            <LoginNav isLoggedIn={this.props.isLoggedIn} globalLogout={this.props.globalLogout}/>
+            <LoginNav
+              isLoggedIn={this.props.isLoggedIn}
+              globalLogout={this.props.globalLogout}
+              username={this.props.username} />
           </div>
         </div>
       </div>
@@ -33,14 +36,13 @@ class Nav extends Component {
 class LoginNav extends Component {
   render() {
     if (this.props.isLoggedIn) {
-      const username = Cookie.get("username") ? Cookie.get("username") : null;
       return (
         <div>
         <Link to='/' onClick={() => {this.props.globalLogout();}}>
           <p>Logout</p>
         </Link>
 
-        <Link to={`/${username}`}>
+        <Link to={`/${this.props.username}`}>
           <p>Profile</p>
         </Link>
         </div>
