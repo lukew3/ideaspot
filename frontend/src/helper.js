@@ -18,7 +18,7 @@ export function getToken() {
 function refreshToken() {
   //Refreshes and returns access_token
   const refresh_token = Cookie.get("refresh_token") ? Cookie.get("refresh_token") : null;
-  axios.get(`/api/refresh`,
+  axios.post(`/api/refresh`,
     { headers: { Authorization: `Bearer ${refresh_token}` }}
   ).then(response => {
     //set newExpirationTime to current time + 1 hour
