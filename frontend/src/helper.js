@@ -10,7 +10,6 @@ export function getToken() {
   if ((currentTime + 600000) > expirationTime) {
     return refreshToken();
   } else {
-    refreshToken();
     const access_token = Cookie.get("access_token") ? Cookie.get("access_token") : null;
     return access_token;
   }
