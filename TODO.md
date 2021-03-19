@@ -40,3 +40,4 @@ Possible Ideas:
   * Could also have a trash section for ideas that you deleted but didn't want to actually get rid of
     * Saved for 30 days or something but could be deleted manually
 * Remove link from text, links in markdown are unclickable
+* RSS feed for new Ideas
