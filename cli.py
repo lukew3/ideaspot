@@ -1,5 +1,6 @@
 import click
 from pymongo import MongoClient
+from bson.objectid import ObjectId
 import json
 import os
 
@@ -43,6 +44,11 @@ def deploy():
     """
     os.system(script)
 
+@cli.command()
+@click.argument('idea_id')
+def delete_idea(idea_id):
+	""" Delete the idea with the passed id """
+	db.idea.delete_one({"_id": ObjectId(idea_id)})
 
 if __name__ == "__main__":
     cli()
