@@ -82,6 +82,7 @@ class EditIdea extends Component {
             name="forSale"
             className="createIdeaForSale createIdeaCheckbox"
             value={this.state.forSale}
+            checked={this.state.forSale}
             onChange={this.handleInputChange} />
           </label>
           <br/>
@@ -92,6 +93,7 @@ class EditIdea extends Component {
             name="private"
             className="createIdeaPrivate createIdeaCheckbox"
             value={this.state.private}
+            checked={this.state.private}
             onChange={this.handleInputChange} />
           </label>
           <br/>
