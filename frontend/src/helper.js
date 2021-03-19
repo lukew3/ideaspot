@@ -1,6 +1,9 @@
 import Cookie from 'js-cookie';
 import axios from 'axios';
 
+const accessExpirationDelta = 3600000; // 1 hour
+const requestRefreshDelta = 600000; // 10 minutes
+
 //How do I handle having no token and no refresh token
 
 export function getToken() {
@@ -8,7 +11,7 @@ export function getToken() {
   const expirationTime = Cookie.get("expirationTime") ? Cookie.get("expirationTime") : null;
   const currentTime = new Date().getTime();
   //if token expires in the next 10 minutes or has already expired
-  if ((currentTime + 600000) > expirationTime) {
+  if ((currentTime + requestRefreshDelta) > expirationTime) {
     //Get a new token
     const refresh_token = Cookie.get("refresh_token") ? Cookie.get("refresh_token") : null;
     let new_access_token = "";
@@ -17,7 +20,7 @@ export function getToken() {
         { headers: { Authorization: `Bearer ${refresh_token}` }}
       ).then(response => {
         //set newExpirationTime to current time + 1 hour
-        const newExpirationTime = (new Date().getTime()) + 3600000;
+        const newExpirationTime = (new Date().getTime()) + accessExpirationDelta;
         Cookie.set("access_token", response.data.access_token, { SameSite: 'lax' });
         Cookie.set("expirationTime", newExpirationTime, { SameSite: 'lax' });
         new_access_token = response.data.access_token;
