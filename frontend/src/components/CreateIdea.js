@@ -27,17 +27,19 @@ class CreateIdea extends Component {
 
   async handleSubmit(event) {
     event.preventDefault();
-    await axios.post(`/api/create_idea`,
-      { title: this.state.title,
-        details: this.state.details,
-        forSale: this.state.forSale,
-        private: this.state.private },
-      { headers: { Authorization: `Bearer ${getToken()}` }}
-    ).then(response => {
-      this.props.history.push(`/idea/${response.data._id}`);
-    }).catch(error => {
-      console.log(error);
-      console.log("Error");
+    getToken().then((token) => {
+      axios.post(`/api/create_idea`,
+        { title: this.state.title,
+          details: this.state.details,
+          forSale: this.state.forSale,
+          private: this.state.private },
+        { headers: { Authorization: `Bearer ${token}` }}
+      ).then(response => {
+        this.props.history.push(`/idea/${response.data._id}`);
+      }).catch(error => {
+        console.log(error);
+        console.log("Error");
+      });
     });
   }
 

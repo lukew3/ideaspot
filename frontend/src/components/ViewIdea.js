@@ -14,12 +14,14 @@ class Home extends Component {
   }
   // on mount, load subscriptions
   componentDidMount() {
-    axios.get(`/api/get_idea/${this.state.ideaId}`,
-      { headers: { Authorization: `Bearer ${getToken()}` }}
-    ).then(response => {
-      this.setState({ idea: response.data.idea });
-    }).catch(error => {
-      console.log("Login invalid");
+    getToken().then((token) => {
+      axios.get(`/api/get_idea/${this.state.ideaId}`,
+        { headers: { Authorization: `Bearer ${token}` }}
+      ).then(response => {
+        this.setState({ idea: response.data.idea });
+      }).catch(error => {
+        console.log("Login invalid");
+      });
     });
   }
 

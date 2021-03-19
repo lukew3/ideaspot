@@ -24,11 +24,12 @@ class App extends Component {
   }
 
   componentDidMount() {
-    const access_token = getToken();
-    if (access_token) {
-      this.setState({ "isLoggedIn": true,
-                      "username": Cookie.get("username") });
-    }
+    getToken().then((token) => {
+      if (token) {
+        this.setState({ "isLoggedIn": true,
+                        "username": Cookie.get("username") });
+      }
+    });
   }
 
   globalLogin = (access_token, refresh_token, username) => {

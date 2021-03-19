@@ -13,12 +13,14 @@ class MyIdeas extends Component {
   }
   // on mount, load subscriptions
   componentDidMount() {
-    axios.get(`/api/get_my_ideas`,
-      { headers: { Authorization: `Bearer ${getToken()}` }}
-    ).then(response => {
-      this.setState({ ideasList: response.data.ideas });
-    }).catch(error => {
-      this.props.history.push(`/login`);
+    getToken().then((token) => {
+      axios.get(`/api/get_my_ideas`,
+        { headers: { Authorization: `Bearer ${token}` }}
+      ).then(response => {
+        this.setState({ ideasList: response.data.ideas });
+      }).catch(error => {
+        this.props.history.push(`/login`);
+      });
     });
   }
 

@@ -35,13 +35,15 @@ class IdeaBox extends Component {
 
 function OwnerFeatures(props) {
   function deleteIdea() {
-    axios.delete(`/api/delete_idea/${props.ideaId}`,
-      { headers: { Authorization: `Bearer ${getToken()}` }}
-    ).then(response => {
-      //if success, hide the ideaBox
-      document.getElementById(props.ideaId).innerHTML = "Idea \"" + props.idea.title + "\" deleted";
-    }).catch(error => {
-      console.log("Deletion failed");
+    getToken().then((token) => {
+      axios.delete(`/api/delete_idea/${props.ideaId}`,
+        { headers: { Authorization: `Bearer ${token}` }}
+      ).then(response => {
+        //if success, hide the ideaBox
+        document.getElementById(props.ideaId).innerHTML = "Idea \"" + props.idea.title + "\" deleted";
+      }).catch(error => {
+        console.log("Deletion failed");
+      });
     });
   }
   const username = Cookie.get("username") ? Cookie.get("username") : null;

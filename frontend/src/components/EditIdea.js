@@ -20,14 +20,16 @@ class EditIdea extends Component {
   }
 
   componentDidMount() {
-    axios.get(`/api/get_idea/${this.state.ideaId}`,
-      { headers: { Authorization: `Bearer ${getToken()}` }}
-    ).then(response => {
-      this.setState({ title: response.data.idea.title,
-                      details: response.data.idea.details,
-                      private: response.data.idea.private,
-                      forSale: response.data.idea.forSale,
-                    });
+    getToken().then((token) => {
+      axios.get(`/api/get_idea/${this.state.ideaId}`,
+        { headers: { Authorization: `Bearer ${token}` }}
+      ).then(response => {
+        this.setState({ title: response.data.idea.title,
+                        details: response.data.idea.details,
+                        private: response.data.idea.private,
+                        forSale: response.data.idea.forSale,
+                      });
+      });
     });
   }
 
@@ -40,17 +42,19 @@ class EditIdea extends Component {
 
   async handleSubmit(event) {
     event.preventDefault();
-    await axios.patch(`/api/edit_idea/${this.state.ideaId}`,
-      { title: this.state.title,
-        details: this.state.details,
-        forSale: this.state.forSale,
-        private: this.state.private },
-      { headers: { Authorization: `Bearer ${getToken()}` }}
-    ).then(response => {
-      this.props.history.push(`/idea/${response.data._id}`);
-    }).catch(error => {
-      console.log(error);
-      console.log("Error");
+    getToken().then((token) => {
+      axios.patch(`/api/edit_idea/${this.state.ideaId}`,
+        { title: this.state.title,
+          details: this.state.details,
+          forSale: this.state.forSale,
+          private: this.state.private },
+        { headers: { Authorization: `Bearer ${token}` }}
+      ).then(response => {
+        this.props.history.push(`/idea/${response.data._id}`);
+      }).catch(error => {
+        console.log(error);
+        console.log("Error");
+      });
     });
   }
 
