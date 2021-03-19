@@ -1,11 +1,14 @@
 * Category tag(s) so that builders can find things that they can/want to build
 * Improve profile page
   * Add edit settings page
-* Fix checkboxes not selected on edit page
 * Add status options for ideas
   * A user can select "interested", "planning on building", or "building now"
     * Maybe have a status for ideas that you want to keep in the database but no don't have an interest in it anymore.
       * Could call it "Bad Idea" or "No longer interested"
+  * "I am":
+    * "Interested"
+    * "Planning on building"
+    * "Building now"
 * Lost password handling
 * Make home page look different if it's your first time on the site
   * Show an about message box or something

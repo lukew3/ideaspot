@@ -26,7 +26,8 @@ class App extends Component {
   componentDidMount() {
     const access_token = getToken();
     if (access_token) {
-      this.setState({ "isLoggedIn": true });
+      this.setState({ "isLoggedIn": true,
+                      "username": Cookie.get("username") });
     }
   }
 
