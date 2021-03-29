@@ -37,13 +37,14 @@ class App extends Component {
     Cookie.set("access_token", access_token, { SameSite: 'lax' });
     Cookie.set("refresh_token", refresh_token, { SameSite: 'lax' });
     Cookie.set("username", username, { SameSite: 'lax' });
+    console.log(refresh_token);
   }
 
   globalLogout = () => {
     this.setState({ "isLoggedIn": false });
     Cookie.remove("access_token");
     Cookie.remove("username");
-    Cookie.remove("token");
+    Cookie.remove("refresh_token");
   }
 
   render() {

@@ -2,7 +2,8 @@ import Cookie from 'js-cookie';
 import axios from 'axios';
 
 const accessExpirationDelta = 3600000; // 1 hour
-const requestRefreshDelta = 600000; // 10 minutes
+//const requestRefreshDelta = 600000; // 10 minutes
+const requestRefreshDelta = 1000000000;
 
 //How do I handle having no token and no refresh token
 
