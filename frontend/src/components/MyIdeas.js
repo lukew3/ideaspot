@@ -1,7 +1,7 @@
 import React, { Component } from "react";
-import axios from 'axios';
 import IdeaBox from './IdeaBox.js';
-import { getToken } from '../helper.js';
+//import { getToken } from '../helper.js';
+import { axiosApiInstance } from '../helper.js';
 
 
 class MyIdeas extends Component {
@@ -13,14 +13,10 @@ class MyIdeas extends Component {
   }
   // on mount, load subscriptions
   componentDidMount() {
-    getToken().then((token) => {
-      axios.get(`/api/get_my_ideas`,
-        { headers: { Authorization: `Bearer ${token}` }}
-      ).then(response => {
-        this.setState({ ideasList: response.data.ideas });
-      }).catch(error => {
-        this.props.history.push(`/login`);
-      });
+    axiosApiInstance.get(`/api/get_my_ideas`).then(response => {
+      this.setState({ ideasList: response.data.ideas });
+    }).catch(error => {
+      this.props.history.push(`/login`);
     });
   }
 

@@ -3,8 +3,7 @@ import ReactMarkdown from 'react-markdown';
 import Tags from './Tags.js';
 import { Link } from 'react-router-dom';
 import Cookie from 'js-cookie';
-import axios from 'axios';
-import { getToken } from '../helper.js';
+import { axiosApiInstance } from '../helper.js';
 
 
 class IdeaBox extends Component {
@@ -35,15 +34,12 @@ class IdeaBox extends Component {
 
 function OwnerFeatures(props) {
   function deleteIdea() {
-    getToken().then((token) => {
-      axios.delete(`/api/delete_idea/${props.ideaId}`,
-        { headers: { Authorization: `Bearer ${token}` }}
-      ).then(response => {
-        //if success, hide the ideaBox
-        document.getElementById(props.ideaId).innerHTML = "Idea \"" + props.idea.title + "\" deleted";
-      }).catch(error => {
-        console.log("Deletion failed");
-      });
+    axiosApiInstance.delete(`/api/delete_idea/${props.ideaId}`
+    ).then(response => {
+      //if success, hide the ideaBox
+      document.getElementById(props.ideaId).innerHTML = "Idea \"" + props.idea.title + "\" deleted";
+    }).catch(error => {
+      console.log("Deletion failed");
     });
   }
   const username = Cookie.get("username") ? Cookie.get("username") : null;

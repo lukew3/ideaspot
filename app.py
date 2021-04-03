@@ -22,7 +22,7 @@ app.config['SECRET_KEY'] = config.get('SECRET_KEY')
 #initialize jwt
 app.config["JWT_SECRET_KEY"] = config.get('JWT_SECRET_KEY')
 app.config["JWT_ACCESS_TOKEN_EXPIRES"] = timedelta(hours=1)
-app.config["JWT_REFRESH_TOKEN_EXPIRES"] = timedelta(days=30)
+app.config["JWT_REFRESH_TOKEN_EXPIRES"] = timedelta(weeks=26)
 jwt = JWTManager(app)
 
 #initialize database connection

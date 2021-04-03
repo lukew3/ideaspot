@@ -1,47 +1,41 @@
 import Cookie from 'js-cookie';
-import axios from 'axios';
+const axios = require('axios');
+export const axiosApiInstance = axios.create();
 
-const accessExpirationDelta = 3600000; // 1 hour
-const requestRefreshDelta = 600000; // 10 minutes
-//const requestRefreshDelta = 1000000000; //testing delta
+// Request interceptor for API calls
+axiosApiInstance.interceptors.request.use(
+  async config => {
+    const access_token = Cookie.get("access_token") ? Cookie.get("access_token") : null;
+    config.headers = {
+      'Authorization': `Bearer ${access_token}`,
+      'Accept': 'application/json',
+      'Content-Type': 'application/json'
+    }
+    return config;
+  },
+  error => {
+    Promise.reject(error)
+});
 
-//How do I handle having no token and no refresh token
-
-export function getToken() {
-  //returns a promise with token as return
-  const expirationTime = Cookie.get("expirationTime") ? Cookie.get("expirationTime") : null;
-  const currentTime = new Date().getTime();
-  //if token expires in the next 10 minutes or has already expired
-  if ((currentTime + requestRefreshDelta) > expirationTime) {
-    //Get a new token
+// Response interceptor for API calls
+axiosApiInstance.interceptors.response.use((response) => {
+  return response
+}, async function (error) {
+  const originalRequest = error.config;
+  if (error.response.status === 401 && !originalRequest._retry) {
+    originalRequest._retry = true;
+    //console.log("Refreshing access token");
     const refresh_token = Cookie.get("refresh_token") ? Cookie.get("refresh_token") : null;
-    let new_access_token = "";
-    return(
-      axios.post(`/api/refresh`, {},
-        { headers: { Authorization: `Bearer ${refresh_token}` }}
-      ).then(response => {
-        //set newExpirationTime to current time + 1 hour
-        const newExpirationTime = (new Date().getTime()) + accessExpirationDelta;
-        Cookie.set("access_token", response.data.access_token, { SameSite: 'lax' });
-        Cookie.set("expirationTime", newExpirationTime, { SameSite: 'lax' });
-        new_access_token = response.data.access_token;
-        return new_access_token;
-      }).catch(error => {
-        console.log(error);
-        new_access_token = "refresh failed";
-        return new_access_token;
-      })
-    );
-  } else {
-    // Get current token, return as a promise for consistency
-    const token_promise = new Promise((resolve, reject) => {
-      const access_token = Cookie.get("access_token") ? Cookie.get("access_token") : null;
-      resolve(access_token);
-    });
-    return(
-      token_promise.then((access_token) => {
-        return access_token;
-      })
-    )
+    await axios.post(`/api/refresh`, {},
+          { headers: { Authorization: `Bearer ${refresh_token}` }}
+        ).then(response => {
+          Cookie.set("access_token", response.data.access_token, { SameSite: 'lax' });
+          axios.defaults.headers.common['Authorization'] = 'Bearer ' + response.data.access_token;
+        }).catch(error => {
+          console.log(error);
+          axios.defaults.headers.common['Authorization'] = 'Bearer failed';
+        })
+    return axiosApiInstance(originalRequest);
   }
-}
+  return Promise.reject(error);
+});

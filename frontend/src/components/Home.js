@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import axios from 'axios';
+import { axiosApiInstance } from '../helper.js';
 import IdeaBox from './IdeaBox.js';
 
 
@@ -12,7 +12,7 @@ class Home extends Component {
   }
   // on mount, load subscriptions
   componentDidMount() {
-    axios.get(`/api/get_ideas`, {}).then(response => {
+    axiosApiInstance.get(`/api/get_ideas`, {}).then(response => {
       this.setState({ ideasList: response.data.ideas });
     });
   }

@@ -1,7 +1,6 @@
 import React, { Component } from "react";
-import axios from 'axios';
 import '../styles/CreateIdea.css';
-import { getToken } from '../helper.js';
+import { axiosApiInstance } from '../helper.js';
 
 
 class EditIdea extends Component {
@@ -20,16 +19,13 @@ class EditIdea extends Component {
   }
 
   componentDidMount() {
-    getToken().then((token) => {
-      axios.get(`/api/get_idea/${this.state.ideaId}`,
-        { headers: { Authorization: `Bearer ${token}` }}
-      ).then(response => {
-        this.setState({ title: response.data.idea.title,
-                        details: response.data.idea.details,
-                        private: response.data.idea.private,
-                        forSale: response.data.idea.forSale,
-                      });
-      });
+    axiosApiInstance.get(`/api/get_idea/${this.state.ideaId}`
+    ).then(response => {
+      this.setState({ title: response.data.idea.title,
+                      details: response.data.idea.details,
+                      private: response.data.idea.private,
+                      forSale: response.data.idea.forSale,
+                    });
     });
   }
 
@@ -42,19 +38,16 @@ class EditIdea extends Component {
 
   async handleSubmit(event) {
     event.preventDefault();
-    getToken().then((token) => {
-      axios.patch(`/api/edit_idea/${this.state.ideaId}`,
-        { title: this.state.title,
-          details: this.state.details,
-          forSale: this.state.forSale,
-          private: this.state.private },
-        { headers: { Authorization: `Bearer ${token}` }}
-      ).then(response => {
-        this.props.history.push(`/idea/${response.data._id}`);
-      }).catch(error => {
-        console.log(error);
-        console.log("Error");
-      });
+    axiosApiInstance.patch(`/api/edit_idea/${this.state.ideaId}`,
+      { title: this.state.title,
+        details: this.state.details,
+        forSale: this.state.forSale,
+        private: this.state.private }
+    ).then(response => {
+      this.props.history.push(`/idea/${response.data._id}`);
+    }).catch(error => {
+      console.log(error);
+      console.log("Error");
     });
   }
 

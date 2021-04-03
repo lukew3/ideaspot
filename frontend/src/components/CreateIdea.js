@@ -1,7 +1,6 @@
 import React, { Component } from "react";
-import axios from 'axios';
 import '../styles/CreateIdea.css';
-import { getToken } from '../helper.js';
+import { axiosApiInstance } from '../helper.js';
 
 
 class CreateIdea extends Component {
@@ -27,19 +26,16 @@ class CreateIdea extends Component {
 
   async handleSubmit(event) {
     event.preventDefault();
-    getToken().then((token) => {
-      axios.post(`/api/create_idea`,
-        { title: this.state.title,
-          details: this.state.details,
-          forSale: this.state.forSale,
-          private: this.state.private },
-        { headers: { Authorization: `Bearer ${token}` }}
-      ).then(response => {
-        this.props.history.push(`/idea/${response.data._id}`);
-      }).catch(error => {
-        console.log(error);
-        console.log("Error");
-      });
+    axiosApiInstance.post(`/api/create_idea`,
+      { title: this.state.title,
+        details: this.state.details,
+        forSale: this.state.forSale,
+        private: this.state.private }
+    ).then(response => {
+      this.props.history.push(`/idea/${response.data._id}`);
+    }).catch(error => {
+      console.log(error);
+      console.log("Error");
     });
   }
 
