@@ -32,7 +32,7 @@ class CreateIdea extends Component {
         forSale: this.state.forSale,
         private: this.state.private }
     ).then(response => {
-      this.props.history.push(`/idea/${response.data._id}`);
+      this.props.history.push(`/idea/${response.data.id}`);
     }).catch(error => {
       console.log(error);
       console.log("Error");
