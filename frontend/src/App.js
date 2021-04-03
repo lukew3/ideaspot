@@ -32,9 +32,9 @@ class App extends Component {
 
   globalLogin = (access_token, refresh_token, username) => {
     this.setState({ "isLoggedIn": true, "username": username });
-    Cookie.set("access_token", access_token, { SameSite: 'lax' });
-    Cookie.set("refresh_token", refresh_token, { SameSite: 'lax' });
-    Cookie.set("username", username, { SameSite: 'lax' });
+    Cookie.set("access_token", access_token, { SameSite: 'lax', expires: 1 });
+    Cookie.set("refresh_token", refresh_token, { SameSite: 'lax', expires: 182 });
+    Cookie.set("username", username, { SameSite: 'lax', expires: 365 });
     console.log(refresh_token);
   }
 
