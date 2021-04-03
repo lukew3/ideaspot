@@ -4,6 +4,7 @@ from pymongo import MongoClient
 from flask_jwt_extended import create_access_token, create_refresh_token, get_jwt_identity, jwt_required, JWTManager
 from flask_bcrypt import Bcrypt
 from datetime import timedelta
+from bson.objectid import ObjectId
 from bson import json_util
 import json
 
@@ -30,6 +31,12 @@ jwt = JWTManager(app)
 #initialize cors
 cors.init_app(app)
 
+def serialize(dct):
+	#turns object id fields to strings
+    for k in dct:
+        if isinstance(dct[k], ObjectId):
+            dct[k] = str(dct[k])
+    return dct
 
 @app.route('/')
 def index():
@@ -62,13 +69,13 @@ def login():
     data = request.get_json(silent=True)
     username = data.get('username')
     password = data.get('password')
-    user = db.user.find_one({"username": username})
+    user = serialize(db.user.find_one({"username": username}))
     if user == None:
-        user = db.user.find_one({"email": username})
-    if user and bcrypt.check_password_hash(user.password, password):
-        access_token = create_access_token(identity=user.username)
-        refresh_token = create_refresh_token(identity=user.username)
-        return jsonify(access_token=access_token, refresh_token=refresh_token,username=user.username)
+        user = serialize(db.user.find_one({"email": username}))
+    if user and bcrypt.check_password_hash(user["password"], password):
+        access_token = create_access_token(identity=user["username"])
+        refresh_token = create_refresh_token(identity=user["username"])
+        return jsonify(access_token=access_token, refresh_token=refresh_token,username=user["username"])
     else:
         return jsonify({"msg": "Bad username or password"}), 401
 
@@ -82,7 +89,6 @@ def refresh():
 @api.route('/create_idea', methods=['POST'])
 @jwt_required()
 def create_idea():
-	print("Creating idea")
 	data = request.get_json(silent=True)
 	title = data.get('title')
 	details = data.get('details')
@@ -94,9 +100,8 @@ def create_idea():
 				"forSale": forSale,
 				"creator": current_user,
 				"private": private }
-	db.idea.insert_one(new_idea)
-	print("Error before here")
-	return new_idea
+	new_id = str(db.idea.insert_one(new_idea).inserted_id)
+	return jsonify(id=new_id)
 
 
 @api.route('/edit_idea/<ideaId>', methods=['PATCH'])
@@ -104,9 +109,9 @@ def create_idea():
 def edit_idea(ideaId):
 	data = request.get_json(silent=True)
 	current_user = get_jwt_identity()
-	old_idea = db.idea.find_one({"_id": ideaId, "creator": current_user})
-	db.idea.update_one(old_idea, **data)
-	new_idea = db.idea.find_one({"_id": ideaId, "creator": current_user})
+	old_idea = db.idea.find_one({"_id": ObjectId(ideaId), "creator": current_user})
+	db.idea.update_one(old_idea, {'$set': data})
+	new_idea = serialize(db.idea.find_one({"_id": ObjectId(ideaId), "creator": current_user}))
 	return new_idea
 
 
@@ -115,48 +120,32 @@ def edit_idea(ideaId):
 def delete_idea(ideaId):
 	data = request.get_json(silent=True)
 	current_user = get_jwt_identity()
-	idea = db.idea.delete({"_id": ideaId, "creator": current_user})
-	print("deleted")
+	db.idea.delete_one({"_id": ObjectId(ideaId), "creator": current_user})
 	return jsonify(status="idea deleted")
 
 
 @api.route('/get_ideas', methods=['GET'])
 def get_ideas():
-    json_ideas = {}
-    json_ideas['ideas'] = []
-    ideas = json.loads(json_util.dumps(list(db.idea.find({"private": False}))))
-    print(ideas)
+    ideascur = db.idea.find({"private": False})
+    ideas = [serialize(item) for item in ideascur]
+    ideas.reverse()
     return jsonify({'ideas': ideas})
-    #return_data = {"ideas": ideas}
-    #print(return_data)
-	#for s in star.find():
-    #output.append({'name' : s['name'], 'distance' : s['distance']})
-    #return jsonify({'result' : output})
-    #ideas = reversed(ideas)
-    #for idea in ideas:
-    #    idea = idea.to_json()
-    #    json_ideas['ideas'].append(idea)
-    #return return_data
 
 
 @api.route('/get_my_ideas', methods=['GET'])
 @jwt_required()
 def get_my_ideas():
-    json_ideas = {}
-    json_ideas['ideas'] = []
     current_user = get_jwt_identity()
-    ideas = db.idea.find({"creator": current_user})
-    #ideas = reversed(ideas)
-    #for idea in ideas:
-    #    idea = idea.to_json()
-    #    json_ideas['ideas'].append(idea)
-    return jsonify(ideas)
+    ideascur = db.idea.find({"creator": current_user})
+    ideas = [serialize(item) for item in ideascur]
+    ideas.reverse()
+    return jsonify({'ideas': ideas})
 
 @api.route('/get_idea/<ideaId>', methods=['GET'])
 @jwt_required(optional=True)
 def get_idea(ideaId):
-	idea_obj = db.idea.find_one({"_id": ideaId})
-	if idea_obj.private == True and idea_obj.creator != get_jwt_identity():
+	idea_obj = serialize(db.idea.find_one({"_id": ObjectId(ideaId)}))
+	if idea_obj["private"] == True and idea_obj["creator"] != get_jwt_identity():
 		return "<h1>This idea is private, you must sign in as owner to access</h1>"
 	else:
 		return jsonify(idea=idea_obj)
