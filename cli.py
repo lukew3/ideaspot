@@ -39,7 +39,6 @@ def deploy():
       git pull
       cd ..
       echo {password} | sudo -S ./notes
-      DONE
       echo "Deployment complete"
     """
     os.system(script)
