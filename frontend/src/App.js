@@ -35,7 +35,6 @@ class App extends Component {
     Cookie.set("access_token", access_token, { SameSite: 'lax', expires: 1 });
     Cookie.set("refresh_token", refresh_token, { SameSite: 'lax', expires: 182 });
     Cookie.set("username", username, { SameSite: 'lax', expires: 365 });
-    console.log(refresh_token);
   }
 
   globalLogout = () => {
