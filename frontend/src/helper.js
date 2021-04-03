@@ -8,10 +8,17 @@ export const axiosApiInstance = axios.create();
 axiosApiInstance.interceptors.request.use(
   async config => {
     const access_token = Cookie.get("access_token") ? Cookie.get("access_token") : null;
-    config.headers = {
-      'Authorization': `Bearer ${access_token}`,
-      'Accept': 'application/json',
-      'Content-Type': 'application/json'
+    if (access_token) {
+      config.headers = {
+        'Authorization': `Bearer ${access_token}`,
+        'Accept': 'application/json',
+        'Content-Type': 'application/json'
+      }
+    } else {
+      config.headers = {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json'
+      }
     }
     return config;
   },

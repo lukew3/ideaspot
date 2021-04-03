@@ -4,7 +4,6 @@ import React, { Component } from "react";
 import { Link } from 'react-router-dom';
 import Cookie from 'js-cookie';
 import { axiosApiInstance } from '../helper.js';
-import IdeaBox from './IdeaBox.js';
 
 
 class Profile extends Component {
@@ -21,7 +20,7 @@ class Profile extends Component {
     axiosApiInstance.get(`/api/get_user/${this.props.match.params.username}`).then(response => {
       this.setState({ user: response.data });
     }).catch(error => {
-      this.props.history.push(`/login`);
+      console.log(error);
     });
   }
 
