@@ -59,6 +59,10 @@ a {
   margin-top: 0;
 }
 
+.profileStats {
+  max-height: 300px;
+}
+
 .standardBorder {
   color: white;
   background-color: rgba(26,26,27,0.8);
@@ -69,4 +73,17 @@ a {
   border-radius: 5px;
   border: #686868 1px solid;
   padding: 2vw;
+}
+
+.profileIdea {
+  padding: 0;
+  padding-left: 2vw;
+}
+
+.profileIdea a {
+  text-decoration: none;
+  color: #58a6ff;
+}
+.profileIdea a:hover {
+  text-decoration: underline;
 }

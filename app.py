@@ -150,6 +150,22 @@ def get_idea(ideaId):
 	else:
 		return jsonify(idea=idea_obj)
 
+@api.route('/get_user/<username>', methods=['GET'])
+@jwt_required(optional=True)
+def get_user(username):
+	user = serialize(db.user.find_one({"username": username}))
+	user.pop("password")
+	user.pop("email")
+	current_user = get_jwt_identity()
+	if current_user == username:
+		ideascur = db.idea.find({"creator": current_user})
+	else:
+		ideascur = db.idea.find({"creator": username, "private": False})
+	user["ideas"] = [serialize(item) for item in ideascur]
+	user["ideas"].reverse()
+	user["ideasCount"] = len(user["ideas"])
+	return jsonify(user)
+
 
 app.register_blueprint(api, url_prefix='/api')
 

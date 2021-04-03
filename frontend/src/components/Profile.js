@@ -1,15 +1,28 @@
 import React, { Component } from "react";
 //import ReactMarkdown from 'react-markdown';
 //import Tags from './Tags.js';
-//import { Link } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import Cookie from 'js-cookie';
+import { axiosApiInstance } from '../helper.js';
+import IdeaBox from './IdeaBox.js';
+
 
 class Profile extends Component {
   constructor(props){
     super(props);
     this.state = {
-      user: props.match.params.username,
+      user: {
+        "ideas": []
+      }
     }
+  }
+
+  componentDidMount() {
+    axiosApiInstance.get(`/api/get_user/${this.props.match.params.username}`).then(response => {
+      this.setState({ user: response.data });
+    }).catch(error => {
+      this.props.history.push(`/login`);
+    });
   }
 
   render() {
@@ -17,19 +30,27 @@ class Profile extends Component {
       <div className="profilePage">
         <div className="profileGrid">
           <div className="profileStats standardBorder">
-            <h1>{this.state.user}</h1>
-            <EditProfile user={this.state.user}/>
+            <h1>{this.state.user.username}</h1>
+            <EditProfile user={this.state.user.username}/>
             <div>
              <h2>Stats:</h2>
-             <p>Created ideas:</p>
-             <p>Rep: </p>
+             <p>Created ideas: {this.state.user.ideasCount}</p>
+             <p>Rep: {this.state.user.ideasCount}</p>
              {//should be a rep breakdown that shows on hover(possibly click for mobile)
                //how much is earned from created ideas, built ideas, suggestions, etc.
+               //could have public rep to show contributions to the platform and private rep for how the user uses the platform for themselves
              }
              </div>
           </div>
           <div className="profileIdeas standardBorder">
-            <h2>Pinned/popular Ideas:</h2>
+            <h2>Ideas:</h2>
+            <div className="ideaFeed">
+              {this.state.user.ideas.map((idea, index) => (
+                <div className="standardBorder profileIdea">
+                  <Link to={`/idea/${idea._id}`}><h3>{idea.title}</h3></Link>
+                </div>
+              ))}
+            </div>
           </div>
         </div>
       </div>
