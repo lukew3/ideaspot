@@ -51,6 +51,21 @@ a {
   color: darkgrey;
 }
 
-.profilePage {
-  margin: 50px;
+.profileGrid {
+  display: grid;
+  grid-template-columns: 20% 75%;
+  grid-column-gap: 5%;
+  margin: 5%;
+}
+
+.standardBorder {
+  color: white;
+  background-color: rgba(26,26,27,0.8);
+  width: 90%;
+  margin: 0;
+  margin-left: 2.5%;
+  margin-top: 20px;
+  border-radius: 5px;
+  border: #686868 1px solid;
+  padding: 2vw;
 }

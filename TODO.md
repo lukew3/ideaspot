@@ -41,3 +41,9 @@ Possible Ideas:
     * Saved for 30 days or something but could be deleted manually
 * Remove link from text, links in markdown are unclickable
 * RSS feed for new Ideas
+
+### Possible Tags
+* Looking for a team
+* For sale
+* Private
+* custom tags
