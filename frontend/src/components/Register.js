@@ -1,6 +1,6 @@
 import React, { Component } from "react";
-import axios from 'axios';
 import '../styles/Auth.css';
+import { axiosApiInstance } from '../helper.js';
 
 class Register extends Component {
   constructor(props){
@@ -23,7 +23,7 @@ class Register extends Component {
 
   async handleSubmit(event) {
     event.preventDefault();
-    await axios.post(`/api/register`,
+    await axiosApiInstance.post(`/api/register`,
       { email: this.state.email,
         username: this.state.username,
         password: this.state.password }

@@ -1,5 +1,7 @@
 import Cookie from 'js-cookie';
-const axios = require('axios');
+import axios from 'axios';
+
+
 export const axiosApiInstance = axios.create();
 
 // Request interceptor for API calls

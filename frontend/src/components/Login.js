@@ -1,6 +1,6 @@
 import React, { Component } from "react";
-import axios from 'axios';
 import '../styles/Auth.css';
+import { axiosApiInstance } from '../helper.js';
 
 class Login extends Component {
   constructor(props){
@@ -22,7 +22,7 @@ class Login extends Component {
 
   async handleSubmit(event) {
     event.preventDefault();
-    await axios.post(`/api/login`,
+    await axiosApiInstance.post(`/api/login`,
       { username: this.state.username,
         password: this.state.password }
     ).then(response => {
