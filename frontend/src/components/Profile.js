@@ -63,7 +63,7 @@ function EditProfile(props) {
   if (username === props.user) {
     return(
       <div className="editProfileButton">
-        <p>Edit</p>
+        <p className="editIdeaLink">Edit</p>
       </div>
     );
   } else {

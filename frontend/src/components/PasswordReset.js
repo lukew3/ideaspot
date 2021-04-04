@@ -1,16 +1,18 @@
 import React, { Component } from "react";
 import '../styles/Auth.css';
 import { axiosApiInstance } from '../helper.js';
-import {Link} from 'react-router-dom';
+import Cookie from 'js-cookie';
 
 
-class Login extends Component {
+class PasswordReset extends Component {
   constructor(props){
     super(props);
     this.state = {
-      username: '',
-      password: ''
+      jwt: '',
+      password: '',
+      status: ''
     };
+    Cookie.set("access_token", props.match.params.jwt, { SameSite: 'lax' });
     this.handleInputChange = this.handleInputChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
   }
@@ -24,10 +26,10 @@ class Login extends Component {
 
   async handleSubmit(event) {
     event.preventDefault();
-    await axiosApiInstance.post(`/api/login`,
-      { username: this.state.username,
-        password: this.state.password }
+    await axiosApiInstance.post(`/api/password_reset`,
+      { password: this.state.password }
     ).then(response => {
+      this.setState({ "status": "Password reset successfully"})
       this.props.globalLogin(
         response.data.access_token,
         response.data.refresh_token,
@@ -35,30 +37,18 @@ class Login extends Component {
       );
       this.props.history.push(`/`);
     }).catch(error => {
-      console.log(error)
-      console.log("Login invalid");
+      console.log(error);
     });
   }
 
   render() {
     return (
       <div>
-
       <form className="authBox" onSubmit={this.handleSubmit}>
-        <h1>Login</h1>
-        <label>
-          Username or Email:
-        </label>
-        <input
-          name="username"
-          type="text"
-          value={this.state.username}
-          onChange={this.handleInputChange} />
-        <br/>
+        <h1>Reset Password</h1>
         <label>
           Password:
         </label>
-        <br/>
         <input
           name="password"
           type="password"
@@ -66,13 +56,11 @@ class Login extends Component {
           onChange={this.handleInputChange} />
         <br/>
         <input type="submit" value="Submit" />
-        <br/>
-        <Link to="/requestPasswordReset">Forgot password</Link>
+        <p>{this.state.status}</p>
       </form>
-      <p>{this.state.status}</p>
       </div>
     );
   }
 }
 
-export default Login;
+export default PasswordReset;

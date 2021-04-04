@@ -8,6 +8,8 @@ import Register from './components/Register.js';
 import MyIdeas from './components/MyIdeas.js';
 import EditIdea from './components/EditIdea.js';
 import Profile from './components/Profile.js';
+import RequestPassReset from './components/RequestPassReset.js';
+import PasswordReset from './components/PasswordReset.js';
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 import React, { Component } from "react";
 import Cookie from 'js-cookie';
@@ -56,6 +58,11 @@ class App extends Component {
         <Register {...props} globalLogin={this.globalLogin}/>
       )
     }
+    const PasswordResetIntermediate = (props) => {
+      return (
+        <PasswordReset {...props} globalLogin={this.globalLogin}/>
+      )
+    }
     return (
       <Router>
         <div className="App">
@@ -68,6 +75,8 @@ class App extends Component {
             <Route path="/register" exact component={RegisterIntermediate} />
             <Route path="/newIdea" exact component={CreateIdea} />
             <Route path="/editIdea/:ideaId" exact component={EditIdea} />
+            <Route path="/requestPasswordReset" exact component={RequestPassReset} />
+            <Route path="/passwordReset/:jwt" exact component={PasswordResetIntermediate} />
             <Route path="/:username" exact component={Profile} />
           </Switch>
         </div>
