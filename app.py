@@ -79,7 +79,7 @@ def login():
 		refresh_token = create_refresh_token(identity=user["username"])
 		return jsonify(access_token=access_token, refresh_token=refresh_token,username=user["username"])
 	else:
-		return jsonify({"msg": "Bad username or password"}), 401
+		return jsonify({"msg": "Bad username or password"}), 422
 
 @api.route('/request_password_reset', methods=['POST'])
 def request_password_reset():
@@ -88,7 +88,7 @@ def request_password_reset():
 	#create a short-lived jwt and send it as a parameter in an email link
 	user = db.user.find_one({"email": email})
 	if not (db.user.find_one({"email": email})):
-		return jsonify({"msg": "No account with the provided email"}), 400
+		return jsonify({"msg": "No account with the provided email"}), 422
 	access_token = create_access_token(identity=user["username"])
 	body = f"Click the following link to reset your password: \nhttps://buildmyidea.tk/passwordReset/{access_token}"
 	send_email(email, "Password reset", body)
@@ -204,6 +204,17 @@ def get_user(username):
 	user["ideasCount"] = len(user["ideas"])
 	return jsonify(user)
 
+@api.route('/add_comment', methods=['POST'])
+@jwt_required()
+def add_comment():
+    data = request.get_json(silent=True)
+    idea_id = data.get('ideaId')
+    comment_content = (data.get('commentContent')).strip()
+    if comment_content == '':
+        return jsonify(status="Empty comment; invalid"), 422
+    db.idea.update_one({"_id": ObjectId(idea_id)},
+                       {'$push': {'comments': {'user': get_jwt_identity(), 'comment': comment_content}}})
+    return jsonify(user=get_jwt_identity(), comment=comment_content, status='Comment added successfully')
 
 app.register_blueprint(api, url_prefix='/api')
 
