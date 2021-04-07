@@ -35,12 +35,10 @@ class ViewIdea extends Component {
 
   render() {
     const idea = this.state.idea;
-    console.log(idea);
     //next four lines are annoying, but it was the workaround that I found
-    const commentsObj = idea.comments;
     let comments = [];
-    for (let i in commentsObj)
-      comments.push(commentsObj[i]);
+    for (let i in idea.comments)
+      comments.push(idea.comments[i]);
     comments.reverse();
     return (
       <div key={idea._id}>
@@ -48,8 +46,6 @@ class ViewIdea extends Component {
         {//<NewComment idea={idea} addCommentLocal={this.addCommentLocal}/>
         }
         <div className="commentsSection">
-          {console.log("Inside idea: ")}
-          {console.log(idea.comments)}
           {(comments).map((comment, index) => (
             <div className="comment standardBorder" key={index}>
               {comment.comment}
