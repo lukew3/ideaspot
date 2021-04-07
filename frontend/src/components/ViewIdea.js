@@ -41,10 +41,12 @@ class ViewIdea extends Component {
     let comments = [];
     for (let i in commentsObj)
       comments.push(commentsObj[i]);
+    comments.reverse();
     return (
       <div key={idea._id}>
         <IdeaBox idea={idea} />
-        <NewComment idea={idea} addCommentLocal={this.addCommentLocal}/>
+        {//<NewComment idea={idea} addCommentLocal={this.addCommentLocal}/>
+        }
         <div className="commentsSection">
           {console.log("Inside idea: ")}
           {console.log(idea.comments)}

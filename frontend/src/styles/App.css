@@ -10,6 +10,13 @@
 a {
   color: #2d7de6;
 }
+input {
+  background-color: rgba(26,26,27,0.8);
+  border-color: rgba(131, 131, 138, 0.8);
+  border-radius: 5px;
+  color: lightgrey;
+  padding: 5px;
+}
 textarea {
   background-color: rgba(26,26,27,0.8);
   border-color: rgba(131, 131, 138, 0.8);
