@@ -100,3 +100,9 @@ textarea {
 .profileIdea a:hover {
   text-decoration: underline;
 }
+
+.markdownWarning {
+  margin: 0;
+  font-size: 11pt;
+  color: lightgrey;
+}

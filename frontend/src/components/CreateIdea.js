@@ -52,6 +52,7 @@ class CreateIdea extends Component {
             value={this.state.title}
             onChange={this.handleInputChange} />
           <br/>
+          <p className="markdownWarning">Use <a href="https://www.markdownguide.org/cheat-sheet/">markdown</a> to style your idea</p>
           <textarea
             type="text"
             name="details"
