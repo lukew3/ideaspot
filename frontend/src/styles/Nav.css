@@ -21,3 +21,11 @@
 .navRight {
   float: right;
 }
+
+/* Shrink nav on small screens */
+@media only screen and (max-width: 600px) {
+  /* Temporary fix, make an actually responsive nav later */
+  .navRight {
+    display: none;
+  }
+}

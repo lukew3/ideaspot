@@ -53,6 +53,7 @@ class EditIdea extends Component {
 
   render() {
     return (
+      <div className="createIdeaBoxContainer">
       <div className="ideaBox createIdeaBox">
         <h1>Edit Idea</h1>
         <form onSubmit={this.handleSubmit}>
@@ -102,6 +103,7 @@ class EditIdea extends Component {
           }
           <input type="submit" value="Submit"/>
         </form>
+      </div>
       </div>
     );
   }

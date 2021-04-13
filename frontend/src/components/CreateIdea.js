@@ -41,6 +41,7 @@ class CreateIdea extends Component {
 
   render() {
     return (
+      <div className="createIdeaBoxContainer">
       <div className="ideaBox createIdeaBox">
         <h1>Create an Idea</h1>
         <form onSubmit={this.handleSubmit}>
@@ -90,6 +91,7 @@ class CreateIdea extends Component {
           }
           <input type="submit" value="Submit"/>
         </form>
+      </div>
       </div>
     );
   }
