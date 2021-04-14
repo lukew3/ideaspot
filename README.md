@@ -2,7 +2,7 @@
 
 ## Development
 ### Setup
-1. Install mongodb on your computer [Install MongoDB](https://docs.mongodb.com/manual/installation/)
+1. [Install MongoDB](https://docs.mongodb.com/manual/installation/) on your computer 
 1. Clone the repo
 1. Install the python requirements using `pip install -r requirements.txt`. It is recommended that you user a virtualenv to containerize the app
 1. Install the frontend requrements by running `npm install` inside of the frontend directory
