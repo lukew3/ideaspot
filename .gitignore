@@ -5,3 +5,7 @@ config.json
 
 # production
 /build
+
+#server tools
+cli.py
+deploy
