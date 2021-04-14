@@ -9,4 +9,4 @@
 ### Starting the app
 1. Inside of the main directory, run `python app.py`. Make sure you are in your virtualenv if you used one
 1. Inside of the frontend directory, run `npm start`.
-1. Interact with the site at `localhost:3000`
+You can now interact with the site at `localhost:3000`
