@@ -15,7 +15,7 @@ class IdeaBox extends Component {
       boxStyle: props.boxStyle, //can be full, normal, or condensed(just showing the title)
       liked: props.idea.liked,
       disliked: props.idea.disliked,
-      score: props.idea.liked-props.idea.disliked,
+      score: props.idea.likeCount-props.idea.dislikeCount,
       boost: 0
     }
     this.likeIdea = this.likeIdea.bind(this);
