@@ -159,10 +159,10 @@ def create_idea():
 	private = data.get('private')
 	current_user = get_jwt_identity()
 	new_idea = {"title": title,
-							"details": details,
-							"forSale": forSale,
-							"creator": current_user,
-							"private": private }
+				"details": details,
+				"forSale": forSale,
+				"creator": current_user,
+				"private": private }
 	new_id = str(db.idea.insert_one(new_idea).inserted_id)
 	return jsonify(id=new_id)
 
@@ -174,7 +174,7 @@ def edit_idea(ideaId):
 	current_user = get_jwt_identity()
 	old_idea = db.idea.find_one({"_id": ObjectId(ideaId), "creator": current_user})
 	db.idea.update_one(old_idea, {'$set': data})
-	new_idea = format_idea(db.idea.find_one({"_id": ObjectId(ideaId), "creator": current_user}))
+	new_idea = format_idea(db.idea.find_one({"_id": ObjectId(ideaId), "creator": current_user}), current_user)
 	return new_idea
 
 
