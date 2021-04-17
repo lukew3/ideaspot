@@ -52,13 +52,15 @@
 }
 
 .likeSection {
-  display: flex;
   width: 100px;
   margin-top: 5px;
 }
+.thumbs {
+  display: flex;
+}
 
 @media only screen and (max-width: 600px) {
-  .likeSection {
+  .likeSection, .thumbs {
     display: block;
     width: 50px;
     margin-left: 5px;
@@ -68,7 +70,6 @@
     margin-bottom: 10px;
   }
 }
-
 
 .ratingButton {
   font-size: 25px;
