@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import ReactMarkdown from 'react-markdown';
 import Tags from './Tags.js';
-import { Link, Redirect } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import Cookie from 'js-cookie';
 import '../styles/IdeaBox.css';
 import { axiosApiInstance } from '../helper.js';
@@ -41,11 +41,11 @@ class IdeaBox extends Component {
   render() {
     const idea = this.state.idea;
     let likedClass = "ratingFalse";
-    if (this.state.liked == true) {
+    if (this.state.liked === true) {
       likedClass = "ratingTrue"
     }
     let dislikedClass = "ratingFalse";
-    if (this.state.disliked == true) {
+    if (this.state.disliked === true) {
       dislikedClass = "ratingTrue";
     }
     return (
