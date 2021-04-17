@@ -83,6 +83,11 @@
   width: 100%;
   justify-content: space-between;
 }
+
 .ideaBoxTitle {
   margin: 0;
+}
+
+.ratingTrue {
+  color: #258ace;
 }

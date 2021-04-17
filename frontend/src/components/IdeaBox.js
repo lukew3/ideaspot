@@ -13,16 +13,40 @@ class IdeaBox extends Component {
     this.state = {
       idea: props.idea,
       boxStyle: props.boxStyle, //can be full, normal, or condensed(just showing the title)
+      liked: props.idea.liked,
+      disliked: props.idea.disliked
     }
+    this.likeIdea = this.likeIdea.bind(this);
+    this.dislikeIdea = this.dislikeIdea.bind(this);
+  }
+
+  likeIdea() {
+    axiosApiInstance.post(`/api/like_idea`, {"ideaId": this.state.idea._id}).then(
+      this.setState({ liked: true, disliked: false })
+    )
+  }
+
+  dislikeIdea() {
+    axiosApiInstance.post(`/api/dislike_idea`, {"ideaId": this.state.idea._id}).then(
+      this.setState({ disliked: true, liked: false })
+    )
   }
 
   render() {
     const idea = this.state.idea;
+    let likedClass = "ratingFalse";
+    if (this.state.liked == true) {
+      likedClass = "ratingTrue"
+    }
+    let dislikedClass = "ratingFalse";
+    if (this.state.disliked == true) {
+      dislikedClass = "ratingTrue";
+    }
     return (
       <div id={idea._id} key={idea._id} className={`ideaBox ${this.state.boxStyle}`}>
         <div className="likeSection">
-          <i className="fa fa-thumbs-up likeButton ratingButton" aria-hidden="true"></i>
-          <i class="fa fa-thumbs-down dislikeButton ratingButton" aria-hidden="true"></i>
+          <i className={`fa fa-thumbs-up likeButton ratingButton ${likedClass}`} aria-hidden="true" onClick={this.likeIdea}></i>
+          <i class={`fa fa-thumbs-down dislikeButton ratingButton ${dislikedClass}`} aria-hidden="true" onClick={this.dislikeIdea}></i>
         </div>
         <div className="ideaBoxContents">
           <div className="ideaBoxUpper">
