@@ -1,0 +1,9 @@
+backend() {
+	source venv/bin/activate
+	python app.py
+}
+frontend() {
+	cd frontend
+	npm start
+}
+backend & frontend
