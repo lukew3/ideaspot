@@ -40,6 +40,31 @@ def serialize(dct):
 			dct[k] = str(dct[k])
 	return dct
 
+def format_idea(idea, username):
+	#formats the idea before it is sent
+	idea = serialize(idea)
+	try:
+		idea["likeCount"] = len(idea["likes"])
+		if username in idea["likes"]:
+			idea["liked"] = True
+		else:
+			idea["liked"] = False
+		idea.pop("likes")
+	except Exception:
+		idea["likeCount"] = 0
+		idea["liked"] = False
+	try:
+		idea["dislikeCount"] = len(idea["dislikes"])
+		if username in idea["dislikes"]:
+			idea["disliked"] = True
+		else:
+			idea["disliked"] = False
+		idea.pop("dislikes")
+	except Exception:
+		idea["dislikeCount"] = 0
+		idea["disliked"] = False
+	return idea
+
 @app.route('/')
 def index():
 	return app.send_static_file('index.html')
@@ -149,7 +174,7 @@ def edit_idea(ideaId):
 	current_user = get_jwt_identity()
 	old_idea = db.idea.find_one({"_id": ObjectId(ideaId), "creator": current_user})
 	db.idea.update_one(old_idea, {'$set': data})
-	new_idea = serialize(db.idea.find_one({"_id": ObjectId(ideaId), "creator": current_user}))
+	new_idea = format_idea(db.idea.find_one({"_id": ObjectId(ideaId), "creator": current_user}))
 	return new_idea
 
 
@@ -163,9 +188,10 @@ def delete_idea(ideaId):
 
 
 @api.route('/get_ideas', methods=['GET'])
+@jwt_required(optional=True)
 def get_ideas():
 	ideascur = db.idea.find({"private": False})
-	ideas = [serialize(item) for item in ideascur]
+	ideas = [format_idea(item, get_jwt_identity()) for item in ideascur]
 	ideas.reverse()
 	return jsonify({'ideas': ideas})
 
@@ -175,14 +201,14 @@ def get_ideas():
 def get_my_ideas():
 	current_user = get_jwt_identity()
 	ideascur = db.idea.find({"creator": current_user})
-	ideas = [serialize(item) for item in ideascur]
+	ideas = [format_idea(item, current_user) for item in ideascur]
 	ideas.reverse()
 	return jsonify({'ideas': ideas})
 
 @api.route('/get_idea/<ideaId>', methods=['GET'])
 @jwt_required(optional=True)
 def get_idea(ideaId):
-	idea_obj = serialize(db.idea.find_one({"_id": ObjectId(ideaId)}))
+	idea_obj = format_idea(db.idea.find_one({"_id": ObjectId(ideaId)}), get_jwt_identity())
 	if idea_obj["private"] == True and idea_obj["creator"] != get_jwt_identity():
 		return "<h1>This idea is private, you must sign in as owner to access</h1>"
 	else:
@@ -199,7 +225,7 @@ def get_user(username):
 			ideascur = db.idea.find({"creator": current_user})
 	else:
 			ideascur = db.idea.find({"creator": username, "private": False})
-	user["ideas"] = [serialize(item) for item in ideascur]
+	user["ideas"] = [format_idea(item, username) for item in ideascur]
 	user["ideas"].reverse()
 	user["ideasCount"] = len(user["ideas"])
 	return jsonify(user)
@@ -215,6 +241,29 @@ def add_comment():
     db.idea.update_one({"_id": ObjectId(idea_id)},
                        {'$push': {'comments': {'user': get_jwt_identity(), 'comment': comment_content}}})
     return jsonify(user=get_jwt_identity(), comment=comment_content, status='Comment added successfully')
+
+@api.route('/like_idea', methods=['POST'])
+@jwt_required()
+def like_idea():
+	data = request.get_json(silent=True)
+	idea_id = data.get('ideaId')
+	db.idea.update_one({"_id": ObjectId(idea_id)},
+					   {'$pull': {'dislikes': get_jwt_identity() }})
+	db.idea.update_one({"_id": ObjectId(idea_id)},
+					   {'$addToSet': {'likes': get_jwt_identity() }})
+	return jsonify(status="liked successfully")
+
+@api.route('/dislike_idea', methods=['POST'])
+@jwt_required()
+def dislike_idea():
+	data = request.get_json(silent=True)
+	idea_id = data.get('ideaId')
+	#remove from likes list if found and add to dislikes list
+	db.idea.update_one({"_id": ObjectId(idea_id)},
+					   {'$pull': {'likes': get_jwt_identity() }})
+	db.idea.update_one({"_id": ObjectId(idea_id)},
+					   {'$addToSet': {'dislikes': get_jwt_identity() }})
+	return jsonify(status="disliked successfully")
 
 app.register_blueprint(api, url_prefix='/api')
 

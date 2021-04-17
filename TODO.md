@@ -42,6 +42,7 @@ Possible Ideas:
 * Remove link from text, links in markdown are unclickable
 * RSS feed for new Ideas
 
+* Could remove comments list when comments are not visible(home or get ideas page), or request comments as a seperate api request
 ### Possible Tags
 * Looking for a team
 * For sale

@@ -12,7 +12,7 @@ class IdeaBox extends Component {
     super(props);
     this.state = {
       idea: props.idea,
-      boxStyle: props.boxStyle //can be full, normal, or condensed(just showing the title)
+      boxStyle: props.boxStyle, //can be full, normal, or condensed(just showing the title)
     }
   }
 
