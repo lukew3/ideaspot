@@ -89,7 +89,7 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n    \"email\": \"test2@gmail.com\",\n    \"password\": \"8a9cbor4\",\n    \"username\": \"kingofrubik\"\n}",
+					"raw": "{\n    \"email\": \"test2@gmail.com\",\n    \"password\": \"12345678\",\n    \"username\": \"lukew3\"\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -117,7 +117,7 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n    \"password\": \"8a9cbor4\",\n    \"username\": \"lukew3\"\n}",
+					"raw": "{\n    \"password\": \"12345678\",\n    \"username\": \"lukew3\"\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -172,6 +172,94 @@
 						"api",
 						"edit_idea",
 						"6050ca3ee71e342295554dc2"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Refresh",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJmcmVzaCI6ZmFsc2UsImlhdCI6MTYxNzAzMDg5MCwianRpIjoiYTE4OWIyZmUtZjQ4NC00Y2NiLTllYTAtMDEzZGNhYjk5MWZmIiwibmJmIjoxNjE3MDMwODkwLCJ0eXBlIjoicmVmcmVzaCIsInN1YiI6Imx1a2V3MyIsImV4cCI6MTYxOTYyMjg5MH0.aV86dLVoZ-ag49keGfdvkSB7xVwyYW9ghcTpElh94JM",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"url": {
+					"raw": "https://buildmyidea.tk/api/refresh",
+					"protocol": "https",
+					"host": [
+						"buildmyidea",
+						"tk"
+					],
+					"path": [
+						"api",
+						"refresh"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get user",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "localhost:5001/api/get_user/lukew3",
+					"host": [
+						"localhost"
+					],
+					"port": "5001",
+					"path": [
+						"api",
+						"get_user",
+						"lukew3"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Like Idea",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJmcmVzaCI6ZmFsc2UsImlhdCI6MTYxODY3MDAzOSwianRpIjoiZmJmZjkxNjktYWUyZC00ZTQyLThjNjItZDBlMTYzOTNjYzViIiwibmJmIjoxNjE4NjcwMDM5LCJ0eXBlIjoiYWNjZXNzIiwic3ViIjoibHVrZXczIiwiZXhwIjoxNjE4NjczNjM5fQ.EAYu4y2BFCUr-UVd2NDZvphhX39DuRyp5JJ3yqqTpf0",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"ideaId\": \"607a57ad04c95719bc043384\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:3000/api/like_idea",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"api",
+						"like_idea"
 					]
 				}
 			},
