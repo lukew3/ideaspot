@@ -26,6 +26,7 @@ class IdeaBox extends Component {
     ).catch(error => {
       console.log(error);
       console.log("must be logged in to rate ideas");
+      window.location.href = "https://buildmyidea.tk/login";
     });
   }
 
@@ -35,6 +36,7 @@ class IdeaBox extends Component {
     ).catch(error => {
       console.log(error);
       console.log("must be logged in to rate ideas");
+      window.location.href = "https://buildmyidea.tk/login";
     });
   }
 
