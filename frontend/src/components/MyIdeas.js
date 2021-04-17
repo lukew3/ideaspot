@@ -24,7 +24,7 @@ class MyIdeas extends Component {
     return (
       <div className="ideaFeed">
         {this.state.ideasList.map((idea, index) => (
-          <IdeaBox key={idea._id} idea={idea} />
+          <IdeaBox key={idea._id} idea={idea} boxStyle="normal"/>
         ))}
       </div>
     );
