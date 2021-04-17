@@ -24,46 +24,6 @@ textarea {
   color: lightgrey;
 }
 
-.ideaBox {
-  color: white;
-  background-color: rgba(26,26,27,0.8);
-  width: 90%;
-  margin: 0;
-  margin-left: 2.5%;
-  margin-top: 20px;
-  border-radius: 5px;
-  border: #686868 1px solid;
-  padding: 2vw;
-}
-
-.ownerFeatures {
-  float: right;
-}
-
-.ownerFeatures * {
-  display: inline-block;
-  margin: 10px;
-}
-
-.editIdeaLink {
-  text-decoration: none;
-  color: #b07b19;
-}
-
-.deleteIdea {
-  color: #c64747;
-  cursor: pointer;
-}
-
-.ideaBoxCreator {
-  color: darkgrey;
-}
-
-.ideaBoxCreator a {
-  text-decoration: none;
-  color: darkgrey;
-}
-
 .profileGrid {
   display: grid;
   grid-template-columns: 20% 75%;
@@ -97,6 +57,7 @@ textarea {
   text-decoration: none;
   color: #58a6ff;
 }
+
 .profileIdea a:hover {
   text-decoration: underline;
 }
@@ -105,11 +66,4 @@ textarea {
   margin: 0;
   font-size: 11pt;
   color: lightgrey;
-}
-
-.ideaBox.normal .ideaDetails {
-  max-height: 150px;
-  overflow: hidden;
-  /*-webkit-mask-image: linear-gradient(to bottom, black 50%, transparent 100%);
-  mask-image: linear-gradient(to bottom, black 50%, transparent 100%); */
 }

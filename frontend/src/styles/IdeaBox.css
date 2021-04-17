@@ -1,0 +1,67 @@
+
+.ideaBox {
+  color: white;
+  background-color: rgba(26,26,27,0.8);
+  width: 90%;
+  margin: 0;
+  margin-left: 2.5%;
+  margin-top: 20px;
+  border-radius: 5px;
+  border: #686868 1px solid;
+  padding: 2vw;
+  display: flex;
+}
+
+.likeSection {
+  width: 10%;
+}
+.ideaBoxContents {
+  width: 100%;
+  /*width: 90%; */
+}
+
+.ownerFeatures * {
+  display: inline-block;
+  margin: 10px;
+}
+
+.editIdeaLink {
+  text-decoration: none;
+  color: #b07b19;
+}
+
+.deleteIdea {
+  color: #c64747;
+  cursor: pointer;
+}
+
+.ideaBoxCreator {
+  color: darkgrey;
+}
+
+.ideaBoxCreator a {
+  text-decoration: none;
+  color: darkgrey;
+}
+
+.ideaBox.normal .ideaDetails {
+  max-height: 150px;
+  overflow: hidden;
+  /*-webkit-mask-image: linear-gradient(to bottom, black 50%, transparent 100%);
+  mask-image: linear-gradient(to bottom, black 50%, transparent 100%); */
+}
+.likeSection {
+  display: flex;
+}
+.ratingButton {
+  font-size: 30px;
+}
+.likeButton {
+  margin-right: 20px;
+}
+
+.ideaBoxUpper {
+  display: flex;
+  width: 100%;
+  justify-content: space-between;
+}
