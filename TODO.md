@@ -41,8 +41,12 @@ Possible Ideas:
     * Saved for 30 days or something but could be deleted manually
 * Remove link from text, links in markdown are unclickable
 * RSS feed for new Ideas
-
 * Could remove comments list when comments are not visible(home or get ideas page), or request comments as a seperate api request
+* Below the like buttons there should be a pair of numbers,
+  * One should be the likes/dislikes
+  * Next should be the boost number
+    * Should be a boost button as well
+
 ### Possible Tags
 * Looking for a team
 * For sale

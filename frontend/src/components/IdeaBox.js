@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import ReactMarkdown from 'react-markdown';
 import Tags from './Tags.js';
-import { Link } from 'react-router-dom';
+import { Link, Redirect } from 'react-router-dom';
 import Cookie from 'js-cookie';
 import '../styles/IdeaBox.css';
 import { axiosApiInstance } from '../helper.js';
@@ -23,13 +23,19 @@ class IdeaBox extends Component {
   likeIdea() {
     axiosApiInstance.post(`/api/like_idea`, {"ideaId": this.state.idea._id}).then(
       this.setState({ liked: true, disliked: false })
-    )
+    ).catch(error => {
+      console.log(error);
+      console.log("must be logged in to rate ideas");
+    });
   }
 
   dislikeIdea() {
     axiosApiInstance.post(`/api/dislike_idea`, {"ideaId": this.state.idea._id}).then(
       this.setState({ disliked: true, liked: false })
-    )
+    ).catch(error => {
+      console.log(error);
+      console.log("must be logged in to rate ideas");
+    });
   }
 
   render() {
