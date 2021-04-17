@@ -1,6 +1,8 @@
 import React, { Component } from "react";
 import '../styles/Auth.css';
 import { axiosApiInstance } from '../helper.js';
+import {Link} from 'react-router-dom';
+
 
 class Register extends Component {
   constructor(props){
@@ -74,6 +76,7 @@ class Register extends Component {
         </label>
         <br/>
         <input type="submit" value="Submit" />
+        <p>Already have an account? <Link to="/login">Login</Link></p>
       </form>
       <p>{this.state.status}</p>
       </div>

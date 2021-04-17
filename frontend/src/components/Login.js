@@ -68,6 +68,8 @@ class Login extends Component {
         <input type="submit" value="Submit" />
         <br/>
         <Link to="/requestPasswordReset">Forgot password</Link>
+        <br/>
+        <p>Don't have an account? <Link to="/register">Sign Up</Link></p>
       </form>
       <p>{this.state.status}</p>
       </div>
