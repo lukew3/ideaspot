@@ -34,6 +34,12 @@ class IdeaBox extends Component {
         console.log("must be logged in to rate ideas");
         window.location.href = "https://buildmyidea.tk/login";
       });
+    } else {
+      axiosApiInstance.post(`/api/remove_idea_like`, {"ideaId": this.state.idea._id}).then(() => {
+        this.setState({ liked: false, disliked: false, score: this.state.score - 1})
+      }).catch(error => {
+        window.location.href = "https://buildmyidea.tk/login";
+      });
     }
   }
 
@@ -45,8 +51,12 @@ class IdeaBox extends Component {
         }
         this.setState({ disliked: true, liked: false, score: this.state.score - 1})
       }).catch(error => {
-        console.log(error);
-        console.log("must be logged in to rate ideas");
+        window.location.href = "https://buildmyidea.tk/login";
+      });
+    } else {
+      axiosApiInstance.post(`/api/remove_idea_dislike`, {"ideaId": this.state.idea._id}).then(() => {
+        this.setState({ disliked: false, liked: false, score: this.state.score + 1})
+      }).catch(error => {
         window.location.href = "https://buildmyidea.tk/login";
       });
     }

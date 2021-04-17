@@ -253,6 +253,14 @@ def like_idea():
 					   {'$addToSet': {'likes': get_jwt_identity() }})
 	return jsonify(status="liked successfully")
 
+@api.route('/remove_idea_like', methods=['POST'])
+@jwt_required()
+def remove_idea_like():
+	idea_id = request.get_json(silent=True).get('ideaId')
+	db.idea.update_one({"_id": ObjectId(idea_id)},
+					   {'$pull': {'likes': get_jwt_identity() }})
+	return jsonify(status="like removed successfully")
+
 @api.route('/dislike_idea', methods=['POST'])
 @jwt_required()
 def dislike_idea():
@@ -264,6 +272,14 @@ def dislike_idea():
 	db.idea.update_one({"_id": ObjectId(idea_id)},
 					   {'$addToSet': {'dislikes': get_jwt_identity() }})
 	return jsonify(status="disliked successfully")
+
+@api.route('/remove_idea_dislike', methods=['POST'])
+@jwt_required()
+def remove_idea_dislike():
+	idea_id = request.get_json(silent=True).get('ideaId')
+	db.idea.update_one({"_id": ObjectId(idea_id)},
+					   {'$pull': {'dislikes': get_jwt_identity() }})
+	return jsonify(status="dislike removed successfully")
 
 app.register_blueprint(api, url_prefix='/api')
 
