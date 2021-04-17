@@ -10,19 +10,20 @@ class IdeaBox extends Component {
   constructor(props){
     super(props);
     this.state = {
-      idea: props.idea
+      idea: props.idea,
+      boxStyle: props.boxStyle //can be full, normal, or condensed(just showing the title)
     }
   }
 
   render() {
     const idea = this.state.idea;
     return (
-      <div id={idea._id} key={idea._id} className="ideaBox">
+      <div id={idea._id} key={idea._id} className={`ideaBox ${this.state.boxStyle}`}>
         <OwnerFeatures idea={idea} creator={idea.creator} ideaId={idea._id}/>
         <Link to={`/idea/${idea._id}`} id="titleLink">
           <h1>{idea.title}</h1>
         </Link>
-        <ReactMarkdown >
+        <ReactMarkdown className="ideaDetails">
           {idea.details}
         </ReactMarkdown >
         <Tags idea={idea}/>

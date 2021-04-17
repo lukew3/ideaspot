@@ -42,7 +42,7 @@ class ViewIdea extends Component {
     comments.reverse();
     return (
       <div key={idea._id}>
-        <IdeaBox idea={idea} />
+        <IdeaBox idea={idea} boxStyle="full"/>
         {//<NewComment idea={idea} addCommentLocal={this.addCommentLocal}/>
         }
         <div className="commentsSection">

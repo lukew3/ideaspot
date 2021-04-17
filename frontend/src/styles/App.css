@@ -106,3 +106,10 @@ textarea {
   font-size: 11pt;
   color: lightgrey;
 }
+
+.ideaBox.normal .ideaDetails {
+  max-height: 150px;
+  overflow: hidden;
+  /*-webkit-mask-image: linear-gradient(to bottom, black 50%, transparent 100%);
+  mask-image: linear-gradient(to bottom, black 50%, transparent 100%); */
+}
