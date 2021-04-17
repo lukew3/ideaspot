@@ -27,7 +27,7 @@ class IdeaBox extends Component {
         <div className="ideaBoxContents">
           <div className="ideaBoxUpper">
             <Link to={`/idea/${idea._id}`} id="titleLink">
-              <h1>{idea.title}</h1>
+              <h1 className="ideaBoxTitle">{idea.title}</h1>
             </Link>
             <OwnerFeatures idea={idea} creator={idea.creator} ideaId={idea._id}/>
           </div>

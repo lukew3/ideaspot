@@ -50,12 +50,30 @@
   /*-webkit-mask-image: linear-gradient(to bottom, black 50%, transparent 100%);
   mask-image: linear-gradient(to bottom, black 50%, transparent 100%); */
 }
+
 .likeSection {
   display: flex;
+  width: 100px;
+  margin-top: 5px;
 }
+
+@media only screen and (max-width: 600px) {
+  .likeSection {
+    display: block;
+    width: 50px;
+    margin-left: 5px;
+    margin-right: -5px;
+  }
+  .likeButton {
+    margin-bottom: 10px;
+  }
+}
+
+
 .ratingButton {
-  font-size: 30px;
+  font-size: 25px;
 }
+
 .likeButton {
   margin-right: 20px;
 }
@@ -64,4 +82,7 @@
   display: flex;
   width: 100%;
   justify-content: space-between;
+}
+.ideaBoxTitle {
+  margin: 0;
 }
