@@ -54,7 +54,7 @@ class IdeaBox extends Component {
       <div id={idea._id} key={idea._id} className={`ideaBox ${this.state.boxStyle}`}>
         <div className="likeSection">
           <i className={`fa fa-thumbs-up likeButton ratingButton ${likedClass}`} aria-hidden="true" onClick={this.likeIdea}></i>
-          <i class={`fa fa-thumbs-down dislikeButton ratingButton ${dislikedClass}`} aria-hidden="true" onClick={this.dislikeIdea}></i>
+          <i className={`fa fa-thumbs-down dislikeButton ratingButton ${dislikedClass}`} aria-hidden="true" onClick={this.dislikeIdea}></i>
         </div>
         <div className="ideaBoxContents">
           <div className="ideaBoxUpper">

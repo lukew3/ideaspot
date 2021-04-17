@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import '../styles/CreateIdea.css';
 import { axiosApiInstance } from '../helper.js';
+import Cookie from 'js-cookie';
 
 
 class CreateIdea extends Component {
@@ -40,6 +41,10 @@ class CreateIdea extends Component {
   }
 
   render() {
+    const username = Cookie.get("username") ? Cookie.get("username") : null;
+    if (username === null) {
+      this.props.history.push(`/login`);
+    }
     return (
       <div className="createIdeaBoxContainer">
       <div className="standardBorder createIdeaBox">
