@@ -47,6 +47,11 @@ Possible Ideas:
   * Next should be the boost number
     * Should be a boost button as well
 
+## Team building
+* Users may want to build an idea themselves, but want a team that they can work with to build it
+* Idea should be able to have a public details and then a private details that can be revealed once the person has joined their team
+* Should have location tags or tags for positions needed
+
 ### Possible Tags
 * Looking for a team
 * For sale

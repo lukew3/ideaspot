@@ -80,6 +80,10 @@ class IdeaBox extends Component {
             <i className={`fa fa-thumbs-down dislikeButton ratingButton ${dislikedClass}`} aria-hidden="true" onClick={this.dislikeIdea}></i>
           </div>
           <p>Score: {this.state.score}</p>
+          {
+          //<p>Boost: {this.state.boost}</p>
+          //<p style={{"background-color": "orange"}}>Give boost</p>
+          }
         </div>
         <div className="ideaBoxContents">
           <div className="ideaBoxUpper">
