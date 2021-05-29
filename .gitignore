@@ -1,6 +1,6 @@
 /venv
 
-config.json
+.env
 *package-lock.json
 
 # production

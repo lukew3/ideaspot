@@ -46,6 +46,8 @@ Possible Ideas:
   * One should be the likes/dislikes
   * Next should be the boost number
     * Should be a boost button as well
+* Should be able to post an anonymous idea
+  * The post will still be tied to your user, the username will simply not be sent, so only you will know if you created an anonymous idea
 
 ## Team building
 * Users may want to build an idea themselves, but want a team that they can work with to build it
