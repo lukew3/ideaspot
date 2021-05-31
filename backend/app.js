@@ -1,5 +1,6 @@
 const express = require("express");
 const bodyParser = require("body-parser");
+const nodemailer = require("nodemailer");
 const mongoose = require("mongoose");
 const jwt = require("jsonwebtoken");
 const bcrypt = require("bcrypt");
@@ -33,6 +34,14 @@ const bmiRootDir = __dirname.substring(0, __dirname.length - 8);
 app.use(express.static(bmiRootDir + "/dist"));
 app.use(bodyParser.json());
 
+app.use((req,res,next) => {
+	res.status(404).sendFile(`${bmiRootDir}/build/index.html`);
+});
+
+app.get('/', (req, res) => {
+  res.sendFile(`${bmiRootDir}/build/index.html`);
+});
+
 function authenticateToken(req, res, next) {
   const authHeader = req.headers["authorization"];
   const token = authHeader && authHeader.split(" ")[1];
@@ -57,11 +66,11 @@ app.post("/api/register", (req, res) => {
     })
   }).then(() => {
     bcrypt.hash(req.body.password, saltRounds, (err, hash) => {
-      const newUser = new User{
+      const newUser = new User({
         email: req.body.email,
         username: req.body.username,
         password: hash
-      }
+      })
       newUser.save()
       const accessToken = jwt.sign({name:newUser.username},process.env.ACCESS_TOKEN_SECRET);
       const refreshToken = jwt.sign({name:newUser.username},process.env.REFRESH_TOKEN_SECRET);
@@ -72,7 +81,7 @@ app.post("/api/register", (req, res) => {
         refresh_token: refreshToken,
         username: newUser.username
       });
-    }
+    })
   }).catch((e) => {
     console.log(e);
     res.status(500).send({ error: "Error when adding user" });

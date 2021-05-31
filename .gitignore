@@ -1,7 +1,6 @@
 /venv
 
 .env
-*package-lock.json
 
 # production
 /build
@@ -9,3 +8,5 @@
 #server tools
 cli.py
 deploy
+
+/node_modules

@@ -1,0 +1,30 @@
+{
+  "name": "buildmyidea",
+  "version": "1.0.0",
+  "description": "## Development ### Setup 1. [Install MongoDB](https://docs.mongodb.com/manual/installation/) on your computer 1. Clone the repo 1. Create a virtualenvironment called venv and install the python requirements to it using `pip install -r requirements.txt` 1. Install the frontend requrements by running `npm install` inside of the frontend directory ### Starting the app If you are on linux/mac and followed the setup instructions correctly, you call the start script with `./start` to start the server. If not follow the instructions below. 1. Inside of the main directory, run `python app.py`. Make sure you are in your virtualenv if you used one 1. Inside of the frontend directory, run `npm start`. You can now interact with the site at `localhost:3000`",
+  "main": "index.js",
+  "scripts": {
+    "dev": "concurrently \"nodemon ./backend/app\" \"cd frontend && npm start\"",
+    "develop": "nodemon ./backend/server.js && cd frontend && npm run start",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/lukew3/buildmyidea.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/lukew3/buildmyidea/issues"
+  },
+  "homepage": "https://github.com/lukew3/buildmyidea#readme",
+  "dependencies": {
+    "bcrypt": "^5.0.1",
+    "concurrently": "^6.2.0",
+    "express": "^4.17.1",
+    "jsonwebtoken": "^8.5.1",
+    "mongoose": "^5.12.12",
+    "nodemailer": "^6.6.1",
+    "nodemon": "^2.0.7"
+  }
+}
