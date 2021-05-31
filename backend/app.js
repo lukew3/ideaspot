@@ -1,6 +1,7 @@
 const express = require("express");
 const bodyParser = require("body-parser");
 const nodemailer = require("nodemailer");
+const cors = require("cors");
 const mongoose = require("mongoose");
 const jwt = require("jsonwebtoken");
 const bcrypt = require("bcrypt");
@@ -86,4 +87,24 @@ app.post("/api/register", (req, res) => {
     console.log(e);
     res.status(500).send({ error: "Error when adding user" });
   });
+})
+
+app.get("/get_ideas", authenticateToken, (req, res) => {
+  Idea.find({private: false}, (err, ideas) => {
+    ideas.reverse();
+    res.json({ideas: ideas});
+  })
+})
+
+/*
+@api.route('/get_ideas', methods=['GET'])
+@jwt_required(optional=True)
+def get_ideas():
+	ideascur = db.idea.find({"private": False})
+	ideas = [format_idea(item, get_jwt_identity()) for item in ideascur]
+	ideas.reverse()
+	return jsonify({'ideas': ideas})
+*/
+app.listen(port, () => {
+  console.log(`Server is running on: ${port}`)
 })
