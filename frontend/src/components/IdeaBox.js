@@ -5,7 +5,10 @@ import { Link } from 'react-router-dom';
 import Cookie from 'js-cookie';
 import '../styles/IdeaBox.css';
 import { axiosApiInstance } from '../helper.js';
-
+import arrowUp from '../svg/arrow-up.svg';
+import arrowDown from '../svg/arrow-down.svg';
+import arrowUpActive from '../svg/arrow-up-active.svg';
+import arrowDownActive from '../svg/arrow-down-active.svg';
 
 class IdeaBox extends Component {
   constructor(props){
@@ -64,28 +67,48 @@ class IdeaBox extends Component {
 
   render() {
     const idea = this.state.idea;
-    let likedClass = "ratingFalse";
-    if (this.state.liked === true) {
-      likedClass = "ratingTrue"
+    const renderUpArrow = () => {
+      if (this.state.liked === true) {
+        return <img className="upArrowActive" src={arrowUpActive} onClick={this.likeIdea}/>;
+      } else {
+        return <img src={arrowUp} onClick={this.likeIdea}/>;
+      }
     }
-    let dislikedClass = "ratingFalse";
-    if (this.state.disliked === true) {
-      dislikedClass = "ratingTrue";
+    const renderDownArrow = () => {
+      if (this.state.disliked === true) {
+        return <img className="downArrowActive" src={arrowDownActive} onClick={this.dislikeIdea}/>;
+      } else {
+        return <img src={arrowDown} onClick={this.dislikeIdea}/>;
+      }
     }
     return (
       <div id={idea._id} key={idea._id} className={`ideaBox ${this.state.boxStyle}`}>
-        <div className="likeSection">
-          <div className="thumbs">
-            <i className={`fa fa-thumbs-up likeButton ratingButton ${likedClass}`} aria-hidden="true" onClick={this.likeIdea}></i>
-            <i className={`fa fa-thumbs-down dislikeButton ratingButton ${dislikedClass}`} aria-hidden="true" onClick={this.dislikeIdea}></i>
+        <div className="ideaBoxLeft">
+          <p className="ratingLabel ideaBoxLeftLabel">Rating</p>
+          <div className="voting">
+            {renderDownArrow()}
+            <p className="ideaBoxScore">{this.state.score}</p>
+            {renderUpArrow()}
           </div>
-          <p>Score: {this.state.score}</p>
+          {
+            //<h3 className="boostLabel ideaBoxLeftLabel">Boost</h3>
+            //<p>10</p>
+            //<p className="giveBoostButton">Give boost</p>
+          }
+
+          {
+          //<div className="thumbs">
+          //  <i className={`fa fa-thumbs-up likeButton ratingButton ${likedClass}`} aria-hidden="true" onClick={this.likeIdea}></i>
+          //  <i className={`fa fa-thumbs-down dislikeButton ratingButton ${dislikedClass}`} aria-hidden="true" onClick={this.dislikeIdea}></i>
+          //</div>
+          }
           {
           //<p>Boost: {this.state.boost}</p>
           //<p style={{"background-color": "orange"}}>Give boost</p>
           }
         </div>
-        <div className="ideaBoxContents">
+        <div className="seperator"></div>
+        <div className="ideaBoxRight">
           <div className="ideaBoxUpper">
             <Link to={`/idea/${idea._id}`} id="titleLink">
               <h1 className="ideaBoxTitle">{idea.title}</h1>
