@@ -1,6 +1,7 @@
 
 .ideaBox {
-  color: white;
+  color: #D6D6D6;
+  position: relative;
   background-color: rgba(26,26,27,0.8);
   width: 90%;
   margin: 0;
@@ -12,10 +13,13 @@
   display: flex;
 }
 
-.likeSection {
-  width: 10%;
+.ideaBoxLeft {
+  width: 100px;
+  padding: 0;
+  margin: 0;
 }
-.ideaBoxContents {
+
+.ideaBoxRight {
   width: 100%;
   /*width: 90%; */
 }
@@ -47,16 +51,56 @@
 .ideaBox.normal .ideaDetails {
   max-height: 150px;
   overflow: hidden;
-  /*-webkit-mask-image: linear-gradient(to bottom, black 50%, transparent 100%);
-  mask-image: linear-gradient(to bottom, black 50%, transparent 100%); */
 }
 
 .likeSection {
   width: 100px;
   margin-top: 5px;
 }
-.thumbs {
+
+.ideaBoxLeftLabel {
+  padding: 0;
+  margin: 0;
+  margin-left: 10px;
+  font-size: 14pt;
+}
+
+.voting {
   display: flex;
+  justify-content: space-between;
+  width: 70px;
+  margin-left: 3px;
+  margin-top: 5px;
+}
+
+.downArrowActive {
+  margin-bottom: 1px;
+  margin-left: 2px;
+}
+
+.upArrowActive {
+  margin-bottom: 1px;
+  margin-right: 2px;
+}
+
+.ideaBoxScore {
+  margin: 0;
+}
+
+.giveBoostButton {
+  background-color: #689D6A;
+  color: black;
+  padding: 5px;
+  border-radius: 3px;
+}
+
+.seperator {
+  display: inline-block;
+  width: 1px;
+  top: 0;
+  bottom: 0;
+  margin-right: 15px;
+  background-color: #646464;
 }
 
 @media only screen and (max-width: 600px) {

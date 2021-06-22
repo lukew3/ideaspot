@@ -1,7 +1,8 @@
 import React, { Component } from "react";
 import '../styles/Nav.css';
 import {Link} from 'react-router-dom';
-
+import logo from '../svg/logo.svg';
+import searchButton from '../svg/search.svg';
 
 class Nav extends Component {
   render() {
@@ -9,17 +10,10 @@ class Nav extends Component {
       <div className="navbar">
         <div className="innerNav">
           <Link to={'/'}>
-            <p><strong>Build My Idea</strong></p>
+            <img className="navLogo" src={logo} alt="Ideaspot" />
           </Link>
-
-          <Link to={'/newIdea'}>
-            <p>Create Idea</p>
-          </Link>
-
-          <Link to={'/myIdeas'}>
-            <p>My Ideas</p>
-          </Link>
-
+          <input className="navSearchBar" type="text" placeholder="Search..." />
+          <img src={searchButton} className="navSearchButton"/>
           <div className="navRight">
             <LoginNav
               isLoggedIn={this.props.isLoggedIn}
@@ -37,12 +31,12 @@ class LoginNav extends Component {
     if (this.props.isLoggedIn) {
       return (
         <div>
-        <Link to='/' onClick={() => {this.props.globalLogout();}}>
-          <p>Logout</p>
+        <Link to={'/newIdea'}>
+          <p>New Idea</p>
         </Link>
 
         <Link to={`/${this.props.username}`}>
-          <p>Profile</p>
+          <p>Account</p>
         </Link>
         </div>
       )
@@ -54,7 +48,7 @@ class LoginNav extends Component {
         </Link>
 
         <Link to={'/register'}>
-          <p>Register</p>
+          <p className="signUpText">Sign Up</p>
         </Link>
         </div>
       );
