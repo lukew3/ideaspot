@@ -11,8 +11,6 @@ class EditIdea extends Component {
       title: "",
       description: "",
       private: false,
-      forSale: false,
-      price: 0
     }
     this.handleInputChange = this.handleInputChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
@@ -24,7 +22,6 @@ class EditIdea extends Component {
       this.setState({ title: response.data.idea.title,
                       description: response.data.idea.description,
                       private: response.data.idea.private,
-                      forSale: response.data.idea.forSale,
                     });
     });
   }
@@ -41,7 +38,6 @@ class EditIdea extends Component {
     axiosApiInstance.patch(`/api/edit_idea/${this.state.ideaId}`,
       { title: this.state.title,
         description: this.state.description,
-        forSale: this.state.forSale,
         private: this.state.private }
     ).then(response => {
       this.props.history.push(`/idea/${response.data._id}`);
@@ -75,17 +71,6 @@ class EditIdea extends Component {
             onChange={this.handleInputChange} />
           <br/>
           <label>
-            Is this idea for sale?:
-          <input
-            type="checkbox"
-            name="forSale"
-            className="createIdeaForSale createIdeaCheckbox"
-            value={this.state.forSale}
-            checked={this.state.forSale}
-            onChange={this.handleInputChange} />
-          </label>
-          <br/>
-          <label>
             Do you wish to keep this idea private?:
           <input
             type="checkbox"
@@ -97,7 +82,6 @@ class EditIdea extends Component {
           </label>
           <br/>
           {
-            //set your price
             //add up to 3 tags
             //checkbox for show prime first(checked by default)
           }

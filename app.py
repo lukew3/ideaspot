@@ -41,29 +41,26 @@ def serialize(dct):
 			dct[k] = str(dct[k])
 	return dct
 
+def format_ldl(idea, username, ldl):
+	#ldl stands for like-dislike
+	#ldl is either "like" or "dislike"
+	try:
+		idea[ldl + "Count"] = len(idea[ldl + "s"])
+		if username in idea[ldl + "s"]:
+			idea[ldl + "d"] = True
+		else:
+			idea[ldl + "d"] = False
+		idea.pop(ldl + "s")
+	except Exception as e:
+		idea[ldl + "Count"] = 0
+		idea[ldl + "d"] = False
+	return idea
+
 def format_idea(idea, username):
 	#formats the idea before it is sent
 	idea = serialize(idea)
-	try:
-		idea["likeCount"] = len(idea["likes"])
-		if username in idea["likes"]:
-			idea["liked"] = True
-		else:
-			idea["liked"] = False
-		idea.pop("likes")
-	except Exception:
-		idea["likeCount"] = 0
-		idea["liked"] = False
-	try:
-		idea["dislikeCount"] = len(idea["dislikes"])
-		if username in idea["dislikes"]:
-			idea["disliked"] = True
-		else:
-			idea["disliked"] = False
-		idea.pop("dislikes")
-	except Exception:
-		idea["dislikeCount"] = 0
-		idea["disliked"] = False
+	idea = format_ldl(idea, username, "like")
+	idea = format_ldl(idea, username, "dislike")
 
 	idea["revisionTime"] = idea["revisions"][-1]["time"]
 	idea["title"] = idea["revisions"][-1]["title"]
@@ -175,7 +172,15 @@ def edit_idea(ideaId):
 	data = request.get_json(silent=True)
 	current_user = get_jwt_identity()
 	old_idea = db.idea.find_one({"_id": ObjectId(ideaId), "creator": current_user})
+	revision = {
+		"time": datetime.datetime.now(),
+		"title": data.get('title'),
+		"description": data.get('description')
+	}
+	data.pop('title')
+	data.pop('description')
 	db.idea.update_one(old_idea, {'$set': data})
+	db.idea.update_one(old_idea, {'$push': {"revisions": revision}})
 	new_idea = format_idea(db.idea.find_one({"_id": ObjectId(ideaId), "creator": current_user}), current_user)
 	return new_idea
 

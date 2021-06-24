@@ -31,6 +31,7 @@
     }
   ],
   private: Boolean,
+  .>deletion_date: Datetime, //on the date specified, this idea will be removed from trash and deleted forever
   .tags: [ //list of tag names that each string contains
     String
   ]
