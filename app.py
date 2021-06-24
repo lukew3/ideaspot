@@ -56,15 +56,18 @@ def format_ldl(idea, username, ldl):
 		idea[ldl + "d"] = False
 	return idea
 
-def format_idea(idea, username):
+def format_idea(idea, username, revNum=-1):
 	#formats the idea before it is sent
 	idea = serialize(idea)
 	idea = format_ldl(idea, username, "like")
 	idea = format_ldl(idea, username, "dislike")
 
-	idea["revisionTime"] = idea["revisions"][-1]["time"]
-	idea["title"] = idea["revisions"][-1]["title"]
-	idea["description"] = idea["revisions"][-1]["description"]
+	idea["revisionTime"] = idea["revisions"][revNum]["time"]
+	idea["title"] = idea["revisions"][revNum]["title"]
+	idea["description"] = idea["revisions"][revNum]["description"]
+	idea["revisionTimes"] = []
+	for revision in idea["revisions"]:
+		idea["revisionTimes"].append(revision["time"])
 	return idea
 
 @app.route('/')
@@ -75,19 +78,18 @@ def index():
 def not_found(e):
   return app.send_static_file('index.html')
 
+blocked_usernames = ['myIdeas','idea','login','register','newIdea','editIdea']
 @api.route('/register', methods=['POST'])
 def register():
-	blocked_usernames = ['myIdeas','idea','login','register','newIdea','editIdea']
 	data = request.get_json(silent=True)
-	email = data.get('email')
 	username = data.get('username')
 	if username in blocked_usernames:
 			return "<p>Invalid username</p>"
 	password = data.get('password')
 	hashed_pwd = bcrypt.generate_password_hash(password).decode('utf-8')
-	new_user = {"email": email,
-							"username": username,
-							"password": hashed_pwd }
+	new_user = {"email": data.get('email'),
+				"username": username,
+				"password": hashed_pwd }
 	db.user.insert_one(new_user)
 	access_token = create_access_token(identity=username)
 	refresh_token = create_refresh_token(identity=username)
@@ -97,11 +99,10 @@ def register():
 def login():
 	data = request.get_json(silent=True)
 	username = data.get('username')
-	password = data.get('password')
 	user = serialize(db.user.find_one({"username": username}))
 	if user == None:
 		user = serialize(db.user.find_one({"email": username}))
-	if user and bcrypt.check_password_hash(user["password"], password):
+	if user and bcrypt.check_password_hash(user["password"], data.get('password')):
 		access_token = create_access_token(identity=user["username"])
 		refresh_token = create_refresh_token(identity=user["username"])
 		return jsonify(access_token=access_token, refresh_token=refresh_token,username=user["username"])
@@ -158,7 +159,6 @@ def create_idea():
 					"time": datetime.datetime.now(),
 					"title": data.get('title'),
 					"description": data.get('description'),
-
 				}],
 				"creator": get_jwt_identity(),
 				"private": data.get('private') }
@@ -211,11 +211,33 @@ def get_my_ideas():
 	ideas = [format_idea(item, current_user) for item in ideascur]
 	ideas.reverse()
 	return jsonify({'ideas': ideas})
-
+"""
 @api.route('/get_idea/<ideaId>', methods=['GET'])
 @jwt_required(optional=True)
 def get_idea(ideaId):
 	idea_obj = format_idea(db.idea.find_one({"_id": ObjectId(ideaId)}), get_jwt_identity())
+	if idea_obj["private"] == True and idea_obj["creator"] != get_jwt_identity():
+		return "<h1>This idea is private, you must sign in as owner to access</h1>"
+	else:
+		return jsonify(idea=idea_obj)
+"""
+"""
+@api.route('/get_idea/<ideaId>/<revNum>', methods=['GET'])
+@jwt_required(optional=True)
+def get_idea(ideaId, revNum):
+	idea_obj = format_idea(db.idea.find_one({"_id": ObjectId(ideaId)}), get_jwt_identity(), revNum=revNum)
+	if idea_obj["private"] == True and idea_obj["creator"] != get_jwt_identity():
+		return "<h1>This idea is private, you must sign in as owner to access</h1>"
+	else:
+		return jsonify(idea=idea_obj)
+"""
+
+@api.route('/get_idea/<ideaId>', defaults={'revNum': -1}, methods=['GET'])
+@api.route('/get_idea/<ideaId>/<revNum>', methods=['GET'])
+@jwt_required(optional=True)
+def get_idea(ideaId, revNum):
+	revNum = int(revNum)
+	idea_obj = format_idea(db.idea.find_one({"_id": ObjectId(ideaId)}), get_jwt_identity(), revNum=revNum)
 	if idea_obj["private"] == True and idea_obj["creator"] != get_jwt_identity():
 		return "<h1>This idea is private, you must sign in as owner to access</h1>"
 	else:

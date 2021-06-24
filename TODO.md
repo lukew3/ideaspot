@@ -9,7 +9,6 @@
     * "Interested"
     * "Planning on building"
     * "Building now"
-* Lost password handling
 * Make home page look different if it's your first time on the site
   * Show an about message box or something
 * Don't show profile of a user if that user doesn't exist

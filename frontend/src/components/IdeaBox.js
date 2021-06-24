@@ -1,8 +1,9 @@
 import React, { Component } from "react";
 import ReactMarkdown from 'react-markdown';
-import Tags from './Tags.js';
+import { Tags } from './index.js';
 import { Link } from 'react-router-dom';
 import Cookie from 'js-cookie';
+
 import '../styles/IdeaBox.css';
 import { axiosApiInstance } from '../helper.js';
 import arrowUp from '../svg/arrow-up.svg';
@@ -18,11 +19,13 @@ class IdeaBox extends Component {
       boxStyle: props.boxStyle, //can be full, normal, or condensed(just showing the title)
       liked: props.idea.liked,
       disliked: props.idea.disliked,
+      revisionTimes: props.idea.revisionTimes,
       score: props.idea.likeCount-props.idea.dislikeCount,
       boost: 0
     }
     this.likeIdea = this.likeIdea.bind(this);
     this.dislikeIdea = this.dislikeIdea.bind(this);
+    this.switchRevision = this.switchRevision.bind(this);
   }
 
   likeIdea() {
@@ -63,6 +66,14 @@ class IdeaBox extends Component {
         window.location.href = "https://buildmyidea.tk/login";
       });
     }
+  }
+
+  switchRevision(event) {
+    console.log("SWITCHING REVISION");
+    let revNum = event.target.value;
+    axiosApiInstance.get(`/api/get_idea/${this.state.idea._id}/${revNum}`).then((response) => {
+      this.setState({ idea: response.data.idea });
+    });
   }
 
   render() {
@@ -113,8 +124,10 @@ class IdeaBox extends Component {
             <Link to={`/idea/${idea._id}`} id="titleLink">
               <h1 className="ideaBoxTitle">{idea.title}</h1>
             </Link>
-            <p>{idea.revisionTime}</p>
-            <OwnerFeatures idea={idea} creator={idea.creator} ideaId={idea._id}/>
+            <div className="ideaBoxUpperRight" style={{"display": "flex"}}>
+              <RevisionSelect revs={idea.revisionTimes} switchRevision={this.switchRevision}/>
+              <OwnerFeatures idea={idea} creator={idea.creator} ideaId={idea._id}/>
+            </div>
           </div>
           <ReactMarkdown className="ideaDescription">
             {idea.description}
@@ -127,12 +140,36 @@ class IdeaBox extends Component {
   }
 }
 
+function RevisionSelect(props) {
+  try {
+    if (props.revs.length == 1) {
+      //should just make a div that looks like the select field with arrow and dropdown
+      /*
+      return (
+        <div>
+          <p>{props.revs[0]}</p>
+        </div>
+      )*/
+    }
+    return (
+      <select onChange={props.switchRevision}>
+        {props.revs.slice(0).reverse().map((rev, index) => {
+          return <option value={props.revs.length-1-index}>{rev}</option>;
+        })}
+      </select>
+    )
+  } catch (e) {
+    console.log(e);
+    return "";
+  }
+}
+
 function OwnerFeatures(props) {
   function deleteIdea() {
-    axiosApiInstance.delete(`/api/delete_idea/${props.ideaId}`
+    axiosApiInstance.delete(`/api/delete_idea/${props.idea._id}`
     ).then(response => {
       //if success, hide the ideaBox
-      document.getElementById(props.ideaId).innerHTML = "Idea \"" + props.idea.title + "\" deleted";
+      document.getElementById(props.idea._id).innerHTML = "Idea \"" + props.idea.title + "\" deleted";
     }).catch(error => {
       console.log("Deletion failed");
     });
@@ -141,7 +178,7 @@ function OwnerFeatures(props) {
   if (username === props.creator) {
     return(
       <div className="ownerFeatures">
-        <Link to={`/editIdea/${props.ideaId}`} className="editIdeaLink">Edit idea</Link>
+        <Link to={`/editIdea/${props.idea._id}`} className="editIdeaLink">Edit idea</Link>
         <p className="deleteIdea" onClick={() => {deleteIdea()}}>Delete Idea</p>
       </div>
     );

@@ -1,14 +1,16 @@
-import Nav from './Nav.js';
-import Home from './Home.js';
-import ViewIdea from './ViewIdea.js';
 import CreateIdea from './CreateIdea.js';
-import Login from './Login.js';
-import Register from './Register.js';
-import MyIdeas from './MyIdeas.js';
 import EditIdea from './EditIdea.js';
-import Profile from './Profile.js';
-import RequestPassReset from './RequestPassReset.js';
+import Home from './Home.js';
+import IdeaBox from './IdeaBox.js';
+import Login from './Login.js';
+import MyIdeas from './MyIdeas.js';
+import Nav from './Nav.js';
 import PasswordReset from './PasswordReset.js';
+import Profile from './Profile.js';
+import Register from './Register.js';
+import RequestPassReset from './RequestPassReset.js';
+import Tags from './Tags.js';
+import ViewIdea from './ViewIdea.js';
 
-export { Nav, Home, ViewIdea, CreateIdea, Login, Register, MyIdeas, EditIdea,
-   Profile, RequestPassReset, PasswordReset };
+export { CreateIdea, EditIdea, Home, IdeaBox, Login, MyIdeas, Nav, PasswordReset,
+Profile, Register, RequestPassReset, Tags, ViewIdea };
