@@ -113,10 +113,11 @@ class IdeaBox extends Component {
             <Link to={`/idea/${idea._id}`} id="titleLink">
               <h1 className="ideaBoxTitle">{idea.title}</h1>
             </Link>
+            <p>{idea.revisionTime}</p>
             <OwnerFeatures idea={idea} creator={idea.creator} ideaId={idea._id}/>
           </div>
-          <ReactMarkdown className="ideaDetails">
-            {idea.details}
+          <ReactMarkdown className="ideaDescription">
+            {idea.description}
           </ReactMarkdown >
           <Tags idea={idea}/>
           <p className="ideaBoxCreator">Created by: <Link to={`/${idea.creator}`}>{idea.creator}</Link></p>

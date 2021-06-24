@@ -1,5 +1,7 @@
 /venv
 
+*.pyc
+
 config.json
 *package-lock.json
 
@@ -9,3 +11,4 @@ config.json
 #server tools
 cli.py
 deploy
+migrate.py

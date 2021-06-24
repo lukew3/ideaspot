@@ -6,6 +6,7 @@ from flask_bcrypt import Bcrypt
 from datetime import timedelta
 from bson.objectid import ObjectId
 from bson import json_util
+import datetime
 import json
 import smtplib
 
@@ -63,6 +64,10 @@ def format_idea(idea, username):
 	except Exception:
 		idea["dislikeCount"] = 0
 		idea["disliked"] = False
+
+	idea["revisionTime"] = idea["revisions"][-1]["time"]
+	idea["title"] = idea["revisions"][-1]["title"]
+	idea["description"] = idea["revisions"][-1]["description"]
 	return idea
 
 @app.route('/')
@@ -112,7 +117,7 @@ def request_password_reset():
 	email = data.get('email')
 	#create a short-lived jwt and send it as a parameter in an email link
 	user = db.user.find_one({"email": email})
-	if not (db.user.find_one({"email": email})):
+	if not (user):
 		return jsonify({"msg": "No account with the provided email"}), 422
 	access_token = create_access_token(identity=user["username"])
 	body = f"Click the following link to reset your password: \nhttps://buildmyidea.tk/passwordReset/{access_token}"
@@ -134,10 +139,9 @@ def send_email(recipient, subject, body):
 @jwt_required()
 def password_reset():
 	data = request.get_json(silent=True)
-	password = data.get('password')
-	hashed_pwd = bcrypt.generate_password_hash(password).decode('utf-8')
+	pwd_hash = bcrypt.generate_password_hash(data.get('password')).decode('utf-8')
 	identity = get_jwt_identity()
-	db.user.update_one({"username": identity}, {'$set': {"password": hashed_pwd} })
+	db.user.update_one({"username": identity}, {'$set': {"password": pwd_hash} })
 	access_token = create_access_token(identity=identity)
 	refresh_token = create_refresh_token(identity=identity)
 	return jsonify(access_token=access_token, refresh_token=refresh_token,username=identity)
@@ -153,16 +157,14 @@ def refresh():
 @jwt_required()
 def create_idea():
 	data = request.get_json(silent=True)
-	title = data.get('title')
-	details = data.get('details')
-	forSale = data.get('forSale')
-	private = data.get('private')
-	current_user = get_jwt_identity()
-	new_idea = {"title": title,
-				"details": details,
-				"forSale": forSale,
-				"creator": current_user,
-				"private": private }
+	new_idea = {"revisions": [{
+					"time": datetime.datetime.now(),
+					"title": data.get('title'),
+					"description": data.get('description'),
+
+				}],
+				"creator": get_jwt_identity(),
+				"private": data.get('private') }
 	new_id = str(db.idea.insert_one(new_idea).inserted_id)
 	return jsonify(id=new_id)
 

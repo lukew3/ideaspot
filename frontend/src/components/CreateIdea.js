@@ -9,7 +9,7 @@ class CreateIdea extends Component {
     super(props);
     this.state = {
       title: "",
-      details: "",
+      description: "",
       private: false,
       forSale: false,
       price: 0
@@ -29,8 +29,7 @@ class CreateIdea extends Component {
     event.preventDefault();
     axiosApiInstance.post(`/api/create_idea`,
       { title: this.state.title,
-        details: this.state.details,
-        forSale: this.state.forSale,
+        description: this.state.description,
         private: this.state.private }
     ).then(response => {
       this.props.history.push(`/idea/${response.data.id}`);
@@ -61,22 +60,11 @@ class CreateIdea extends Component {
           <p className="markdownWarning">Use <a href="https://www.markdownguide.org/cheat-sheet/">markdown</a> to style your idea description</p>
           <textarea
             type="text"
-            name="details"
-            className="createIdeaDetails"
+            name="description"
+            className="createIdeaDescription"
             placeholder="Describe your idea..."
-            value={this.state.details}
+            value={this.state.description}
             onChange={this.handleInputChange} />
-          <br/>
-          <label>
-            Is this idea for sale?:
-          <input
-            type="checkbox"
-            name="forSale"
-            className="createIdeaForSale createIdeaCheckbox"
-            value={this.state.forSale}
-            checked={this.state.forSale}
-            onChange={this.handleInputChange} />
-          </label>
           <br/>
           <label>
             Do you wish to keep this idea private?:

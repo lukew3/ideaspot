@@ -48,7 +48,7 @@
   color: darkgrey;
 }
 
-.ideaBox.normal .ideaDetails {
+.ideaBox.normal .ideaDescription {
   max-height: 150px;
   overflow: hidden;
 }

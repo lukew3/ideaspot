@@ -9,7 +9,7 @@ class EditIdea extends Component {
     this.state = {
       ideaId: props.match.params.ideaId,
       title: "",
-      details: "",
+      description: "",
       private: false,
       forSale: false,
       price: 0
@@ -22,7 +22,7 @@ class EditIdea extends Component {
     axiosApiInstance.get(`/api/get_idea/${this.state.ideaId}`
     ).then(response => {
       this.setState({ title: response.data.idea.title,
-                      details: response.data.idea.details,
+                      description: response.data.idea.description,
                       private: response.data.idea.private,
                       forSale: response.data.idea.forSale,
                     });
@@ -40,7 +40,7 @@ class EditIdea extends Component {
     event.preventDefault();
     axiosApiInstance.patch(`/api/edit_idea/${this.state.ideaId}`,
       { title: this.state.title,
-        details: this.state.details,
+        description: this.state.description,
         forSale: this.state.forSale,
         private: this.state.private }
     ).then(response => {
@@ -68,10 +68,10 @@ class EditIdea extends Component {
           <p className="markdownWarning">Use <a href="https://www.markdownguide.org/cheat-sheet/">markdown</a> to style your idea description</p>
           <textarea
             type="text"
-            name="details"
-            className="createIdeaDetails"
+            name="description"
+            className="createIdeaDescription"
             placeholder="Describe your idea..."
-            value={this.state.details}
+            value={this.state.description}
             onChange={this.handleInputChange} />
           <br/>
           <label>

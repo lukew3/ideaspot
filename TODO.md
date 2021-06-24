@@ -49,7 +49,7 @@ Possible Ideas:
 
 ## Team building
 * Users may want to build an idea themselves, but want a team that they can work with to build it
-* Idea should be able to have a public details and then a private details that can be revealed once the person has joined their team
+* Idea should be able to have a public description and then a private description that can be revealed once the person has joined their team
 * Should have location tags or tags for positions needed
 
 ### Possible Tags

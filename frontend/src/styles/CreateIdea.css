@@ -24,7 +24,7 @@
   left: 2px;
 }
 
-.createIdeaDetails {
+.createIdeaDescription {
   width: calc(100% - 16px);
   height: 20vh;
   resize: vertical;

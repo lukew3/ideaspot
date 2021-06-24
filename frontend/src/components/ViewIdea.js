@@ -101,7 +101,7 @@ class NewComment extends Component {
           <textarea
             type="text"
             name="commentContent"
-            className="createIdeaDetails"
+            className="createIdeaDescription"
             placeholder="What do you think?..."
             value={this.state.commentContent}
             onChange={this.handleInputChange} />

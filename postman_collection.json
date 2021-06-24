@@ -22,7 +22,7 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n    \"title\": \"blah2\",\n    \"details\": \"detailsstuff2\"\n}",
+					"raw": "{\n    \"title\": \"blah2\",\n    \"description\": \"descriptionstuff2\"\n}",
 					"options": {
 						"raw": {
 							"language": "json"
