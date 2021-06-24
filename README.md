@@ -1,4 +1,4 @@
-# Build My Idea server
+# Ideaspot server
 
 ## Development
 ### Setup
