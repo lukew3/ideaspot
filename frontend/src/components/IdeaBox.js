@@ -142,7 +142,7 @@ class IdeaBox extends Component {
 
 function RevisionSelect(props) {
   try {
-    if (props.revs.length == 1) {
+    if (props.revs.length === 1) {
       //should just make a div that looks like the select field with arrow and dropdown
       /*
       return (
