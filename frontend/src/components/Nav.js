@@ -13,7 +13,7 @@ class Nav extends Component {
             <img className="navLogo" src={logo} alt="Ideaspot" />
           </Link>
           <input className="navSearchBar" type="text" placeholder="Search..." />
-          <img src={searchButton} className="navSearchButton"/>
+          <img src={searchButton} alt="Search button" className="navSearchButton"/>
           <div className="navRight">
             <LoginNav
               isLoggedIn={this.props.isLoggedIn}

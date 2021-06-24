@@ -69,16 +69,16 @@ class IdeaBox extends Component {
     const idea = this.state.idea;
     const renderUpArrow = () => {
       if (this.state.liked === true) {
-        return <img className="upArrowActive" src={arrowUpActive} onClick={this.likeIdea}/>;
+        return <img className="upArrowActive" alt = "Active up arrow" src={arrowUpActive} onClick={this.likeIdea}/>;
       } else {
-        return <img src={arrowUp} onClick={this.likeIdea}/>;
+        return <img src={arrowUp} alt="Inactive up arrow" onClick={this.likeIdea}/>;
       }
     }
     const renderDownArrow = () => {
       if (this.state.disliked === true) {
-        return <img className="downArrowActive" src={arrowDownActive} onClick={this.dislikeIdea}/>;
+        return <img className="downArrowActive" alt="Active down arrow" src={arrowDownActive} onClick={this.dislikeIdea}/>;
       } else {
-        return <img src={arrowDown} onClick={this.dislikeIdea}/>;
+        return <img src={arrowDown} alt="Inactive down arrow" onClick={this.dislikeIdea}/>;
       }
     }
     return (

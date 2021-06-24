@@ -1,15 +1,6 @@
 import './styles/App.css';
-import Nav from './components/Nav.js';
-import Home from './components/Home.js';
-import ViewIdea from './components/ViewIdea.js';
-import CreateIdea from './components/CreateIdea.js';
-import Login from './components/Login.js';
-import Register from './components/Register.js';
-import MyIdeas from './components/MyIdeas.js';
-import EditIdea from './components/EditIdea.js';
-import Profile from './components/Profile.js';
-import RequestPassReset from './components/RequestPassReset.js';
-import PasswordReset from './components/PasswordReset.js';
+import { Nav, Home, ViewIdea, CreateIdea, Login, Register, MyIdeas, EditIdea,
+  Profile, RequestPassReset, PasswordReset } from './components/index.js';
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 import React, { Component } from "react";
 import Cookie from 'js-cookie';
