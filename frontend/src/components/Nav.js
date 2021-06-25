@@ -1,8 +1,7 @@
 import React, { Component } from "react";
 import '../styles/Nav.css';
 import {Link} from 'react-router-dom';
-import logo from '../svg/logo.svg';
-import searchButton from '../svg/search.svg';
+import { logo, searchButton } from '../svg/index.js';
 
 class Nav extends Component {
   render() {

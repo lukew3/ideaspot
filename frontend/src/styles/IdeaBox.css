@@ -24,11 +24,6 @@
   /*width: 90%; */
 }
 
-.ownerFeatures * {
-  display: inline-block;
-  margin: 10px;
-}
-
 .editIdeaLink {
   text-decoration: none;
   color: #b07b19;
@@ -135,4 +130,36 @@
 
 .ratingTrue {
   color: #258ace;
+}
+
+.revisionSelect {
+  height: 30px;
+}
+
+.ownerOptionsContainer {
+  position: relative;
+}
+.ownerOptionsButton {
+  position: relative;
+  margin-left: 10px;
+}
+
+.ownerOptionsMenu {
+  position: absolute;
+  border: #686868 1px solid;
+  border-radius: 3px;
+  padding: 10px;
+  width: 70pt;
+  right: 0;
+}
+.ownerOptionsMenu * {
+  margin: 0;
+}
+.ownerOptionsMenuDivider {
+  height: 1px;
+  width: 85pt;
+  margin-left: -7pt;
+  margin-top: 7px;
+  margin-bottom: 7px;
+  background-color: #686868;
 }

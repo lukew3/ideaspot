@@ -6,10 +6,7 @@ import Cookie from 'js-cookie';
 
 import '../styles/IdeaBox.css';
 import { axiosApiInstance } from '../helper.js';
-import arrowUp from '../svg/arrow-up.svg';
-import arrowDown from '../svg/arrow-down.svg';
-import arrowUpActive from '../svg/arrow-up-active.svg';
-import arrowDownActive from '../svg/arrow-down-active.svg';
+import { arrowUp, arrowDown, arrowUpActive, arrowDownActive, optionsButton } from '../svg/index.js';
 
 class IdeaBox extends Component {
   constructor(props){
@@ -69,7 +66,6 @@ class IdeaBox extends Component {
   }
 
   switchRevision(event) {
-    console.log("SWITCHING REVISION");
     let revNum = event.target.value;
     axiosApiInstance.get(`/api/get_idea/${this.state.idea._id}/${revNum}`).then((response) => {
       this.setState({ idea: response.data.idea });
@@ -152,7 +148,7 @@ function RevisionSelect(props) {
       )*/
     }
     return (
-      <select onChange={props.switchRevision}>
+      <select className="revisionSelect" onChange={props.switchRevision}>
         {props.revs.slice(0).reverse().map((rev, index) => {
           return <option value={props.revs.length-1-index}>{rev}</option>;
         })}
@@ -177,9 +173,19 @@ function OwnerFeatures(props) {
   const username = Cookie.get("username") ? Cookie.get("username") : null;
   if (username === props.creator) {
     return(
-      <div className="ownerFeatures">
-        <Link to={`/editIdea/${props.idea._id}`} className="editIdeaLink">Edit idea</Link>
-        <p className="deleteIdea" onClick={() => {deleteIdea()}}>Delete Idea</p>
+      <div className="ownerOptionsContainer">
+        <img src={optionsButton} alt="Options" className="ownerOptionsButton" onClick={() => {
+          if (document.getElementById(props.idea._id + "OptionsMenu").style.display == 'none') {
+            document.getElementById(props.idea._id + "OptionsMenu").style.display = 'block';
+          } else {
+            document.getElementById(props.idea._id + "OptionsMenu").style.display = 'none';
+          }
+        }}/>
+        <div className="ownerOptionsMenu" style={{"display": "none"}} id={props.idea._id + "OptionsMenu"}>
+          <Link to={`/editIdea/${props.idea._id}`} className="editIdeaLink">Edit idea</Link>
+          <div className="ownerOptionsMenuDivider"></div>
+          <p className="deleteIdea" onClick={() => {deleteIdea()}}>Delete Idea</p>
+        </div>
       </div>
     );
   } else {
