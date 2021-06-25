@@ -134,6 +134,10 @@
 
 .revisionSelect {
   height: 30px;
+  background-color: #151515;
+  border: .5px solid #686868;
+  border-radius: 3px;
+  color: #d6d6d6;
 }
 
 .ownerOptionsContainer {
@@ -152,9 +156,13 @@
   width: 70pt;
   right: 0;
 }
-.ownerOptionsMenu * {
+
+.ownerOptionsMenu a {
   margin: 0;
+  width: 100%;
+  display: inline-block;
 }
+
 .ownerOptionsMenuDivider {
   height: 1px;
   width: 85pt;
