@@ -68,6 +68,10 @@
   margin-top: 5px;
 }
 
+.voting img {
+  cursor: pointer;
+}
+
 .downArrowActive {
   margin-bottom: 1px;
   margin-left: 2px;
