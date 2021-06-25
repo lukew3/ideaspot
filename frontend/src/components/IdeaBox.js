@@ -180,7 +180,7 @@ function OwnerOptions(props) {
             document.getElementById(props.idea._id + "OptionsMenu").style.display = 'none';
           }
         }}/>
-        <div className="ownerOptionsMenu" style={{"display": "none"}} id={props.idea._id + "OptionsMenu"}>
+        <div className="ownerOptionsMenu customDropMenu" style={{"display": "none"}} id={props.idea._id + "OptionsMenu"}>
           <Link to={`/editIdea/${props.idea._id}`} className="editIdeaLink">Edit idea</Link>
           <div className="ownerOptionsMenuDivider"></div>
           <a className="deleteIdeaLink" href="#" onClick={() => {deleteIdea()}}>Delete Idea</a>

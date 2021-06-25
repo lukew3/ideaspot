@@ -19,6 +19,7 @@
   float: left;
   text-align: center;
   padding: 10px;
+  position: relative;
 }
 
 .navLogo {
@@ -67,6 +68,73 @@
   margin-left: 7px;
   margin-top: 7px;
 }
+
+#accountDropdownContiner {
+  display: flex;
+  z-index: 3;
+  position: relative;
+}
+
+#accountDropdownArrow {
+  font-size: 9pt;
+  margin-top: 18px;
+  margin-left: 5px;
+}
+
+#navAccountMenu {
+  position: absolute;
+  right: 0;
+  background-color: black;
+  margin-top: 60px;
+  width: 150px;
+  color: white;
+  border: #686868 1px solid;
+  border-radius: 3px;
+  padding-top: 5px;
+  padding-bottom: 5px;
+}
+
+#navAccountMenu::before {
+  width: 10px;
+  height: 10px;
+  background-color: red;
+  z-index: 5;
+}
+
+#navAccountMenu * {
+  text-align: left;
+  padding: 0;
+  margin: 0;
+  padding-left: 10px;
+  padding-right: 10px;
+}
+
+#navAccountMenu .dropdownItem {
+  padding: 5px;
+  padding-left: 10px;
+  padding-right: 10px;
+  filter: brightness(100%);
+  color: lightgrey;
+  cursor: pointer;
+}
+
+#navAccountMenu .dropdownItem:hover {
+  background-color: #1f6feb;
+}
+
+.customDropMenuDivider {
+  padding: 0;
+  height: 1px;
+  width: 130px;
+  margin-left: 0pt;
+  margin-top: 7px;
+  margin-bottom: 7px;
+  background-color: #686868;
+}
+/*
+.customDropMenu {
+
+}*/
 
 /* Shrink nav on small screens */
 @media only screen and (max-width: 600px) {

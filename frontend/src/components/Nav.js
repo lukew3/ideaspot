@@ -15,35 +15,55 @@ class Nav extends Component {
             <img src={searchButton} alt="Search button" className="navSearchButton"/>
             <input className="navSearchBar" type="text" placeholder="Search..." />
           </div>
-          <div className="navRight">
-            <LoginNav
-              isLoggedIn={this.props.isLoggedIn}
-              globalLogout={this.props.globalLogout}
-              username={this.props.username} />
-          </div>
+          <NavRight
+            isLoggedIn={this.props.isLoggedIn}
+            globalLogout={this.props.globalLogout}
+            username={this.props.username} />
         </div>
       </div>
     );
   }
 }
 
-class LoginNav extends Component {
+class NavRight extends Component {
   render() {
     if (this.props.isLoggedIn) {
       return (
-        <div>
-        <Link to={'/newIdea'}>
-          <p>New Idea</p>
-        </Link>
+        <div className="navRight">
+          <Link to={'/newIdea'}>
+            <p>New Idea</p>
+          </Link>
 
-        <Link to={`/${this.props.username}`}>
-          <p style={{"display": "flex"}}>Account <p style={{"font-size": "9pt", "margin-top": "2px", "margin-left": "5px"}}>▼</p></p>
-        </Link>
+          <div id="accountDropdownContiner" onClick={() => {
+            if (document.getElementById("navAccountMenu").style.display === 'none') {
+              document.getElementById("navAccountMenu").style.display = 'grid';
+            } else {
+              document.getElementById("navAccountMenu").style.display = 'none';
+            }
+          }}>
+            <a href="#" style={{"display": "flex"}}>
+              <p>Account</p>
+              <p id="accountDropdownArrow">▼</p>
+            </a>
+            <div className="customDropMenu" id="navAccountMenu" style={{"display": "none"}}>
+              <p>Logged in as:</p>
+              <Link to={`/${this.props.username}`} className="dropdownItem">{this.props.username}</Link>
+              <div className="customDropMenuDivider"></div>
+              <Link to={`/${this.props.username}`} className="dropdownItem">My profile</Link>
+              <Link to={`/myIdeas/`} className="dropdownItem">My Ideas</Link>
+              <div className="customDropMenuDivider"></div>
+              <Link to={`/settings/`} className="dropdownItem">Settings</Link>
+              <Link to={`/trash/`} className="dropdownItem">Trash</Link>
+              <p className="dropdownItem" onClick={() => {
+                this.props.globalLogout();
+              }}>Sign Out</p>
+            </div>
+          </div>
         </div>
       )
     } else {
       return(
-        <div>
+        <div className="navRight">
         <Link to={'/login'}>
           <p>Login</p>
         </Link>

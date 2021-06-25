@@ -78,7 +78,7 @@ def index():
 def not_found(e):
   return app.send_static_file('index.html')
 
-blocked_usernames = ['myIdeas','idea','login','register','newIdea','editIdea']
+blocked_usernames = ['myIdeas','idea','login','register','newIdea','editIdea','trash','settings']
 @api.route('/register', methods=['POST'])
 def register():
 	data = request.get_json(silent=True)

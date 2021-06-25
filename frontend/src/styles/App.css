@@ -13,7 +13,7 @@ a {
 }
 
 a:hover {
-  filter: brightness(110%);
+  filter: brightness(80%);
 }
 
 .ideaDescription * a {
