@@ -8,8 +8,18 @@
 }
 
 a {
+  text-decoration: none;
+  color: lightgrey;
+}
+
+a:hover {
+  filter: brightness(110%);
+}
+
+.ideaDescription * a {
   color: #2d7de6;
 }
+
 input {
   background-color: rgba(26,26,27,0.8);
   border-color: rgba(131, 131, 138, 0.8);
@@ -66,4 +76,23 @@ textarea {
   margin: 0;
   font-size: 11pt;
   color: lightgrey;
+}
+
+.blankPageTextContainer {
+  height: calc(75vh - 70px);
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  color: lightgrey;
+  align-items: center;
+  justify-content: center;
+}
+
+.orangeLink {
+  text-decoration: none;
+  color: #b07b19;
+}
+.redLink {
+  text-decoration: none;
+  color: #c64747;
 }

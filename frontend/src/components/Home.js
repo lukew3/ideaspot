@@ -18,6 +18,16 @@ class Home extends Component {
   }
 
   render() {
+    if (this.state.ideasList.length === 0) {
+      return (
+        <div className="blankPageTextContainer">
+          <h2>
+            No Ideas?
+          </h2>
+          <p>Where are they?</p>
+        </div>
+      )
+    }
     return (
       <div className="ideaFeed">
         {this.state.ideasList.map((idea, index) => (

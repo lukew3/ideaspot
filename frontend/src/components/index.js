@@ -10,7 +10,8 @@ import Profile from './Profile.js';
 import Register from './Register.js';
 import RequestPassReset from './RequestPassReset.js';
 import Tags from './Tags.js';
+import Trash from './Trash.js';
 import ViewIdea from './ViewIdea.js';
 
 export { CreateIdea, EditIdea, Home, IdeaBox, Login, MyIdeas, Nav, PasswordReset,
-Profile, Register, RequestPassReset, Tags, ViewIdea };
+Profile, Register, RequestPassReset, Tags, Trash, ViewIdea };

@@ -1,6 +1,6 @@
 import './styles/App.css';
 import { Nav, Home, ViewIdea, CreateIdea, Login, Register, MyIdeas, EditIdea,
-  Profile, RequestPassReset, PasswordReset } from './components/index.js';
+  Profile, RequestPassReset, PasswordReset, Trash } from './components/index.js';
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 import React, { Component } from "react";
 import Cookie from 'js-cookie';
@@ -65,6 +65,7 @@ class App extends Component {
             <Route path="/login" exact component={LoginIntermediate} />
             <Route path="/register" exact component={RegisterIntermediate} />
             <Route path="/newIdea" exact component={CreateIdea} />
+            <Route path="/trash" exact component={Trash} />
             <Route path="/editIdea/:ideaId" exact component={EditIdea} />
             <Route path="/requestPasswordReset" exact component={RequestPassReset} />
             <Route path="/passwordReset/:jwt" exact component={PasswordResetIntermediate} />

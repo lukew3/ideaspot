@@ -18,7 +18,8 @@ class IdeaBox extends Component {
       disliked: props.idea.disliked,
       revisionTimes: props.idea.revisionTimes,
       score: props.idea.likeCount-props.idea.dislikeCount,
-      boost: 0
+      boost: 0,
+      hideOptions: props.hideOptions,
     }
     this.likeIdea = this.likeIdea.bind(this);
     this.dislikeIdea = this.dislikeIdea.bind(this);
@@ -122,7 +123,7 @@ class IdeaBox extends Component {
             </Link>
             <div className="ideaBoxUpperRight" style={{"display": "flex"}}>
               <RevisionSelect revs={idea.revisionTimes} switchRevision={this.switchRevision}/>
-              <OwnerFeatures idea={idea} creator={idea.creator} ideaId={idea._id}/>
+              <OwnerOptions idea={idea} creator={idea.creator} ideaId={idea._id} hideOptions={this.state.hideOptions}/>
             </div>
           </div>
           <ReactMarkdown className="ideaDescription">
@@ -155,27 +156,27 @@ function RevisionSelect(props) {
       </select>
     )
   } catch (e) {
-    console.log(e);
     return "";
   }
 }
 
-function OwnerFeatures(props) {
+function OwnerOptions(props) {
   function deleteIdea() {
-    axiosApiInstance.delete(`/api/delete_idea/${props.idea._id}`
+    axiosApiInstance.post(`/api/trash_idea/${props.idea._id}`
     ).then(response => {
       //if success, hide the ideaBox
-      document.getElementById(props.idea._id).innerHTML = "Idea \"" + props.idea.title + "\" deleted";
+      document.getElementById(props.idea._id).innerHTML = "Idea \"" + props.idea.title + "\" moved to trash. It will be deleted in 30 days unless you choose otherwise.";
     }).catch(error => {
       console.log("Deletion failed");
     });
   }
+  if (props.hideOptions) return <div className="ownerOptionsContainer"></div>;
   const username = Cookie.get("username") ? Cookie.get("username") : null;
   if (username === props.creator) {
     return(
       <div className="ownerOptionsContainer">
         <img src={optionsButton} alt="Options" className="ownerOptionsButton" onClick={() => {
-          if (document.getElementById(props.idea._id + "OptionsMenu").style.display == 'none') {
+          if (document.getElementById(props.idea._id + "OptionsMenu").style.display === 'none') {
             document.getElementById(props.idea._id + "OptionsMenu").style.display = 'block';
           } else {
             document.getElementById(props.idea._id + "OptionsMenu").style.display = 'none';
@@ -184,13 +185,13 @@ function OwnerFeatures(props) {
         <div className="ownerOptionsMenu" style={{"display": "none"}} id={props.idea._id + "OptionsMenu"}>
           <Link to={`/editIdea/${props.idea._id}`} className="editIdeaLink">Edit idea</Link>
           <div className="ownerOptionsMenuDivider"></div>
-          <p className="deleteIdea" onClick={() => {deleteIdea()}}>Delete Idea</p>
+          <a className="deleteIdeaLink" href="#" onClick={() => {deleteIdea()}}>Delete Idea</a>
         </div>
       </div>
     );
   } else {
     return(
-      <div className="creatorFeatures"></div>
+      <div className="ownerOptionsContainer"></div>
     );
   }
 }

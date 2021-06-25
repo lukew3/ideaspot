@@ -29,9 +29,9 @@
   color: #b07b19;
 }
 
-.deleteIdea {
+.deleteIdeaLink {
+  text-decoration: none;
   color: #c64747;
-  cursor: pointer;
 }
 
 .ideaBoxCreator {

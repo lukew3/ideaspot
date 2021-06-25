@@ -184,20 +184,32 @@ def edit_idea(ideaId):
 	new_idea = format_idea(db.idea.find_one({"_id": ObjectId(ideaId), "creator": current_user}), current_user)
 	return new_idea
 
+@api.route('/trash_idea/<ideaId>', methods=['POST'])
+@jwt_required()
+def recycle_idea(ideaId):
+	#Set idea deletion date for 30 days in the future
+	current_user = get_jwt_identity()
+	db.idea.update_one({"_id": ObjectId(ideaId)}, { "$set": {"delete_date": datetime.datetime.now() + datetime.timedelta(30)}})
+	return jsonify(status="idea recycled")
 
 @api.route('/delete_idea/<ideaId>', methods=['DELETE'])
 @jwt_required()
 def delete_idea(ideaId):
-	data = request.get_json(silent=True)
 	current_user = get_jwt_identity()
 	db.idea.delete_one({"_id": ObjectId(ideaId), "creator": current_user})
 	return jsonify(status="idea deleted")
 
+@api.route('/restore_idea/<ideaId>', methods=['POST'])
+@jwt_required()
+def restore_idea(ideaId):
+	current_user = get_jwt_identity()
+	db.idea.update_one({"_id": ObjectId(ideaId)}, { '$unset': { "delete_date": '' } })
+	return jsonify(status="idea restored")
 
 @api.route('/get_ideas', methods=['GET'])
 @jwt_required(optional=True)
 def get_ideas():
-	ideascur = db.idea.find({"private": False})
+	ideascur = db.idea.find({"private": False, "delete_date": { "$exists": False} })
 	ideas = [format_idea(item, get_jwt_identity()) for item in ideascur]
 	ideas.reverse()
 	return jsonify({'ideas': ideas})
@@ -211,26 +223,14 @@ def get_my_ideas():
 	ideas = [format_idea(item, current_user) for item in ideascur]
 	ideas.reverse()
 	return jsonify({'ideas': ideas})
-"""
-@api.route('/get_idea/<ideaId>', methods=['GET'])
-@jwt_required(optional=True)
-def get_idea(ideaId):
-	idea_obj = format_idea(db.idea.find_one({"_id": ObjectId(ideaId)}), get_jwt_identity())
-	if idea_obj["private"] == True and idea_obj["creator"] != get_jwt_identity():
-		return "<h1>This idea is private, you must sign in as owner to access</h1>"
-	else:
-		return jsonify(idea=idea_obj)
-"""
-"""
-@api.route('/get_idea/<ideaId>/<revNum>', methods=['GET'])
-@jwt_required(optional=True)
-def get_idea(ideaId, revNum):
-	idea_obj = format_idea(db.idea.find_one({"_id": ObjectId(ideaId)}), get_jwt_identity(), revNum=revNum)
-	if idea_obj["private"] == True and idea_obj["creator"] != get_jwt_identity():
-		return "<h1>This idea is private, you must sign in as owner to access</h1>"
-	else:
-		return jsonify(idea=idea_obj)
-"""
+
+@api.route('/get_trash', methods=['GET'])
+@jwt_required()
+def get_trash():
+	current_user = get_jwt_identity()
+	ideascur = db.idea.find({"creator": current_user, "delete_date": { "$exists": True }})
+	ideas = [format_idea(item, current_user) for item in ideascur]
+	return jsonify({'ideas': ideas})
 
 @api.route('/get_idea/<ideaId>', defaults={'revNum': -1}, methods=['GET'])
 @api.route('/get_idea/<ideaId>/<revNum>', methods=['GET'])
