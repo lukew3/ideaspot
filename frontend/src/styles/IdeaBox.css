@@ -134,15 +134,20 @@
 
 .revisionSelect {
   height: 30px;
+  margin-top: 5px;
   background-color: #151515;
   border: .5px solid #686868;
   border-radius: 3px;
   color: #d6d6d6;
+  position: relative;
+  margin-left: auto;
 }
 
 .ownerOptionsContainer {
   position: relative;
+  margin-top: 5px;
 }
+
 .ownerOptionsButton {
   position: relative;
   margin-left: 10px;
@@ -170,4 +175,41 @@
   margin-top: 7px;
   margin-bottom: 7px;
   background-color: #686868;
+}
+
+@media only screen and (max-width: 600px) {
+  .revisionSelect {
+    align-self: flex-end;
+    position: absolute;
+  }
+
+  .ideaBoxTitle {
+    margin-bottom: 40px;
+  }
+
+  .ideaBoxLeft {
+    width: 35px;
+  }
+
+  .voting {
+    display: block;
+  }
+
+  .ratingLabel {
+    display: none;
+  }
+  .upArrow {
+    position: absolute;
+  }
+  .downArrow {
+    margin-top: 50px;
+    position: absolute;
+  }
+  .ideaBoxScore {
+    position: absolute;
+    margin-top: 25px;
+    margin-left: -7px;
+    width: 35px;
+    text-align: center;
+  }
 }

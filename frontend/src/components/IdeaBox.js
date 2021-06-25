@@ -77,16 +77,16 @@ class IdeaBox extends Component {
     const idea = this.state.idea;
     const renderUpArrow = () => {
       if (this.state.liked === true) {
-        return <img className="upArrowActive" alt = "Active up arrow" src={arrowUpActive} onClick={this.likeIdea}/>;
+        return <img className="upArrowActive upArrow" alt="Active up arrow" src={arrowUpActive} onClick={this.likeIdea}/>;
       } else {
-        return <img src={arrowUp} alt="Inactive up arrow" onClick={this.likeIdea}/>;
+        return <img src={arrowUp} className="upArrow" alt="Inactive up arrow" onClick={this.likeIdea}/>;
       }
     }
     const renderDownArrow = () => {
       if (this.state.disliked === true) {
-        return <img className="downArrowActive" alt="Active down arrow" src={arrowDownActive} onClick={this.dislikeIdea}/>;
+        return <img className="downArrowActive downArrow" alt="Active down arrow" src={arrowDownActive} onClick={this.dislikeIdea}/>;
       } else {
-        return <img src={arrowDown} alt="Inactive down arrow" onClick={this.dislikeIdea}/>;
+        return <img src={arrowDown} className="downArrow" alt="Inactive down arrow" onClick={this.dislikeIdea}/>;
       }
     }
     return (
@@ -121,10 +121,8 @@ class IdeaBox extends Component {
             <Link to={`/idea/${idea._id}`} id="titleLink">
               <h1 className="ideaBoxTitle">{idea.title}</h1>
             </Link>
-            <div className="ideaBoxUpperRight" style={{"display": "flex"}}>
-              <RevisionSelect revs={idea.revisionTimes} switchRevision={this.switchRevision}/>
-              <OwnerOptions idea={idea} creator={idea.creator} ideaId={idea._id} hideOptions={this.state.hideOptions}/>
-            </div>
+            <RevisionSelect revs={idea.revisionTimes} switchRevision={this.switchRevision}/>
+            <OwnerOptions idea={idea} creator={idea.creator} ideaId={idea._id} hideOptions={this.state.hideOptions}/>
           </div>
           <ReactMarkdown className="ideaDescription">
             {idea.description}
