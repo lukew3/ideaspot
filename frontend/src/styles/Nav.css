@@ -86,7 +86,7 @@
   .navSearchBarGroup {
     position: absolute;
     margin-top: 80px;
-    width: calc(100vw - 30px);
+    width: calc(100vw - 35px);
     margin-left: 5px;
   }
   .navRight {
