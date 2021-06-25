@@ -12,8 +12,8 @@ class Nav extends Component {
             <img className="navLogo" src={logo} alt="Ideaspot" />
           </Link>
           <div className="navSearchBarGroup">
-            <input className="navSearchBar" type="text" placeholder="Search..." />
             <img src={searchButton} alt="Search button" className="navSearchButton"/>
+            <input className="navSearchBar" type="text" placeholder="Search..." />
           </div>
           <div className="navRight">
             <LoginNav
