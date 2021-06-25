@@ -201,6 +201,10 @@
   .upArrow {
     position: absolute;
   }
+  .upArrowActive {
+    margin-top: 2px;
+    margin-left: 2px;
+  }
   .downArrow {
     margin-top: 50px;
     position: absolute;
