@@ -1,3 +1,4 @@
+import About from './About.js';
 import CreateIdea from './CreateIdea.js';
 import EditIdea from './EditIdea.js';
 import Home from './Home.js';
@@ -13,5 +14,5 @@ import Tags from './Tags.js';
 import Trash from './Trash.js';
 import ViewIdea from './ViewIdea.js';
 
-export { CreateIdea, EditIdea, Home, IdeaBox, Login, MyIdeas, Nav, PasswordReset,
+export { About, CreateIdea, EditIdea, Home, IdeaBox, Login, MyIdeas, Nav, PasswordReset,
 Profile, Register, RequestPassReset, Tags, Trash, ViewIdea };

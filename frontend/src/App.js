@@ -1,5 +1,5 @@
 import './styles/App.css';
-import { Nav, Home, ViewIdea, CreateIdea, Login, Register, MyIdeas, EditIdea,
+import { About, Nav, Home, ViewIdea, CreateIdea, Login, Register, MyIdeas, EditIdea,
   Profile, RequestPassReset, PasswordReset, Trash } from './components/index.js';
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 import React, { Component } from "react";
@@ -66,6 +66,7 @@ class App extends Component {
             <Route path="/register" exact component={RegisterIntermediate} />
             <Route path="/newIdea" exact component={CreateIdea} />
             <Route path="/trash" exact component={Trash} />
+            <Route path="/about" exact component={About} />
             <Route path="/editIdea/:ideaId" exact component={EditIdea} />
             <Route path="/requestPasswordReset" exact component={RequestPassReset} />
             <Route path="/passwordReset/:jwt" exact component={PasswordResetIntermediate} />

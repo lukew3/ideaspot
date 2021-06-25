@@ -15,21 +15,24 @@ class Nav extends Component {
             <img src={searchButton} alt="Search button" className="navSearchButton"/>
             <input className="navSearchBar" type="text" placeholder="Search..." />
           </div>
-          <NavRight
-            isLoggedIn={this.props.isLoggedIn}
-            globalLogout={this.props.globalLogout}
-            username={this.props.username} />
+          <div className="navRight">
+            <LoginNav
+              isLoggedIn={this.props.isLoggedIn}
+              globalLogout={this.props.globalLogout}
+              username={this.props.username} />
+          </div>
         </div>
       </div>
     );
   }
 }
 
-class NavRight extends Component {
+class LoginNav extends Component {
   render() {
     if (this.props.isLoggedIn) {
       return (
-        <div className="navRight">
+        <div>
+
           <Link to={'/newIdea'}>
             <p>New Idea</p>
           </Link>
@@ -63,7 +66,7 @@ class NavRight extends Component {
       )
     } else {
       return(
-        <div className="navRight">
+        <div>
         <Link to={'/login'}>
           <p>Login</p>
         </Link>

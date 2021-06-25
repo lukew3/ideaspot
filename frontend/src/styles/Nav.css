@@ -1,6 +1,6 @@
 .navbar {
   background-color: rgba(26,26,27,0.8);
-  width: 100vw;
+  width: calc(100vw - 8px);
   height: 70px;
   border-bottom: #686868 1px solid;
 }
@@ -92,13 +92,6 @@
   border-radius: 3px;
   padding-top: 5px;
   padding-bottom: 5px;
-}
-
-#navAccountMenu::before {
-  width: 10px;
-  height: 10px;
-  background-color: red;
-  z-index: 5;
 }
 
 #navAccountMenu * {
