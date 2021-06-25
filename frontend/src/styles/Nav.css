@@ -41,11 +41,15 @@
   border-radius: 3px;
   margin-top: 6px;
 }
+
 .navSearchBarGroup {
   display: inline-block;
   flex-grow: 1;
   margin-top: 25px;
+  margin-left: 15px;
+  margin-right: 15px;
 }
+
 .navSearchBar {
   color: black;
   background-color: #BDAE93;
@@ -71,5 +75,20 @@
   .innerNav {
     margin-left: 0;
     margin-right: 0;
+  }
+  .navbar {
+    padding-bottom: 50px;
+  }
+  .navSearchBarGroup {
+    position: absolute;
+    margin-top: 80px;
+    width: calc(100vw - 30px);
+    margin-left: 5px;
+  }
+  .navRight {
+    margin-right: 30px;
+  }
+  .navbar a {
+    padding: 5px;
   }
 }
