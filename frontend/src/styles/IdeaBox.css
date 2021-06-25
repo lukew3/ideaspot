@@ -155,6 +155,7 @@
 .ownerOptionsButton {
   position: relative;
   margin-left: 10px;
+  cursor: pointer;
 }
 
 .ownerOptionsMenu {
