@@ -41,24 +41,23 @@
   border-radius: 3px;
   margin-top: 6px;
 }
-
+.navSearchBarGroup {
+  display: inline-block;
+  flex-grow: 1;
+  margin-top: 25px;
+}
 .navSearchBar {
-  position: relative;
   color: black;
   background-color: #BDAE93;
   border: none;
-  flex-grow: 2;
-  margin-top: 23px;
-  height: 20px;
-  margin-left: 5px;
-  margin-right: 5px;
   border-radius: 5px;
+  width: calc(100% - 10px);
 }
-
 .navSearchButton {
+  position: absolute;
   height: 20px;
-  margin: 28px 10px 0px -30px;
-  z-index: 1;
+  margin-left: -25px;
+  margin-top: 3px;
 }
 
 /* Shrink nav on small screens */
