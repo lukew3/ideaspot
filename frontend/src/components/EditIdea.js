@@ -61,7 +61,7 @@ class EditIdea extends Component {
             value={this.state.title}
             onChange={this.handleInputChange} />
           <br/>
-          <p className="markdownWarning">Use <a href="https://www.markdownguide.org/cheat-sheet/">markdown</a> to style your idea description</p>
+          <p className="markdownWarning">Use <a href="https://www.markdownguide.org/cheat-sheet/" style={{"color": "#2d7de6"}}>markdown</a> to style your idea description</p>
           <textarea
             type="text"
             name="description"

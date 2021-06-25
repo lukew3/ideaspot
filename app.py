@@ -209,9 +209,22 @@ def restore_idea(ideaId):
 @api.route('/get_ideas', methods=['GET'])
 @jwt_required(optional=True)
 def get_ideas():
-	ideascur = db.idea.find({"private": False, "delete_date": { "$exists": False} })
+	try:
+		page = int(request.args['page'])
+	except Exception:
+		page = 1
+
+	per_page = 10
+	offset = (page-1) * per_page
+
+	starting_id = db.idea.find().sort('_id', -1)
+	last_id = starting_id[offset]['_id']
+
+	ideascur =  db.idea.find(
+		{'_id': {'$lte': last_id}, "private": False, "delete_date": { "$exists": False}}
+	).sort('_id', -1).limit(per_page)
+
 	ideas = [format_idea(item, get_jwt_identity()) for item in ideascur]
-	ideas.reverse()
 	return jsonify({'ideas': ideas})
 
 
@@ -219,7 +232,7 @@ def get_ideas():
 @jwt_required()
 def get_my_ideas():
 	current_user = get_jwt_identity()
-	ideascur = db.idea.find({"creator": current_user})
+	ideascur = db.idea.find({"creator": current_user, "delete_date": { "$exists": False }})
 	ideas = [format_idea(item, current_user) for item in ideascur]
 	ideas.reverse()
 	return jsonify({'ideas': ideas})
@@ -251,9 +264,9 @@ def get_user(username):
 	user.pop("email")
 	current_user = get_jwt_identity()
 	if current_user == username:
-			ideascur = db.idea.find({"creator": current_user})
+			ideascur = db.idea.find({"creator": current_user, "delete_date": { "$exists": False }})
 	else:
-			ideascur = db.idea.find({"creator": username, "private": False})
+			ideascur = db.idea.find({"creator": username, "private": False, "delete_date": { "$exists": False }})
 	user["ideas"] = [format_idea(item, username) for item in ideascur]
 	user["ideas"].reverse()
 	user["ideasCount"] = len(user["ideas"])
