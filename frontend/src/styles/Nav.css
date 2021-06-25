@@ -1,6 +1,6 @@
 .navbar {
   background-color: rgba(26,26,27,0.8);
-  width: calc(100vw - 8px);
+  width: 100%;
   height: 70px;
   border-bottom: #686868 1px solid;
 }
