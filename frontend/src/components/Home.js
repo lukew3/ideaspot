@@ -27,6 +27,9 @@ class Home extends Component {
         tempIdeasList.push(idea);
       });
       this.setState({ ideasList: tempIdeasList, page: this.state.page+1 });
+    }).catch((e) => {
+      console.log(e);
+      document.getElementById("loadMoreButton").style.display = "none";
     })
   }
 
@@ -47,6 +50,7 @@ class Home extends Component {
           <IdeaBox key={idea._id} idea={idea} boxStyle="normal"/>
         ))}
         <button className="loadMoreButton"
+                id="loadMoreButton"
                 style={{"margin-left": "calc(50vw - 50px)"}}
                 onClick={this.loadMoreIdeas}>Load More</button>
       </div>
