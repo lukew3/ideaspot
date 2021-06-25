@@ -37,7 +37,7 @@ class LoginNav extends Component {
         </Link>
 
         <Link to={`/${this.props.username}`}>
-          <p>Account</p>
+          <p style={{"display": "flex"}}>Account <p style={{"font-size": "9pt", "margin-top": "2px", "margin-left": "5px"}}>▼</p></p>
         </Link>
         </div>
       )
