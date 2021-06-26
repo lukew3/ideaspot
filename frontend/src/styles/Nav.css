@@ -6,8 +6,8 @@
 }
 
 .innerNav {
-  margin-left: 20px;
-  margin-right: 50px;
+  margin-left: 25px;
+  margin-right: 25px;
   display: flex;
   flex-wrap: nowrap;
   justify-content: space-between;
@@ -56,7 +56,7 @@
   background-color: #BDAE93;
   border: none;
   border-radius: 5px;
-  width: calc(100% - 45px);
+  width: calc(100% - 35px);
   font-size: 11pt;
   padding: 8px;
   padding-left: 35px;
@@ -147,11 +147,8 @@
   .navSearchBarGroup {
     position: absolute;
     margin-top: 80px;
-    width: calc(100vw - 35px);
+    width: calc(100% - 35px);
     margin-left: 5px;
-  }
-  .navRight {
-    margin-right: 30px;
   }
   .navbar a {
     padding: 5px;
