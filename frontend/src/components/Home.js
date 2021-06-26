@@ -7,7 +7,7 @@ class Home extends Component {
   constructor(props){
     super(props);
     this.state = {
-      ideasList: [{}],
+      ideasList: [],
       page: 1,
     }
     this.loadMoreIdeas = this.loadMoreIdeas.bind(this);
@@ -38,9 +38,8 @@ class Home extends Component {
       return (
         <div className="blankPageTextContainer">
           <h2>
-            No Ideas?
+            Loading Ideas...
           </h2>
-          <p>Where are they?</p>
         </div>
       )
     }

@@ -7,7 +7,7 @@ class Trash extends Component {
   constructor(props){
     super(props);
     this.state = {
-      ideasList: [{}]
+      ideasList: []
     }
   }
   // on mount, load subscriptions

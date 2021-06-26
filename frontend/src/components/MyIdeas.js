@@ -8,7 +8,7 @@ class MyIdeas extends Component {
   constructor(props){
     super(props);
     this.state = {
-      ideasList: [{}]
+      ideasList: []
     }
   }
   // on mount, load subscriptions
@@ -21,6 +21,15 @@ class MyIdeas extends Component {
   }
 
   render() {
+    if (this.state.ideasList.length === 0) {
+      return (
+        <div className="blankPageTextContainer">
+          <h2>
+            Loading Ideas...
+          </h2>
+        </div>
+      )
+    }
     return (
       <div className="ideaFeed">
         {this.state.ideasList.map((idea, index) => (
