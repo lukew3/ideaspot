@@ -43,7 +43,7 @@ class Trash extends Component {
                   document.getElementById(`trash${idea._id}`).innerHTML = "Idea restored";
                 })
               }}>Restore</a>
-              <br></br>
+              <br style={{"margin-bottom": "10px"}}></br>
               <a href="#" onClick={() => {
                 axiosApiInstance.delete(`/api/delete_idea/${idea._id}`).then(() => {
                   document.getElementById(`trash${idea._id}`).innerHTML = "Idea deleted";
