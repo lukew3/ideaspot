@@ -20,6 +20,7 @@ class IdeaBox extends Component {
       score: props.idea.likeCount-props.idea.dislikeCount,
       boost: 0,
       hideOptions: props.hideOptions,
+      hideScore: props.hideScore,
     }
     this.likeIdea = this.likeIdea.bind(this);
     this.dislikeIdea = this.dislikeIdea.bind(this);
@@ -75,47 +76,15 @@ class IdeaBox extends Component {
 
   render() {
     const idea = this.state.idea;
-    const renderUpArrow = () => {
-      if (this.state.liked === true) {
-        return <img className="upArrowActive upArrow" alt="Active up arrow" src={arrowUpActive} onClick={this.likeIdea}/>;
-      } else {
-        return <img src={arrowUp} className="upArrow" alt="Inactive up arrow" onClick={this.likeIdea}/>;
-      }
-    }
-    const renderDownArrow = () => {
-      if (this.state.disliked === true) {
-        return <img className="downArrowActive downArrow" alt="Active down arrow" src={arrowDownActive} onClick={this.dislikeIdea}/>;
-      } else {
-        return <img src={arrowDown} className="downArrow" alt="Inactive down arrow" onClick={this.dislikeIdea}/>;
-      }
-    }
     return (
       <div id={idea._id} key={idea._id} className={`ideaBox ${this.state.boxStyle}`}>
-        <div className="ideaBoxLeft">
-          <p className="ratingLabel ideaBoxLeftLabel">Rating</p>
-          <div className="voting">
-            {renderDownArrow()}
-            <p className="ideaBoxScore">{this.state.score}</p>
-            {renderUpArrow()}
-          </div>
-          {
-            //<h3 className="boostLabel ideaBoxLeftLabel">Boost</h3>
-            //<p>10</p>
-            //<p className="giveBoostButton">Give boost</p>
-          }
-
-          {
-          //<div className="thumbs">
-          //  <i className={`fa fa-thumbs-up likeButton ratingButton ${likedClass}`} aria-hidden="true" onClick={this.likeIdea}></i>
-          //  <i className={`fa fa-thumbs-down dislikeButton ratingButton ${dislikedClass}`} aria-hidden="true" onClick={this.dislikeIdea}></i>
-          //</div>
-          }
-          {
-          //<p>Boost: {this.state.boost}</p>
-          //<p style={{"background-color": "orange"}}>Give boost</p>
-          }
-        </div>
-        <div className="seperator"></div>
+        <VotingSection
+          hideScore={this.state.hideScore}
+          liked={this.state.liked}
+          disliked={this.state.disliked}
+          likeIdea={this.likeIdea}
+          dislikeIdea={this.dislikeIdea}
+          score={this.state.score} />
         <div className="ideaBoxRight">
           <div className="ideaBoxUpper">
             <Link to={`/idea/${idea._id}`} id="titleLink">
@@ -133,6 +102,53 @@ class IdeaBox extends Component {
       </div>
     );
   }
+}
+
+function VotingSection(props) {
+  if (props.hideScore == true) return <div></div>
+  const renderUpArrow = () => {
+    if (props.liked === true) {
+      return <img className="upArrowActive upArrow" alt="Active up arrow" src={arrowUpActive} onClick={props.likeIdea}/>;
+    } else {
+      return <img src={arrowUp} className="upArrow" alt="Inactive up arrow" onClick={props.likeIdea}/>;
+    }
+  }
+  const renderDownArrow = () => {
+    if (props.disliked === true) {
+      return <img className="downArrowActive downArrow" alt="Active down arrow" src={arrowDownActive} onClick={props.dislikeIdea}/>;
+    } else {
+      return <img src={arrowDown} className="downArrow" alt="Inactive down arrow" onClick={props.dislikeIdea}/>;
+    }
+  }
+  return (
+    <div style={{"display": "flex"}}>
+      <div className="ideaBoxLeft">
+        <p className="ratingLabel ideaBoxLeftLabel">Rating</p>
+        <div className="voting">
+          {renderDownArrow()}
+          <p className="ideaBoxScore">{props.score}</p>
+          {renderUpArrow()}
+        </div>
+        {
+          //<h3 className="boostLabel ideaBoxLeftLabel">Boost</h3>
+          //<p>10</p>
+          //<p className="giveBoostButton">Give boost</p>
+        }
+
+        {
+        //<div className="thumbs">
+        //  <i className={`fa fa-thumbs-up likeButton ratingButton ${likedClass}`} aria-hidden="true" onClick={this.likeIdea}></i>
+        //  <i className={`fa fa-thumbs-down dislikeButton ratingButton ${dislikedClass}`} aria-hidden="true" onClick={this.dislikeIdea}></i>
+        //</div>
+        }
+        {
+        //<p>Boost: {this.state.boost}</p>
+        //<p style={{"background-color": "orange"}}>Give boost</p>
+        }
+      </div>
+      <div className="seperator"></div>
+    </div>
+  )
 }
 
 function RevisionSelect(props) {
