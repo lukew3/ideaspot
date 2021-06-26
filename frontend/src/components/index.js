@@ -8,11 +8,11 @@ import MyIdeas from './MyIdeas.js';
 import Nav from './Nav.js';
 import PasswordReset from './PasswordReset.js';
 import Profile from './Profile.js';
-import Register from './Register.js';
+import SignUp from './SignUp.js';
 import RequestPassReset from './RequestPassReset.js';
 import Tags from './Tags.js';
 import Trash from './Trash.js';
 import ViewIdea from './ViewIdea.js';
 
 export { About, CreateIdea, EditIdea, Home, IdeaBox, Login, MyIdeas, Nav, PasswordReset,
-Profile, Register, RequestPassReset, Tags, Trash, ViewIdea };
+Profile, SignUp, RequestPassReset, Tags, Trash, ViewIdea };

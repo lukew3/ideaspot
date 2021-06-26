@@ -27,6 +27,7 @@ input {
   color: lightgrey;
   padding: 5px;
 }
+
 textarea {
   background-color: rgba(26,26,27,0.8);
   border-color: rgba(131, 131, 138, 0.8);

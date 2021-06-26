@@ -38,15 +38,17 @@ class RequestPassReset extends Component {
       <div>
       <form className="authBox" onSubmit={this.handleSubmit}>
         <h1>Request Password Reset</h1>
-        <label>
-          Email:
-        </label>
-        <input
-          name="email"
-          type="text"
-          value={this.state.email}
-          onChange={this.handleInputChange} />
-        <br/>
+        <div className="inputGroup">
+          <label>
+            Email:
+          </label>
+          <input
+            name="email"
+            type="text"
+            value={this.state.email}
+            onChange={this.handleInputChange} />
+          <br/>
+        </div>
         <input type="submit" value="Submit" />
         <p>{this.state.status}</p>
       </form>

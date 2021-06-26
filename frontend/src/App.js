@@ -1,5 +1,5 @@
 import './styles/App.css';
-import { About, Nav, Home, ViewIdea, CreateIdea, Login, Register, MyIdeas, EditIdea,
+import { About, Nav, Home, ViewIdea, CreateIdea, Login, SignUp, MyIdeas, EditIdea,
   Profile, RequestPassReset, PasswordReset, Trash } from './components/index.js';
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 import React, { Component } from "react";
@@ -44,9 +44,9 @@ class App extends Component {
         <Login {...props} globalLogin={this.globalLogin}/>
       )
     }
-    const RegisterIntermediate = (props) => {
+    const SignUpIntermediate = (props) => {
       return (
-        <Register {...props} globalLogin={this.globalLogin}/>
+        <SignUp {...props} globalLogin={this.globalLogin}/>
       )
     }
     const PasswordResetIntermediate = (props) => {
@@ -63,7 +63,7 @@ class App extends Component {
             <Route path="/myIdeas" exact component={MyIdeas} />
             <Route path="/idea/:ideaId" exact component={ViewIdea} />
             <Route path="/login" exact component={LoginIntermediate} />
-            <Route path="/register" exact component={RegisterIntermediate} />
+            <Route path="/register" exact component={SignUpIntermediate} />
             <Route path="/newIdea" exact component={CreateIdea} />
             <Route path="/trash" exact component={Trash} />
             <Route path="/about" exact component={About} />

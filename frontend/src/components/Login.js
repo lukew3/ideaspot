@@ -46,30 +46,35 @@ class Login extends Component {
 
       <form className="authBox" onSubmit={this.handleSubmit}>
         <h1>Login</h1>
-        <label>
-          Username or Email:
-        </label>
-        <input
-          name="username"
-          type="text"
-          value={this.state.username}
-          onChange={this.handleInputChange} />
-        <br/>
-        <label>
-          Password:
-        </label>
-        <br/>
-        <input
-          name="password"
-          type="password"
-          value={this.state.password}
-          onChange={this.handleInputChange} />
-        <br/>
+        <div className="inputGroup">
+          <label>
+            Username or Email:
+          </label>
+          <br/>
+          <input
+            name="username"
+            type="text"
+            value={this.state.username}
+            onChange={this.handleInputChange} />
+          <br/>
+        </div>
+        <div className="inputGroup">
+          <label>
+            Password:
+          </label>
+          <br/>
+          <input
+            name="password"
+            type="password"
+            value={this.state.password}
+            onChange={this.handleInputChange} />
+          <br/>
+          <Link to="/requestPasswordReset" className="forgotPasswordLink">Forgot password?</Link>
+          <br/>
+        </div>
         <input type="submit" value="Submit" />
         <br/>
-        <Link to="/requestPasswordReset">Forgot password</Link>
-        <br/>
-        <p>Don't have an account? <Link to="/register">Sign Up</Link></p>
+        <p className="loginSignUpSwitch">Don't have an account? <Link to="/register">Sign Up</Link></p>
       </form>
       <p>{this.state.status}</p>
       </div>

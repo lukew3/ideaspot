@@ -1,11 +1,39 @@
 .authBox {
-  width: 340px;
+  width: 400px;
   margin: 0 auto;
-  background-color: rgba(26,26,27,0.8);
+  background-color: rgba(34, 34, 34, 0.8);
   border: #686868 1px solid;
-  text-align: center;
   margin-top: 5vh;
   height: 60vh;
+  padding: 20px 50px 50px 50px;
+  border-radius: 10px;
+}
+
+.authBox label {
+  font-weight: bold;
+}
+
+.authBox h1 {
+  text-align: center;
+  margin-bottom: 40px;
+}
+
+.authBox input {
+  border: 1px solid #595757;
+  width: 100%;
+  background-color: #2d2d2d;
+}
+
+.authBox .inputGroup {
+  margin-bottom: 20px;
+}
+
+.authBox a {
+  color: rgb(91, 146, 219);
+}
+
+.forgotPasswordLink {
+  font-size: 10pt;
 }
 
 .authBox * {
@@ -13,17 +41,14 @@
   margin-bottom: 5px;
 }
 
-.authBox input {
-  padding: 5px 12px;
-  font-size: 14px;
-  line-height: 20px;
-  color: #24292e;
-  vertical-align: middle;
-  background-color: #fff;
-  background-repeat: no-repeat;
-  background-position: right 8px center;
-  border: 1px solid #e1e4e8;
-  border-radius: 6px;
-  width: 290px;
-  outline: none;
+.loginSignUpSwitch {
+  text-align: center;
+  margin-top: 20px;
+}
+
+@media only screen and (max-width: 600px) {
+  .authBox {
+    width: 80vw;
+    padding: 20px;
+  }
 }

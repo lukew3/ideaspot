@@ -4,7 +4,7 @@ import { axiosApiInstance } from '../helper.js';
 import {Link} from 'react-router-dom';
 
 
-class Register extends Component {
+class SignUp extends Component {
   constructor(props){
     super(props);
     this.state = {
@@ -47,36 +47,42 @@ class Register extends Component {
       <div>
 
       <form className="authBox" onSubmit={this.handleSubmit}>
-        <h1>Register</h1>
-        <label>
-          Email:
-        <input
-          name="email"
-          type="text"
-          value={this.state.email}
-          onChange={this.handleInputChange} />
-        </label>
-        <br/>
-        <label>
-          Username:
-        <input
-          name="username"
-          type="text"
-          value={this.state.username}
-          onChange={this.handleInputChange} />
-        </label>
-        <br/>
-        <label>
-          Password:
-        <input
-          name="password"
-          type="password"
-          value={this.state.password}
-          onChange={this.handleInputChange} />
-        </label>
-        <br/>
+        <h1>Sign Up</h1>
+        <div className="inputGroup">
+          <label>
+            Email:
+          <input
+            name="email"
+            type="text"
+            value={this.state.email}
+            onChange={this.handleInputChange} />
+          </label>
+          <br/>
+        </div>
+        <div className="inputGroup">
+          <label>
+            Username:
+          <input
+            name="username"
+            type="text"
+            value={this.state.username}
+            onChange={this.handleInputChange} />
+          </label>
+          <br/>
+        </div>
+        <div className="inputGroup">
+          <label>
+            Password:
+          <input
+            name="password"
+            type="password"
+            value={this.state.password}
+            onChange={this.handleInputChange} />
+          </label>
+          <br/>
+        </div>
         <input type="submit" value="Submit" />
-        <p>Already have an account? <Link to="/login">Login</Link></p>
+        <p className="loginSignUpSwitch">Already have an account? <Link to="/login">Login</Link></p>
       </form>
       <p>{this.state.status}</p>
       </div>
@@ -84,4 +90,4 @@ class Register extends Component {
   }
 }
 
-export default Register;
+export default SignUp;
