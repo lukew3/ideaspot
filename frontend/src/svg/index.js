@@ -1,3 +1,4 @@
+import addButton from '../svg/addButton.svg';
 import arrowUp from '../svg/arrow-up.svg';
 import arrowDown from '../svg/arrow-down.svg';
 import arrowUpActive from '../svg/arrow-up-active.svg';
@@ -6,5 +7,5 @@ import optionsButton from '../svg/optionsButton.svg';
 import searchButton from '../svg/searchButton.svg';
 import logo from '../svg/logo.svg';
 
-export { arrowUp, arrowDown, arrowUpActive, arrowDownActive, optionsButton, searchButton,
-  logo };
+export { addButton,arrowUp, arrowDown, arrowUpActive, arrowDownActive, optionsButton,
+  searchButton, logo };

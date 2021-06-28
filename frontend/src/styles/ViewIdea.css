@@ -1,0 +1,37 @@
+.viewIdeaMainContainer {
+  display: flex;
+}
+.viewIdeaLeft {
+  flex-grow: 2;
+}
+.viewIdeaRight {
+  width: 25vw;
+  /* width: 400px */
+  float: right;
+}
+
+.viewIdeaBuilds {
+  color: #D6D6D6;
+  position: relative;
+  background-color: rgba(26,26,27,0.8);
+  margin: 0;
+  margin-top: 20px;
+  margin-right: 25px;
+  border-radius: 5px;
+  border: #686868 1px solid;
+  padding: 2vw;
+  display: block;
+}
+
+.viewIdeaRightBox h2 {
+  margin: 0;
+}
+
+.viewIdeaRightBoxUpper {
+  display: flex;
+  justify-content: space-between;
+}
+
+.addBuildButton {
+  position: relative;
+}

@@ -2,7 +2,9 @@ import React, { Component } from "react";
 import IdeaBox from './IdeaBox.js';
 import { axiosApiInstance } from '../helper.js';
 import { Link } from 'react-router-dom';
-
+import { addButton } from '../svg/index.js';
+import '../styles/ViewIdea.css';
+import '../styles/IdeaBox.css';
 
 class ViewIdea extends Component {
   constructor(props){
@@ -41,22 +43,80 @@ class ViewIdea extends Component {
       comments.push(idea.comments[i]);
     comments.reverse();
     return (
-      <div key={idea._id}>
-        <IdeaBox idea={idea} hideScore={true} boxStyle="full"/>
-        {//<NewComment idea={idea} addCommentLocal={this.addCommentLocal}/>
+      <div className="viewIdeaMainContainer" key={idea._id}>
+        <div className="viewIdeaLeft">
+          <IdeaBox idea={idea} hideScore={false} boxStyle="full"/>
+          { //cheange hidescore to true if you go with the original design
+            //might be a good idea to let the text wrap underneath the score instead of being pushed to the right. THis makes for better reading on mobile
+          }
+
+          {//<NewComment idea={idea} addCommentLocal={this.addCommentLocal}/>
+          }
+          <div className="commentsSection">
+            {(comments).map((comment, index) => (
+              <div className="comment standardBorder" key={index}>
+                {comment.comment}
+                <br/>
+                <Link to={`/${comment.user}`}>{comment.user}</Link>
+              </div>
+            ))}
+          </div>
+        </div>
+        <div className="viewIdeaRight">
+          <IdeaBuilds />
+          {
+            /*
+          <div className="viewIdeaTeams">
+            <div className="addTeamButton"></div>
+            <h2>Teams</h2>
+            <h4>looking for members</h4>
+            {
+              //list links to exisinting products here
+            }
+            <h4>not looking for members</h4>
+            {
+              //list links to builds here
+            }
+            <h4>{} users building</h4>
+            <h4>{} users want to build</h4>
+          </div>
+          */
         }
-        <div className="commentsSection">
-          {(comments).map((comment, index) => (
-            <div className="comment standardBorder" key={index}>
-              {comment.comment}
-              <br/>
-              <Link to={`/${comment.user}`}>{comment.user}</Link>
-            </div>
-          ))}
         </div>
       </div>
     );
   }
+}
+
+function IdeaBuilds(props) {
+  function renderBuildList() {
+    return(
+      <div>
+        <h4>built</h4>
+        <ul></ul>
+      </div>
+    )
+  }
+  function renderExistingList() {
+    return(
+      <div>
+        <h4>similar existing</h4>
+        <ul></ul>
+      </div>
+    )
+  }
+  return(
+    <div className="viewIdeaBuilds viewIdeaRightBox">
+      <div className="viewIdeaRightBoxUpper">
+        <h2>Builds</h2>
+        <img className="addBuildButton" src={addButton} alt="submit build"/>
+      </div>
+      {renderExistingList()}
+      {renderBuildList()}
+      <h4>{0} users building</h4>
+      <h4>{0} users want to build</h4>
+    </div>
+  )
 }
 
 class NewComment extends Component {
