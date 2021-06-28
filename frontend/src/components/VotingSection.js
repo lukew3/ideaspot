@@ -88,13 +88,6 @@ class VotingSection extends Component {
             //<p>10</p>
             //<p className="giveBoostButton">Give boost</p>
           }
-
-          {
-          //<div className="thumbs">
-          //  <i className={`fa fa-thumbs-up likeButton ratingButton ${likedClass}`} aria-hidden="true" onClick={this.likeIdea}></i>
-          //  <i className={`fa fa-thumbs-down dislikeButton ratingButton ${dislikedClass}`} aria-hidden="true" onClick={this.dislikeIdea}></i>
-          //</div>
-          }
           {
           //<p>Boost: {this.state.boost}</p>
           //<p style={{"background-color": "orange"}}>Give boost</p>
