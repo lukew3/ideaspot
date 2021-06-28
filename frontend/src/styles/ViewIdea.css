@@ -8,6 +8,7 @@
   width: 25vw;
   /* width: 400px */
   float: right;
+  margin-right: 25px;
 }
 
 .viewIdeaBuilds {
@@ -16,7 +17,6 @@
   background-color: rgba(26,26,27,0.8);
   margin: 0;
   margin-top: 20px;
-  margin-right: 25px;
   border-radius: 5px;
   border: #686868 1px solid;
   padding: 2vw;
@@ -34,4 +34,18 @@
 
 .addBuildButton {
   position: relative;
+}
+
+@media only screen and (max-width: 600px) {
+  .viewIdeaMainContainer {
+    display: block;
+  }
+  .viewIdeaRight {
+    width: calc(100% - 10px);
+    margin-right: 5px;
+  }
+  /* Builds should be able to collapse and be expanded */
+  .viewIdeaBuilds * {
+    margin: 0;
+  }
 }
