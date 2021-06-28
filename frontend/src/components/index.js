@@ -13,6 +13,7 @@ import RequestPassReset from './RequestPassReset.js';
 import Tags from './Tags.js';
 import Trash from './Trash.js';
 import ViewIdea from './ViewIdea.js';
+import VotingSection from './VotingSection.js';
 
 export { About, CreateIdea, EditIdea, Home, IdeaBox, Login, MyIdeas, Nav, PasswordReset,
-Profile, SignUp, RequestPassReset, Tags, Trash, ViewIdea };
+Profile, SignUp, RequestPassReset, Tags, Trash, ViewIdea, VotingSection };

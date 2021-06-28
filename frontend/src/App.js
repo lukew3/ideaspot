@@ -4,7 +4,7 @@ import { About, Nav, Home, ViewIdea, CreateIdea, Login, SignUp, MyIdeas, EditIde
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 import React, { Component } from "react";
 import Cookie from 'js-cookie';
-
+import axios from 'axios';
 
 class App extends Component {
   constructor(props){
@@ -18,6 +18,11 @@ class App extends Component {
   componentDidMount() {
     const refresh_token = Cookie.get("refresh_token") ? Cookie.get("refresh_token") : null;
     if (refresh_token) {
+      axios.post(`/api/refresh`, {},
+            { headers: { Authorization: `Bearer ${refresh_token}` }}
+          ).then(response => {
+            Cookie.set("access_token", response.data.access_token, { SameSite: 'lax' });
+          })
       this.setState({ "isLoggedIn": true,
                       "username": Cookie.get("username") });
     }

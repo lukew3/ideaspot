@@ -56,3 +56,7 @@ Possible Ideas:
 * For sale
 * Private
 * custom tags
+* Should be tags for how big the project is
+  * Small(build in a day or less)
+  * Medium(could squeeze into a long weekend to a week)
+  * Large(long time to build, probably need a team)

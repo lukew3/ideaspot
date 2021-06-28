@@ -59,7 +59,6 @@ class ViewIdea extends Component {
   }
 }
 
-
 class NewComment extends Component {
   constructor(props) {
     super(props);
