@@ -59,7 +59,7 @@ class VotingSection extends Component {
   }
 
   render() {
-    if (this.state.hideScore == true) return <div></div>
+    if (this.state.hideScore === true) return <div></div>
     const renderUpArrow = () => {
       if (this.state.liked === true) {
         return <img className="upArrowActive upArrow" alt="Active up arrow" src={arrowUpActive} onClick={this.likeIdea}/>;
