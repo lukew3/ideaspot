@@ -4,7 +4,7 @@ import { Tags, VotingSection } from './index.js';
 import { Link } from 'react-router-dom';
 import Cookie from 'js-cookie';
 import '../styles/IdeaBox.css';
-import { axiosApiInstance } from '../helper.js';
+import axiosApiInstance from '../helper.js';
 import { optionsButton } from '../svg/index.js';
 
 class IdeaBox extends Component {

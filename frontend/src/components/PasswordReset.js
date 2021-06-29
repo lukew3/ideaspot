@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import '../styles/Auth.css';
-import { axiosApiInstance } from '../helper.js';
+import axiosApiInstance from '../helper.js';
 import Cookie from 'js-cookie';
 
 

@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import '../styles/CreateIdea.css';
-import { axiosApiInstance } from '../helper.js';
+import axiosApiInstance from '../helper.js';
 
 
 class EditIdea extends Component {

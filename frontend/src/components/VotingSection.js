@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { axiosApiInstance } from '../helper.js';
+import axiosApiInstance from '../helper.js';
 import { arrowUp, arrowDown, arrowUpActive, arrowDownActive } from '../svg/index.js';
 
 

@@ -272,16 +272,40 @@ def get_user(username):
 	user["ideasCount"] = len(user["ideas"])
 	return jsonify(user)
 
+def get_parent_comment_position(previous, comments, seeking_id):
+	for item in comments:
+		if str(item._id) == seeking_id:
+			return [str(item._id)]
+		elif item.replies == []:
+			return False
+		else:
+			previous.append(str(item._id))
+			next_list = get_parent_comment_position(previous, item.replies, seeking_id)
+			if next_list:
+				return previous + next_list
+
 @api.route('/add_comment', methods=['POST'])
 @jwt_required()
 def add_comment():
     data = request.get_json(silent=True)
     idea_id = data.get('ideaId')
+    parent_id = data.get('parentId')
     comment_content = (data.get('commentContent')).strip()
     if comment_content == '':
         return jsonify(status="Empty comment; invalid"), 422
-    db.idea.update_one({"_id": ObjectId(idea_id)},
-                       {'$push': {'comments': {'user': get_jwt_identity(), 'comment': comment_content}}})
+
+	#trace through comments until you find the parent_id,
+	#then, add the comment to that and push changes
+	# if no parent_id, push without search
+    if parent_id == '':
+    	db.idea.update_one({"_id": ObjectId(idea_id)},
+			{'$push': {'comments': {'user': get_jwt_identity(), 'comment': comment_content}}})
+    else:
+        comments = (db.idea.find_one({"_id": ObjectId(idea_id)})).comments
+        id_list = get_parent_comment_position([])
+        print(id_list)
+    print("comment: " + comment_content)
+    print(db.idea.find_one({"_id": ObjectId(idea_id)}))
     return jsonify(user=get_jwt_identity(), comment=comment_content, status='Comment added successfully')
 
 @api.route('/like_idea', methods=['POST'])

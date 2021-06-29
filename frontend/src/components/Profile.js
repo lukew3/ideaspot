@@ -3,7 +3,7 @@ import React, { Component } from "react";
 //import Tags from './Tags.js';
 import { Link } from 'react-router-dom';
 import Cookie from 'js-cookie';
-import { axiosApiInstance } from '../helper.js';
+import axiosApiInstance from '../helper.js';
 
 
 class Profile extends Component {

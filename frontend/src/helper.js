@@ -1,8 +1,7 @@
 import Cookie from 'js-cookie';
 import axios from 'axios';
 
-
-export const axiosApiInstance = axios.create();
+const axiosApiInstance = axios.create();
 
 // Request interceptor for API calls
 axiosApiInstance.interceptors.request.use(
@@ -48,3 +47,5 @@ axiosApiInstance.interceptors.response.use((response) => {
   }
   return Promise.reject(error);
 });
+
+export default axiosApiInstance;

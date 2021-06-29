@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { IdeaBox, ControlBar } from './index.js';
 //import { getToken } from '../helper.js';
-import { axiosApiInstance } from '../helper.js';
+import axiosApiInstance from '../helper.js';
 
 
 class MyIdeas extends Component {

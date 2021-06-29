@@ -35,6 +35,17 @@ textarea {
   color: lightgrey;
 }
 
+h2 {
+  margin: 0;
+}
+
+.normalBox {
+  color: #D6D6D6;
+  background-color: rgba(26,26,27,0.8);
+  border: #686868 1px solid;
+  border-radius: 5px;
+}
+
 .profileGrid {
   display: grid;
   grid-template-columns: 20% 75%;
