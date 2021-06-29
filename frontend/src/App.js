@@ -26,6 +26,7 @@ class App extends Component {
       this.setState({ "isLoggedIn": true,
                       "username": Cookie.get("username") });
     }
+    this.render();
   }
 
   globalLogin = (access_token, refresh_token, username) => {
