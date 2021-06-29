@@ -13,7 +13,7 @@ class Comments extends Component {
   }
 
   addComment = (comment) => {
-    let tempComments = this.state.comments;
+    let tempComments = this.state.comments == undefined ? [] : this.state.comments;
     tempComments.push(comment);
     this.setState({comments: tempComments})
   }
@@ -22,6 +22,7 @@ class Comments extends Component {
     if (this.state.comments !== undefined) {
       return(
         <div id="comments" className="comments normalBox">
+          <h2>Comments</h2>
           <NewComment
             ideaId={this.state.ideaId}
             parentId=""
@@ -62,7 +63,11 @@ class Comment extends Component {
 
   addComment = (comment) => {
     let tempComment = this.state.comment;
-    tempComment.replies.push(comment);
+    if (tempComment.replies) {
+      tempComment.replies.push(comment);
+    } else {
+      tempComment.replies = [comment];
+    }
     this.setState({comment: tempComment})
   }
 

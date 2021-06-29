@@ -41,3 +41,10 @@
   font-size: 11pt;
   color: #888787;
 }
+
+@media only screen and (max-width: 600px) {
+  .comments {
+    margin-left: 5px;
+    margin-right: 5px;
+  }
+}
