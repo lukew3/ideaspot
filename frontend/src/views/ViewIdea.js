@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { IdeaBox, Comments } from './index.js';
+import { IdeaBox, Comments } from '../components/index.js';
 import axiosApiInstance from '../helper.js';
 import { addButton } from '../svg/index.js';
 import '../styles/ViewIdea.css';

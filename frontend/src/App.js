@@ -1,6 +1,7 @@
 import './styles/App.css';
-import { About, Nav, Home, ViewIdea, CreateIdea, Login, SignUp, MyIdeas, EditIdea,
-  Profile, RequestPassReset, PasswordReset, Trash } from './components/index.js';
+import { About, Home, ViewIdea, CreateIdea, Login, SignUp, MyIdeas, EditIdea,
+  Profile, RequestPassReset, PasswordReset, Trash } from './views/index.js';
+import { Nav } from './components/index.js';
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 import React, { Component } from "react";
 import Cookie from 'js-cookie';

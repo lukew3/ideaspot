@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import axiosApiInstance from '../helper.js';
-import { IdeaBox, ControlBar } from './index.js';
+import { IdeaBox, ControlBar } from '../components/index.js';
 
 
 class Home extends Component {

@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { IdeaBox, ControlBar } from './index.js';
+import { IdeaBox, ControlBar } from '../components/index.js';
 //import { getToken } from '../helper.js';
 import axiosApiInstance from '../helper.js';
 

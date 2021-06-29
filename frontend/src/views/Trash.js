@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import axiosApiInstance from '../helper.js';
-import IdeaBox from './IdeaBox.js';
+import { IdeaBox } from '../components/index.js';
 
 
 class Trash extends Component {
