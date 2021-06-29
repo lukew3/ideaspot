@@ -17,10 +17,15 @@ class Comments extends Component {
         <div className="comments normalBox">
           <NewComment ideaId={this.state.ideaId} parentId=""/>
           {(this.state.comments).map((comment, index) => (
-            <div className="comment standardBorder" key={index}>
-              {comment.comment}
-              <br/>
+            <div className="comment" key={index}>
               <Link to={`/${comment.user}`}>{comment.user}</Link>
+              <br/>
+              <div className="commentString">
+                <div className="commentStringLeft"></div>
+                <div className="commentStringRight">
+                  {comment.comment}
+                </div>
+              </div>
             </div>
           ))}
         </div>
@@ -71,7 +76,7 @@ class NewComment extends Component {
 
   render() {
     return(
-      <div>
+      <div className="newCommentGroup">
         <form onSubmit={this.submitComment}>
           <textarea
             type="text"

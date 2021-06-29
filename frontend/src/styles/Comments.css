@@ -13,3 +13,23 @@
   width: calc(100% - 10px);
   resize: vertical;
 }
+
+.commentString {
+  display: flex;
+  margin-top: 2px;
+  margin-bottom: 10px;
+}
+
+.commentStringLeft {
+  width: 2px;
+  height: auto;
+  background-color: #646464;
+  margin-left: 5px;
+  margin-right: 10px;
+}
+.newCommentGroup {
+  margin-bottom: 10px;
+}
+.newCommentInput {
+  padding: 8px;
+}
