@@ -11,11 +11,21 @@ class Comments extends Component {
       comments: props.comments
     }
   }
+
+  addComment = (comment) => {
+    let tempComments = this.state.comments;
+    tempComments.push(comment);
+    this.setState({comments: tempComments})
+  }
+
   render() {
-    if (this.state.comments != undefined) {
+    if (this.state.comments !== undefined) {
       return(
-        <div className="comments normalBox">
-          <NewComment ideaId={this.state.ideaId} parentId=""/>
+        <div id="comments" className="comments normalBox">
+          <NewComment
+            ideaId={this.state.ideaId}
+            parentId=""
+            addComment={this.addComment} />
           {(this.state.comments).map((comment, index) => (
             <Comment
               ideaId={this.state.ideaId}
@@ -29,7 +39,10 @@ class Comments extends Component {
       return(
         <div className="comments normalBox">
           <h2>Comments</h2>
-          <NewComment ideaId={this.state.ideaId} parentId=""/>
+          <NewComment
+            ideaId={this.state.ideaId}
+            parentId=""
+            addComment={this.addComment} />
           No comments
         </div>
       )
@@ -46,21 +59,52 @@ class Comment extends Component {
       parentId: props.parentId,
     }
   }
+
+  addComment = (comment) => {
+    let tempComment = this.state.comment;
+    tempComment.replies.push(comment);
+    this.setState({comment: tempComment})
+  }
+
   render() {
-    return(
-      <div className="comment" key={this.state.comment.comment}> {//key should be comment._id
+    let comment = this.state.comment;
+    if (comment.replies == null) comment.replies = [];
+    let inputVisible = false;
+    const toggleInput = () => {
+      if (inputVisible) {
+        inputVisible = true;
+      } else {
+        inputVisible = false;
       }
-        <Link to={`/${this.state.comment.user}`}>{this.state.comment.user}</Link>
+    }
+    const renderInput = () => {
+      if (inputVisible) {
+        return <NewComment />
+      } else {
+        return <div></div>
+      }
+    }
+    return(
+      <div className="comment" key={comment.comment}> {//key should be comment._id
+      }
+        <Link to={`/${comment.user}`}>{comment.user}</Link>
         <br/>
         <div className="commentString">
           <div className="commentStringLeft"></div>
           <div className="commentStringRight">
-            {this.state.comment.comment}
+            {comment.comment}
             <div className="commentActions">
-              <a href="#" onClick={() => {
-                return <p>Test</p>
-              }}>Reply</a>
+              <a href="#" onClick={toggleInput()}>Reply</a>
             </div>
+            <div>
+              {(comment.replies).map((comment, index) => (
+                <Comment
+                  ideaId={this.state.ideaId}
+                  comment={comment}
+                  parentId={""} />
+              ))}
+            </div>
+            {renderInput()}
           </div>
         </div>
       </div>
@@ -96,6 +140,10 @@ class NewComment extends Component {
       ideaId: this.state.ideaId,
       parentId: this.state.parentId,
       commentContent: this.state.commentInput,
+    }).then(() => {
+      let newCommentObj = { user: "lukew3", comment: this.state.commentInput }
+      this.props.addComment(newCommentObj);
+      this.setState({commentInput: ""})
     })
   }
 
