@@ -78,10 +78,17 @@ class IdeaForm extends Component {
     if (username === null) {
       this.props.history.push(`/login`);
     }
+    const renderHeader = () => {
+      if (this.state.formType === "create") {
+        return <h1>Create an Idea</h1>;
+      } else if (this.state.formType === "edit") {
+        return <h1>Edit Idea</h1>;
+      }
+    }
     return (
       <div className="ideaFormBoxContainer">
       <div className="standardBorder ideaFormBox">
-        <h1>Create an Idea</h1>
+        {renderHeader()}
         <form onSubmit={this.handleSubmit}>
           <input
             name="title"
