@@ -32,3 +32,4 @@ Clicking outside of idea options menu should close the menu
 Could be an inspiration tag
 * You post ideas of projects that you have already built
 
+Empty all trash button on trash page
