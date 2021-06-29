@@ -1,5 +1,4 @@
 import React, { Component } from "react";
-import axiosApiInstance from '../helper.js';
 import { IdeaForm } from '../components/index.js';
 
 class EditIdea extends Component {

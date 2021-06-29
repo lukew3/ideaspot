@@ -12,6 +12,12 @@ a {
   color: lightgrey;
 }
 
+.a {
+  text-decoration: none;
+  color: lightgrey;
+  cursor: pointer;
+}
+
 a:hover {
   filter: brightness(80%);
 }

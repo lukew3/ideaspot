@@ -1,7 +1,5 @@
 import React, { Component } from "react";
 import '../styles/ControlBar.css';
-import { Link } from 'react-router-dom';
-import { logo, searchButton } from '../svg/index.js';
 
 class ControlBar extends Component {
   constructor(props){

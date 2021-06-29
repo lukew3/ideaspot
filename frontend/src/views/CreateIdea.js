@@ -1,7 +1,5 @@
 import React, { Component } from "react";
-import axiosApiInstance from '../helper.js';
 import { IdeaForm } from '../components/index.js';
-import Cookie from 'js-cookie';
 
 class CreateIdea extends Component {
   render() {

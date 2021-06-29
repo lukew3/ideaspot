@@ -44,10 +44,10 @@ class LoginNav extends Component {
               document.getElementById("navAccountMenu").style.display = 'none';
             }
           }}>
-            <a href="#" style={{"display": "flex"}}>
+            <p className="a" style={{"display": "flex"}}>
               <p>Account</p>
               <p id="accountDropdownArrow">▼</p>
-            </a>
+            </p>
             <div className="customDropMenu" id="navAccountMenu" style={{"display": "none"}}>
               <p>Logged in as:</p>
               <Link to={`/${this.props.username}`} className="dropdownItem">{this.props.username}</Link>

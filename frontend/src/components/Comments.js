@@ -13,7 +13,7 @@ class Comments extends Component {
   }
 
   addComment = (comment) => {
-    let tempComments = this.state.comments == undefined ? [] : this.state.comments;
+    let tempComments = this.state.comments === undefined ? [] : this.state.comments;
     tempComments.push(comment);
     this.setState({comments: tempComments})
   }
@@ -99,7 +99,7 @@ class Comment extends Component {
           <div className="commentStringRight">
             {comment.comment}
             <div className="commentActions">
-              <a href="#" onClick={toggleInput()}>Reply</a>
+              <p className="a" onClick={toggleInput()}>Reply</p>
             </div>
             <div>
               {(comment.replies).map((comment, index) => (

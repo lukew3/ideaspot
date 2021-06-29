@@ -105,7 +105,7 @@ function OwnerOptions(props) {
         <div className="ownerOptionsMenu customDropMenu" style={{"display": "none"}} id={props.idea._id + "OptionsMenu"}>
           <Link to={`/editIdea/${props.idea._id}`} className="editIdeaLink">Edit idea</Link>
           <div className="ownerOptionsMenuDivider"></div>
-          <a className="deleteIdeaLink" href="#" onClick={() => {deleteIdea()}}>Delete Idea</a>
+          <p className="a deleteIdeaLink" onClick={() => {deleteIdea()}}>Delete Idea</p>
         </div>
       </div>
     );

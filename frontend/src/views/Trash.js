@@ -38,17 +38,17 @@ class Trash extends Component {
           <div className="ideaBox" id={"trash" + idea._id}>
             <div style={{ "display": "block"}}>
               <p>Deleting on {idea.delete_date}:</p>
-              <a href="#" onClick={() => {
+              <p className="a" onClick={() => {
                 axiosApiInstance.post(`/api/restore_idea/${idea._id}`).then(() => {
                   document.getElementById(`trash${idea._id}`).innerHTML = "Idea restored";
                 })
-              }}>Restore</a>
+              }}>Restore</p>
               <br style={{"margin-bottom": "10px"}}></br>
-              <a href="#" onClick={() => {
+              <p className="a" onClick={() => {
                 axiosApiInstance.delete(`/api/delete_idea/${idea._id}`).then(() => {
                   document.getElementById(`trash${idea._id}`).innerHTML = "Idea deleted";
                 })
-              }}>Delete forever</a>
+              }}>Delete forever</p>
             </div>
             <IdeaBox key={idea._id} idea={idea} hideOptions={true} boxStyle="normal"/>
           </div>
