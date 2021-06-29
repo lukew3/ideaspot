@@ -1,0 +1,59 @@
+.controlBar {
+  padding: 2px;
+  margin-left: 25px;
+  margin-right: 25px;
+  margin-top: 20px;
+  border-radius: 5px;
+  border: #686868 1px solid;
+  padding: 15px;
+  padding-left: 40px;
+  padding-right: 40px;
+  text-align: center;
+}
+
+.innerControlBar {
+  display: flex;
+  width: 570px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.controlBarSection {
+  display: flex;
+}
+
+.controlBarSection * {
+  margin: 0;
+}
+
+.controlBarSection p {
+  margin-top: 10px;
+  margin-right: 5px;
+}
+
+.controlBarSelect {
+  height: 30px;
+  margin-top: 10px;
+}
+
+.controlBarDivider {
+  background-color: #646464;
+  width: 1px;
+  height: 30px;
+  margin-top: 5px;
+  margin-left: 15px;
+  margin-right: 10px;
+}
+
+@media only screen and (max-width: 600px) {
+  .innerControlBar {
+    display: block
+  }
+  /*
+  .controlBarSection p {
+    margin-right: 10px;
+  }*/
+  .controlBarDivider {
+    display: none;
+  }
+}

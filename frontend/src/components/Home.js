@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { axiosApiInstance } from '../helper.js';
-import IdeaBox from './IdeaBox.js';
+import { IdeaBox, ControlBar } from './index.js';
 
 
 class Home extends Component {
@@ -45,6 +45,7 @@ class Home extends Component {
     }
     return (
       <div className="ideaFeed">
+        <ControlBar />
         {this.state.ideasList.map((idea, index) => (
           <IdeaBox key={idea._id} idea={idea} boxStyle="normal"/>
         ))}

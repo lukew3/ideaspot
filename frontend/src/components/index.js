@@ -1,4 +1,5 @@
 import About from './About.js';
+import ControlBar from './ControlBar.js';
 import CreateIdea from './CreateIdea.js';
 import EditIdea from './EditIdea.js';
 import Home from './Home.js';
@@ -15,5 +16,6 @@ import Trash from './Trash.js';
 import ViewIdea from './ViewIdea.js';
 import VotingSection from './VotingSection.js';
 
-export { About, CreateIdea, EditIdea, Home, IdeaBox, Login, MyIdeas, Nav, PasswordReset,
-Profile, SignUp, RequestPassReset, Tags, Trash, ViewIdea, VotingSection };
+export { About, ControlBar, CreateIdea, EditIdea, Home, IdeaBox, Login, MyIdeas,
+  Nav, PasswordReset, Profile, SignUp, RequestPassReset, Tags, Trash, ViewIdea,
+  VotingSection };
