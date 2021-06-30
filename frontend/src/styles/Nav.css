@@ -1,31 +1,44 @@
 .navbar {
   background-color: rgba(26,26,27,0.8);
   width: 100%;
-  height: 70px;
+  height: 90px;
   border-bottom: #686868 1px solid;
 }
 
-.innerNav {
+.mainNav {
   margin-left: 25px;
   margin-right: 25px;
   display: flex;
   flex-wrap: nowrap;
   justify-content: space-between;
 }
+.subNav {
+  /*display: none;*/
+  margin-left: 35px;
+  margin-right: 25px;
+  display: flex;
+}
 
-.navbar a,
-.navbar .a {
+.subNav a {
+  margin: 0;
+  margin-right: 10px;
+  padding: 0;
+}
+
+.mainNav a,
+.mainNav .a {
   color: #D6D6D6;
   text-decoration: none;
   float: left;
   text-align: center;
-  padding: 10px;
+  padding: 5px 10px 5px 10px;
   position: relative;
 }
 
 .navLogo {
   width: 150px;
   margin-top: 2px;
+  margin-bottom: -15px;
 }
 
 .navRight {
@@ -47,7 +60,7 @@
 .navSearchBarGroup {
   display: inline-block;
   flex-grow: 1;
-  margin-top: 21px;
+  margin-top: 15px;
   margin-left: 15px;
   margin-right: 15px;
 }

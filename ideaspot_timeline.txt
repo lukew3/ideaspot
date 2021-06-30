@@ -10,16 +10,12 @@ Search
 ---
 Tags
 ---
-Redesigned view idea page
----
 Infinity Scroll
 After you get to the last 5 items on page, load 20 more
 ---
 Status
 ---
 Ability for other users to request edits
----
-Comments
 ---
 When requesting many ideas, only transfer the amount of text that would show up on the homepage
 * The entire idea doesn't have to be transfered to show it on the home page
