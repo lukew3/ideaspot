@@ -143,15 +143,16 @@
     margin-right: 0;
   }
   .navbar {
-    padding-bottom: 50px;
+    padding-bottom: 35px;
   }
   .navSearchBarGroup {
     position: absolute;
-    margin-top: 80px;
+    margin-top: 65px;
     width: calc(100% - 35px);
     margin-left: 5px;
   }
-  .navbar a {
+  .navbar a,
+  .navbar .a {
     padding: 5px;
   }
 }

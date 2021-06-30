@@ -30,3 +30,10 @@
   resize: vertical;
   padding: 8px;
 }
+
+.markdownWarning {
+  margin: 0;
+  font-size: 11pt;
+  color: lightgrey;
+  margin-top: 10px;
+}

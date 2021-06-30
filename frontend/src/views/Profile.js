@@ -1,6 +1,5 @@
 import React, { Component } from "react";
-//import ReactMarkdown from 'react-markdown';
-//import Tags from './Tags.js';
+import '../styles/Profile.css';
 import { Link } from 'react-router-dom';
 import Cookie from 'js-cookie';
 import axiosApiInstance from '../helper.js';
