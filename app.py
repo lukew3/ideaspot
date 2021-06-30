@@ -15,7 +15,7 @@ with open('config.json') as config_file:
 		config = json.load(config_file)
 
 client = MongoClient()
-db = client.buildmyidea
+db = client.ideaspot
 cors = CORS()
 bcrypt = Bcrypt()
 
@@ -133,7 +133,7 @@ def request_password_reset():
 	if not (user):
 		return jsonify({"msg": "No account with the provided email"}), 422
 	access_token = create_access_token(identity=user["username"])
-	body = f"Click the following link to reset your password: \nhttps://buildmyidea.tk/passwordReset/{access_token}"
+	body = f"Click the following link to reset your password: \nhttps://ideaspot.org/passwordReset/{access_token}"
 	send_email(email, "Password reset", body)
 	return jsonify(message="Email sent")
 
