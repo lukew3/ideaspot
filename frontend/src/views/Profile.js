@@ -17,6 +17,8 @@ class Profile extends Component {
 
   componentDidMount() {
     axiosApiInstance.get(`/api/get_user/${this.props.match.params.username}`).then(response => {
+      if (response.data.bio == undefined) response.data.bio = "";
+      if (response.data.buildCount == undefined) response.data.buildCount = 0;
       this.setState({ user: response.data });
     }).catch(error => {
       console.log(error);
@@ -27,21 +29,28 @@ class Profile extends Component {
     return (
       <div className="profilePage">
         <div className="profileGrid">
-          <div className="profileStats standardBorder">
-            <h1>{this.state.user.username}</h1>
+          <div className="profileOverview standardBorder">
+            <h1 className="profileUsername">{this.state.user.username}</h1>
+            <p>{this.state.user.bio}</p>
             <EditProfile user={this.state.user.username}/>
-            <div>
-             <h2>Stats:</h2>
-             <p>Created ideas: {this.state.user.ideasCount}</p>
-             <p>Rep: {this.state.user.ideasCount}</p>
-             {//should be a rep breakdown that shows on hover(possibly click for mobile)
-               //how much is earned from created ideas, built ideas, suggestions, etc.
-               //could have public rep to show contributions to the platform and private rep for how the user uses the platform for themselves
-             }
+            <div className="profileStats">
+              <p className="profileStat"><strong>{this.state.user.ideasCount}</strong> reputation earned</p>
+              <p className="profileStat"><strong>{this.state.user.ideasCount}</strong> ideas written</p>
+              <p className="profileStat"><strong>{this.state.user.buildCount}</strong> ideas built</p>
+
+              {//should be a rep breakdown that shows on hover(possibly click for mobile)
+                //how much is earned from created ideas, built ideas, suggestions, etc.
+                //could have public rep to show contributions to the platform and private rep for how the user uses the platform for themselves
+              }
              </div>
           </div>
-          <div className="profileIdeas standardBorder">
-            <h2>Ideas:</h2>
+
+          <div className="profileRight standardBorder">
+            <div className="profileSectionSelector">
+              <div className="profileSelectorItem selActive selIdeas">Ideas ({this.state.user.ideasCount})</div>
+              <div className="profileSelectorItem selBuilds">Builds ({this.state.user.buildCount})</div>
+              <div className="profileSelectorItem selTeams">Teams</div>
+            </div>
             <div className="ideaFeed">
               {this.state.user.ideas.map((idea, index) => (
                 <div className="standardBorder profileIdea">
@@ -61,14 +70,13 @@ function EditProfile(props) {
   const username = Cookie.get("username") ? Cookie.get("username") : null;
   if (username === props.user) {
     return(
-      <div className="editProfileButton">
-        <p  className="orangeLink">Edit</p>
-        <Link to={'/trash'} className="redLink">View Trash</Link>
+      <div type="button" className="editProfileButton">
+        <p>Edit Profile</p>
       </div>
     );
   } else {
     return(
-      <div className="editProfileButton"></div>
+      <div></div>
     );
   }
 }
