@@ -303,12 +303,20 @@ def get_parent_comment_position(previous, comments, seeking_id):
 			if next_list:
 				return previous + next_list
 
+def comments_push_query_creator(parent_ids):
+	push_location = "comments.$[comment1].replies"
+	array_filters = [ {"comment1._id": ObjectId(parent_ids[0])} ]
+	for i in range(len(parent_ids)-1):
+		push_location += f".$[reply{i}].replies"
+		array_filters.append({f"reply{i}._id": ObjectId(parent_ids[i+1])})
+	return push_location, array_filters
+
 @api.route('/add_comment', methods=['POST'])
 @jwt_required()
 def add_comment():
     data = request.get_json(silent=True)
     idea_id = data.get('ideaId')
-    parent_id = data.get('parentId')
+    parent_ids = data.get('parentIds')
     comment_content = (data.get('commentContent')).strip()
     if comment_content == '':
         return jsonify(status="Empty comment; invalid"), 422
@@ -316,19 +324,15 @@ def add_comment():
 	#trace through comments until you find the parent_id,
 	#then, add the comment to that and push changes
 	# if no parent_id, push without search
-    if parent_id == "":
+    if parent_ids == []:
     	db.idea.update_one({"_id": ObjectId(idea_id)},
 			{'$push': {'comments': {'_id': new_id, 'user': get_jwt_identity(), 'comment': comment_content}}})
     else:
-        push_location = f"comments.$[comment1].replies"
-        array_filters = [ {"comment1._id": ObjectId(parent_id)} ]
+        push_location, array_filters = comments_push_query_creator(parent_ids)
         db.idea.update_one({"_id": ObjectId(idea_id)},
             {'$push': {push_location: {'_id': ObjectId(new_id), 'user': get_jwt_identity(), 'comment': comment_content}}},
 			upsert=False,
 			array_filters=array_filters)
-    print("parent_id: " + str(parent_id))
-    print("comment: " + comment_content)
-    print(db.idea.find_one({"_id": ObjectId(idea_id)}))
     return jsonify(user=get_jwt_identity(), comment=comment_content, status='Comment added successfully')
 
 @api.route('/like_idea', methods=['POST'])

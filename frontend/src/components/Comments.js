@@ -25,13 +25,13 @@ class Comments extends Component {
           <h2>Comments</h2>
           <NewComment
             ideaId={this.state.ideaId}
-            parentId={""}
+            parentIds={[]}
             addComment={this.addComment} />
           {(this.state.comments).map((comment, index) => (
             <Comment
               ideaId={this.state.ideaId}
               comment={comment}
-              parentId={""} />
+              parentIds={[]} />
           ))}
         </div>
       );
@@ -42,7 +42,7 @@ class Comments extends Component {
           <h2>Comments</h2>
           <NewComment
             ideaId={this.state.ideaId}
-            parentId={""}
+            parentIds={[]}
             addComment={this.addComment} />
           No comments
         </div>
@@ -58,6 +58,7 @@ class Comment extends Component {
       ideaId: props.ideaId,
       comment: props.comment,
       inputVisible: false,
+      parentIds: props.parentIds,
     }
   }
 
@@ -82,7 +83,7 @@ class Comment extends Component {
       if (this.state.inputVisible) {
         return <NewComment
           ideaId={this.state.ideaId}
-          parentId={this.state.comment._id}
+          parentIds={this.state.parentIds.concat(this.state.comment._id)}
           addComment={this.addComment}
           hideInput={this.hideInput}/>
       } else {
@@ -107,7 +108,8 @@ class Comment extends Component {
               {(comment.replies).map((comment, index) => (
                 <Comment
                   ideaId={this.state.ideaId}
-                  comment={comment}/>
+                  comment={comment}
+                  parentIds={this.state.parentIds.concat(this.state.comment._id)}/>
               ))}
             </div>
             {renderInput()}
@@ -125,7 +127,7 @@ class NewComment extends Component {
     this.state = {
       ideaId: props.ideaId,
       commentInput: "",
-      parentId: props.parentId //id of the parent comment, empty if no parent
+      parentIds: props.parentIds //id of the parent comment, empty if no parent
     }
     this.handleInputChange = this.handleInputChange.bind(this);
     this.submitComment = this.submitComment.bind(this);
@@ -144,7 +146,7 @@ class NewComment extends Component {
     event.preventDefault();
     axiosApiInstance.post('/api/add_comment', {
       ideaId: this.state.ideaId,
-      parentId: this.state.parentId,
+      parentIds: this.state.parentIds,
       commentContent: this.state.commentInput,
     }).then(() => {
       let newCommentObj = { user: "lukew3", comment: this.state.commentInput }
