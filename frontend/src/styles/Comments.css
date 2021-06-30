@@ -9,6 +9,11 @@
   margin-bottom: 10px;
 }
 
+.commentUsername {
+  /*color: #5fb38f;*/
+  color: #acacac;
+}
+
 .comment {
   margin-top: 10px;
 }

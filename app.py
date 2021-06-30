@@ -318,9 +318,6 @@ def add_comment():
     else:
         db.idea.update_one({"_id": ObjectId(idea_id), "comments._id": ObjectId(parent_id)},
             {'$push': {'comments.$.replies': {'_id': ObjectId(new_id), 'user': get_jwt_identity(), 'comment': comment_content}}})
-        #comments = (db.idea.find_one({"_id": ObjectId(idea_id)}))["comments"]
-        #id_list = get_parent_comment_position([], comments, parent_ids)
-        #print(id_list)
     print("parent_id: " + str(parent_id))
     print("comment: " + comment_content)
     print(db.idea.find_one({"_id": ObjectId(idea_id)}))

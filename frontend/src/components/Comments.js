@@ -71,6 +71,10 @@ class Comment extends Component {
     this.setState({comment: tempComment})
   }
 
+  hideInput = () => {
+    this.setState({inputVisible: !this.state.inputVisible});
+  }
+
   render() {
     let comment = this.state.comment;
     if (comment.replies == null) comment.replies = [];
@@ -79,7 +83,8 @@ class Comment extends Component {
         return <NewComment
           ideaId={this.state.ideaId}
           parentId={this.state.comment._id}
-          addComment={this.addComment}/>
+          addComment={this.addComment}
+          hideInput={this.hideInput}/>
       } else {
         return <div></div>
       }
@@ -87,7 +92,7 @@ class Comment extends Component {
     return(
       <div className="comment" key={comment.comment}> {//key should be comment._id
       }
-        <Link to={`/${comment.user}`}>{comment.user}</Link>
+        <Link to={`/${comment.user}`} className="commentUsername">{comment.user}</Link>
         <br/>
         <div className="commentString">
           <div className="commentStringLeft"></div>
@@ -145,6 +150,9 @@ class NewComment extends Component {
       let newCommentObj = { user: "lukew3", comment: this.state.commentInput }
       this.props.addComment(newCommentObj);
       this.setState({commentInput: ""})
+      if (this.props.hideInput) {
+        this.props.hideInput();
+      }
     })
   }
 
