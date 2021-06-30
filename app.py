@@ -56,6 +56,15 @@ def format_ldl(idea, username, ldl):
 		idea[ldl + "d"] = False
 	return idea
 
+def serialize_comment_thread(comment):
+	comment["_id"] = str(comment["_id"])
+	try:
+		for i in range(len(comment["replies"])):
+			comment["replies"][i] = serialize_comment_thread(comment["replies"][i])
+	except Exception:
+		pass
+	return comment
+
 def format_idea(idea, username, revNum=-1):
 	#formats the idea before it is sent
 	idea = serialize(idea)
@@ -68,6 +77,12 @@ def format_idea(idea, username, revNum=-1):
 	idea["revisionTimes"] = []
 	for revision in idea["revisions"]:
 		idea["revisionTimes"].append(revision["time"])
+
+	try:
+		for i in range(len(idea["comments"])):
+			idea["comments"][i] = serialize_comment_thread(idea["comments"][i])
+	except Exception:
+		pass
 	return idea
 
 @app.route('/')
@@ -274,13 +289,13 @@ def get_user(username):
 
 def get_parent_comment_position(previous, comments, seeking_id):
 	for item in comments:
-		if str(item._id) == seeking_id:
-			return [str(item._id)]
+		if str(item["_id"]) == seeking_id:
+			return [str(item["_id"])]
 		elif item.replies == []:
 			return False
 		else:
 			previous.append(str(item._id))
-			next_list = get_parent_comment_position(previous, item.replies, seeking_id)
+			next_list = get_parent_comment_position(previous, item["replies"], seeking_id)
 			if next_list:
 				return previous + next_list
 
@@ -293,16 +308,16 @@ def add_comment():
     comment_content = (data.get('commentContent')).strip()
     if comment_content == '':
         return jsonify(status="Empty comment; invalid"), 422
-
+    new_id = ObjectId()
 	#trace through comments until you find the parent_id,
 	#then, add the comment to that and push changes
 	# if no parent_id, push without search
     if parent_id == '':
     	db.idea.update_one({"_id": ObjectId(idea_id)},
-			{'$push': {'comments': {'user': get_jwt_identity(), 'comment': comment_content}}})
+			{'$push': {'comments': {'_id': new_id, 'user': get_jwt_identity(), 'comment': comment_content}}})
     else:
-        comments = (db.idea.find_one({"_id": ObjectId(idea_id)})).comments
-        id_list = get_parent_comment_position([])
+        comments = (db.idea.find_one({"_id": ObjectId(idea_id)}))["comments"]
+        id_list = get_parent_comment_position([], comments, parent_id)
         print(id_list)
     print("comment: " + comment_content)
     print(db.idea.find_one({"_id": ObjectId(idea_id)}))

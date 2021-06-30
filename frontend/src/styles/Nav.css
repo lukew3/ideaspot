@@ -13,7 +13,8 @@
   justify-content: space-between;
 }
 
-.navbar a {
+.navbar a,
+.navbar .a {
   color: #D6D6D6;
   text-decoration: none;
   float: left;

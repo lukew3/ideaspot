@@ -35,3 +35,6 @@ Could be an inspiration tag
 Empty all trash button on trash page
 
 Don't submit an edit if an edit was not made
+
+Close menu on click outside
+* https://stackoverflow.com/questions/32553158/detect-click-outside-react-component

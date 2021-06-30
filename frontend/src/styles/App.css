@@ -16,6 +16,11 @@ a {
   text-decoration: none;
   color: lightgrey;
   cursor: pointer;
+  margin: 0;
+}
+
+.a:hover {
+  filter: brightness(80%);
 }
 
 a:hover {

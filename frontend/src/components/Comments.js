@@ -58,6 +58,7 @@ class Comment extends Component {
       ideaId: props.ideaId,
       comment: props.comment,
       parentId: props.parentId,
+      inputVisible: false,
     }
   }
 
@@ -71,20 +72,26 @@ class Comment extends Component {
     this.setState({comment: tempComment})
   }
 
+  toggleInput = () => {
+    if (this.state.inputVisible) {
+      this.setState({inputVisible: true});
+    } else {
+      this.setState({inputVisible: false});
+    }
+  }
+  
   render() {
     let comment = this.state.comment;
     if (comment.replies == null) comment.replies = [];
     let inputVisible = false;
     const toggleInput = () => {
-      if (inputVisible) {
-        inputVisible = true;
-      } else {
-        inputVisible = false;
-      }
+      this.toggleInput();
     }
     const renderInput = () => {
-      if (inputVisible) {
-        return <NewComment />
+      if (this.state.inputVisible) {
+        return <NewComment
+          ideaId={this.state.ideaId}
+          parentId={this.state.comment._id}/>
       } else {
         return <div></div>
       }
@@ -99,7 +106,9 @@ class Comment extends Component {
           <div className="commentStringRight">
             {comment.comment}
             <div className="commentActions">
-              <p className="a" onClick={toggleInput()}>Reply</p>
+              <p className="a" onClick={() => {
+                this.setState({inputVisible: !this.state.inputVisible});
+              }}>Reply</p>
             </div>
             <div>
               {(comment.replies).map((comment, index) => (
