@@ -321,9 +321,6 @@ def add_comment():
     if comment_content == '':
         return jsonify(status="Empty comment; invalid"), 422
     new_id = ObjectId()
-	#trace through comments until you find the parent_id,
-	#then, add the comment to that and push changes
-	# if no parent_id, push without search
     if parent_ids == []:
     	db.idea.update_one({"_id": ObjectId(idea_id)},
 			{'$push': {'comments': {'_id': new_id, 'user': get_jwt_identity(), 'comment': comment_content}}})
