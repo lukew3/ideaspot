@@ -320,8 +320,12 @@ def add_comment():
     	db.idea.update_one({"_id": ObjectId(idea_id)},
 			{'$push': {'comments': {'_id': new_id, 'user': get_jwt_identity(), 'comment': comment_content}}})
     else:
-        db.idea.update_one({"_id": ObjectId(idea_id), "comments._id": ObjectId(parent_id)},
-            {'$push': {'comments.$.replies': {'_id': ObjectId(new_id), 'user': get_jwt_identity(), 'comment': comment_content}}})
+        push_location = f"comments.$[comment1].replies"
+        array_filters = [ {"comment1._id": ObjectId(parent_id)} ]
+        db.idea.update_one({"_id": ObjectId(idea_id)},
+            {'$push': {push_location: {'_id': ObjectId(new_id), 'user': get_jwt_identity(), 'comment': comment_content}}},
+			upsert=False,
+			array_filters=array_filters)
     print("parent_id: " + str(parent_id))
     print("comment: " + comment_content)
     print(db.idea.find_one({"_id": ObjectId(idea_id)}))
