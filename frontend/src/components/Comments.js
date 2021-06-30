@@ -25,7 +25,7 @@ class Comments extends Component {
           <h2>Comments</h2>
           <NewComment
             ideaId={this.state.ideaId}
-            parentId=""
+            parentId={""}
             addComment={this.addComment} />
           {(this.state.comments).map((comment, index) => (
             <Comment
@@ -42,7 +42,7 @@ class Comments extends Component {
           <h2>Comments</h2>
           <NewComment
             ideaId={this.state.ideaId}
-            parentId=""
+            parentId={""}
             addComment={this.addComment} />
           No comments
         </div>
@@ -57,7 +57,6 @@ class Comment extends Component {
     this.state = {
       ideaId: props.ideaId,
       comment: props.comment,
-      parentId: props.parentId,
       inputVisible: false,
     }
   }
@@ -72,26 +71,15 @@ class Comment extends Component {
     this.setState({comment: tempComment})
   }
 
-  toggleInput = () => {
-    if (this.state.inputVisible) {
-      this.setState({inputVisible: true});
-    } else {
-      this.setState({inputVisible: false});
-    }
-  }
-  
   render() {
     let comment = this.state.comment;
     if (comment.replies == null) comment.replies = [];
-    let inputVisible = false;
-    const toggleInput = () => {
-      this.toggleInput();
-    }
     const renderInput = () => {
       if (this.state.inputVisible) {
         return <NewComment
           ideaId={this.state.ideaId}
-          parentId={this.state.comment._id}/>
+          parentId={this.state.comment._id}
+          addComment={this.addComment}/>
       } else {
         return <div></div>
       }
@@ -114,8 +102,7 @@ class Comment extends Component {
               {(comment.replies).map((comment, index) => (
                 <Comment
                   ideaId={this.state.ideaId}
-                  comment={comment}
-                  parentId={""} />
+                  comment={comment}/>
               ))}
             </div>
             {renderInput()}

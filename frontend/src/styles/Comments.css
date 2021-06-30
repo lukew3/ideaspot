@@ -9,6 +9,10 @@
   margin-bottom: 10px;
 }
 
+.comment {
+  margin-top: 10px;
+}
+
 .newCommentInput {
   width: calc(100% - 10px);
   resize: vertical;
