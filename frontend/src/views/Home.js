@@ -45,7 +45,9 @@ class Home extends Component {
     }
     return (
       <div className="ideaFeed">
-        <ControlBar />
+        {
+          //<ControlBar />
+        }
         {this.state.ideasList.map((idea, index) => (
           <IdeaBox key={idea._id} idea={idea} boxStyle="normal"/>
         ))}
