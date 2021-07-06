@@ -329,22 +329,56 @@ def comments_delete_query_creator(parent_ids):
 		array_filters.append({f"reply{i}._id": ObjectId(parent_ids[i+1])})
 	return push_location, array_filters
 
+def get_comment_replies(idea_id, ids_list):
+	""" Returns true if the comment has replies, false if it doesn't """
+	idea = db.idea.find_one({"_id": ObjectId(idea_id)})
+	comment = {}
+	for item in idea['comments']:
+		if str(item['_id']) == ids_list[0]:
+			comment = item
+	i = 0
+	for this_id in ids_list:
+		if i == 0:
+			i = 1
+			continue
+		#print(comment)
+		#print(comment['replies'])
+		for item in comment['replies']:
+			if str(item['_id']) == this_id:
+				comment = item
+	try:
+		return comment['replies']
+	except Exception:
+		return []
+
 @api.route('/delete_comment', methods=['POST'])
 @jwt_required()
 def delete_comment():
 	data = request.get_json(silent=True)
-	print(data)
 	idea_id = data.get('ideaId')
 	ids_list = data.get('idsList') #list of parent ids including the current id
 	# use $set to set comment.comment to <Deleted> and comment.user to <Deleted>
 	idea = db.idea.find_one({"_id": ObjectId(idea_id)})
 	if get_jwt_identity() != idea['creator']:
 		return jsonify(status='Must be signed in as idea creator to delete comment'), 403
-	push_location, array_filters = comments_delete_query_creator(ids_list)
-	db.idea.update_one({"_id": ObjectId(idea_id)},
-		{'$set': {push_location: {'_id': ObjectId(ids_list[-1]), 'user': "<Deleted>", 'comment': "<Deleted>"}}},
-		upsert=False,
-		array_filters=array_filters)
+	#Set text and user to <Deleted> if there are replies but remove completely if there are not
+	replies = get_comment_replies(idea_id, ids_list)
+	if (len(replies) > 0):
+		push_location, array_filters = comments_delete_query_creator(ids_list)
+		db.idea.update_one({"_id": ObjectId(idea_id)},
+			{'$set': {push_location: {'_id': ObjectId(ids_list[-1]), 'user': "<Deleted>", 'comment': "<Deleted>", 'replies': replies}}},
+			upsert=False,
+			array_filters=array_filters)
+	else:
+		if len(ids_list) == 1:
+			pull_location = "comments"
+			array_filters = []
+		else:
+			pull_location, array_filters = comments_push_query_creator(ids_list[:-1])
+		db.idea.update_one({"_id": ObjectId(idea_id)},
+            {'$pull': {pull_location: {'_id': ObjectId(ids_list[-1])}}},
+			upsert=False,
+			array_filters=array_filters)
 	return jsonify(status='Comment deleted successfully')
 
 
