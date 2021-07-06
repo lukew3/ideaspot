@@ -126,6 +126,7 @@ class Comment extends Component {
               {renderCommentOwnerOptions()}
 
             </div>
+            {renderInput()}
             <div>
               {(comment.replies).map((comment, index) => (
                 <Comment
@@ -134,7 +135,6 @@ class Comment extends Component {
                   parentIds={this.state.parentIds.concat(this.state.comment._id)}/>
               ))}
             </div>
-            {renderInput()}
           </div>
         </div>
       </div>
