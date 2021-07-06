@@ -46,13 +46,24 @@
   margin-bottom: 10px;
 }
 
+.commentActions {
+  display: flex;
+}
+
+.commentActions div {
+  display: flex;
+}
+
 .commentActions * {
   font-size: 11pt;
   color: #888787;
+  margin-right: 5px;
 }
+
 .newCommentFormBottom {
   display: flex;
 }
+
 .newCommentCancel {
   bottom: 0;
   font-size: 10pt;

@@ -272,7 +272,8 @@ def get_idea(ideaId, revNum):
 		if idea_obj["delete_date"] and idea_obj["creator"] != get_jwt_identity():
 			return "<h1>This idea has been deleted</h1>", 500
 	except Exception as e:
-		print(e);
+		pass
+		#print(e);
 	return jsonify(idea=idea_obj)
 
 @api.route('/get_user/<username>', methods=['GET'])
@@ -290,18 +291,6 @@ def get_user(username):
 	user["ideas"].reverse()
 	user["ideasCount"] = len(user["ideas"])
 	return jsonify(user)
-
-def get_parent_comment_position(previous, comments, seeking_id):
-	for item in comments:
-		if str(item["_id"]) == seeking_id:
-			return [str(item["_id"])]
-		elif item.replies == []:
-			return False
-		else:
-			previous.append(str(item._id))
-			next_list = get_parent_comment_position(previous, item["replies"], seeking_id)
-			if next_list:
-				return previous + next_list
 
 def comments_push_query_creator(parent_ids):
 	push_location = "comments.$[comment1].replies"
@@ -331,6 +320,33 @@ def add_comment():
 			upsert=False,
 			array_filters=array_filters)
     return jsonify(user=get_jwt_identity(), comment=comment_content, status='Comment added successfully')
+
+def comments_delete_query_creator(parent_ids):
+	push_location = "comments.$[comment1]"
+	array_filters = [ {"comment1._id": ObjectId(parent_ids[0])} ]
+	for i in range(len(parent_ids)-1):
+		push_location += f".replies.$[reply{i}]"
+		array_filters.append({f"reply{i}._id": ObjectId(parent_ids[i+1])})
+	return push_location, array_filters
+
+@api.route('/delete_comment', methods=['POST'])
+@jwt_required()
+def delete_comment():
+	data = request.get_json(silent=True)
+	print(data)
+	idea_id = data.get('ideaId')
+	ids_list = data.get('idsList') #list of parent ids including the current id
+	# use $set to set comment.comment to <Deleted> and comment.user to <Deleted>
+	idea = db.idea.find_one({"_id": ObjectId(idea_id)})
+	if get_jwt_identity() != idea['creator']:
+		return jsonify(status='Must be signed in as idea creator to delete comment'), 403
+	push_location, array_filters = comments_delete_query_creator(ids_list)
+	db.idea.update_one({"_id": ObjectId(idea_id)},
+		{'$set': {push_location: {'_id': ObjectId(ids_list[-1]), 'user': "<Deleted>", 'comment': "<Deleted>"}}},
+		upsert=False,
+		array_filters=array_filters)
+	return jsonify(status='Comment deleted successfully')
+
 
 @api.route('/like_idea', methods=['POST'])
 @jwt_required()

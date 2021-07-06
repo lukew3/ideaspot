@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import { Link } from 'react-router-dom';
+import Cookie from 'js-cookie';
 import axiosApiInstance from '../helper.js';
 import '../styles/Comments.css';
 
@@ -78,16 +79,35 @@ class Comment extends Component {
 
   render() {
     let comment = this.state.comment;
-    if (comment.replies == null) comment.replies = [];
+    if (!comment.replies) comment.replies = [];
     const renderInput = () => {
       if (this.state.inputVisible) {
         return <NewComment
           ideaId={this.state.ideaId}
           parentIds={this.state.parentIds.concat(this.state.comment._id)}
           addComment={this.addComment}
-          hideInput={this.hideInput}/>
+          hideInput={this.hideInput} />
       } else {
         return <div></div>
+      }
+    }
+    const renderCommentOwnerOptions = () => {
+      if (comment.user === Cookie.get("username")) {
+        return <div>
+          <p className="a">Edit</p>
+          <p className="a" onClick={() => {
+            axiosApiInstance.post(`/api/delete_comment`, {
+              ideaId: this.state.ideaId,
+              idsList: this.state.parentIds.concat(this.state.comment._id)
+            }).then(() => {
+              comment.comment = "<Deleted>";
+              comment.user = "<Deleted>";
+              this.setState({ comment: comment });
+            }).catch(() => {
+              console.log("Deletion failed");
+            })
+          }}>Delete</p>
+        </div>
       }
     }
     return(
@@ -103,6 +123,8 @@ class Comment extends Component {
               <p className="a" onClick={() => {
                 this.setState({inputVisible: !this.state.inputVisible});
               }}>Reply</p>
+              {renderCommentOwnerOptions()}
+
             </div>
             <div>
               {(comment.replies).map((comment, index) => (
