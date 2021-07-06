@@ -319,7 +319,7 @@ def add_comment():
             {'$push': {push_location: {'_id': ObjectId(new_id), 'user': get_jwt_identity(), 'comment': comment_content}}},
 			upsert=False,
 			array_filters=array_filters)
-    return jsonify(user=get_jwt_identity(), comment=comment_content, status='Comment added successfully')
+    return jsonify(user=get_jwt_identity(), comment=comment_content, id=str(new_id), status='Comment added successfully')
 
 def comments_delete_query_creator(parent_ids):
 	push_location = "comments.$[comment1]"

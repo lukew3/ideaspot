@@ -170,8 +170,8 @@ class NewComment extends Component {
       ideaId: this.state.ideaId,
       parentIds: this.state.parentIds,
       commentContent: this.state.commentInput,
-    }).then(() => {
-      let newCommentObj = { user: "lukew3", comment: this.state.commentInput }
+    }).then((response) => {
+      let newCommentObj = { user: "lukew3", comment: this.state.commentInput, _id: response.data.id }
       this.props.addComment(newCommentObj);
       this.setState({commentInput: ""})
       if (this.props.hideInput) {
