@@ -10,6 +10,7 @@
 a {
   text-decoration: none;
   color: lightgrey;
+  cursor: pointer;
 }
 
 .a {

@@ -50,6 +50,16 @@
   font-size: 11pt;
   color: #888787;
 }
+.newCommentFormBottom {
+  display: flex;
+}
+.newCommentCancel {
+  bottom: 0;
+  font-size: 10pt;
+  margin-left: 10px;
+  margin-top: auto;
+  margin-bottom: auto;
+}
 
 @media only screen and (max-width: 600px) {
   .comments {

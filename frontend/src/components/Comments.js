@@ -159,6 +159,13 @@ class NewComment extends Component {
   }
 
   render() {
+    const renderCancel = () => {
+      if (this.state.parentIds.length > 0) {
+        return <p className="a newCommentCancel" onClick={this.props.hideInput}>Cancel</p>
+      } else {
+        return <p></p>
+      }
+    }
     return(
       <div className="newCommentGroup">
         <form onSubmit={this.submitComment}>
@@ -169,7 +176,10 @@ class NewComment extends Component {
             placeholder="What are your thoughts..."
             value={this.state.commentInput}
             onChange={this.handleInputChange}/>
-          <input type="submit" value="Submit" />
+          <div className="newCommentFormBottom">
+            <input type="submit" value="Submit" />
+            {renderCancel()}
+          </div>
         </form>
       </div>
     );
