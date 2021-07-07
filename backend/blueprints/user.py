@@ -5,7 +5,7 @@ from ..db import db
 from ..tools import serialize, format_ldl, serialize_comment_thread, format_idea
 import datetime
 
-user_bp = Blueprint('misc', __name__)
+user_bp = Blueprint('user', __name__)
 
 @user_bp.route('/get_user/<username>', methods=['GET'])
 @jwt_required(optional=True)
