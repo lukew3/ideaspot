@@ -2,9 +2,8 @@ from flask import Flask, Blueprint, flash, request
 from flask_cors import CORS
 from flask_jwt_extended import create_access_token, create_refresh_token, get_jwt_identity, jwt_required, JWTManager
 from flask_bcrypt import Bcrypt
-import datetime
-import json
-from backend.blueprints import auth, comments, misc, voting
+import datetime, json
+from backend.blueprints import auth, comments, idea, list, misc, voting
 
 with open('config.json') as config_file:
 		config = json.load(config_file)
@@ -35,6 +34,8 @@ def not_found(e):
 
 api.register_blueprint(auth)
 api.register_blueprint(comments)
+api.register_blueprint(idea)
+api.register_blueprint(list)
 api.register_blueprint(misc)
 api.register_blueprint(voting)
 
