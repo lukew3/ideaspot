@@ -5,9 +5,9 @@ from ..db import db
 from ..tools import serialize, format_ldl, serialize_comment_thread, format_idea
 import datetime
 
-idea = Blueprint('idea', __name__)
+idea_bp = Blueprint('idea', __name__)
 
-@idea.route('/create_idea', methods=['POST'])
+@idea_bp.route('/create_idea', methods=['POST'])
 @jwt_required()
 def create_idea():
 	data = request.get_json(silent=True)
@@ -22,7 +22,7 @@ def create_idea():
 	return jsonify(id=new_id)
 
 
-@idea.route('/edit_idea/<ideaId>', methods=['PATCH'])
+@idea_bp.route('/edit_idea/<ideaId>', methods=['PATCH'])
 @jwt_required()
 def edit_idea(ideaId):
 	data = request.get_json(silent=True)
@@ -40,7 +40,7 @@ def edit_idea(ideaId):
 	new_idea = format_idea(db.idea.find_one({"_id": ObjectId(ideaId), "creator": current_user}), current_user)
 	return new_idea
 
-@idea.route('/trash_idea/<ideaId>', methods=['POST'])
+@idea_bp.route('/trash_idea/<ideaId>', methods=['POST'])
 @jwt_required()
 def recycle_idea(ideaId):
 	#Set idea deletion date for 30 days in the future
@@ -48,22 +48,22 @@ def recycle_idea(ideaId):
 	db.idea.update_one({"_id": ObjectId(ideaId)}, { "$set": {"delete_date": datetime.datetime.now() + datetime.timedelta(30)}})
 	return jsonify(status="idea recycled")
 
-@idea.route('/delete_idea/<ideaId>', methods=['DELETE'])
+@idea_bp.route('/delete_idea/<ideaId>', methods=['DELETE'])
 @jwt_required()
 def delete_idea(ideaId):
 	current_user = get_jwt_identity()
 	db.idea.delete_one({"_id": ObjectId(ideaId), "creator": current_user})
 	return jsonify(status="idea deleted")
 
-@idea.route('/restore_idea/<ideaId>', methods=['POST'])
+@idea_bp.route('/restore_idea/<ideaId>', methods=['POST'])
 @jwt_required()
 def restore_idea(ideaId):
 	current_user = get_jwt_identity()
 	db.idea.update_one({"_id": ObjectId(ideaId)}, { '$unset': { "delete_date": '' } })
 	return jsonify(status="idea restored")
 
-@idea.route('/get_idea/<ideaId>', defaults={'revNum': -1}, methods=['GET'])
-@idea.route('/get_idea/<ideaId>/<revNum>', methods=['GET'])
+@idea_bp.route('/get_idea/<ideaId>', defaults={'revNum': -1}, methods=['GET'])
+@idea_bp.route('/get_idea/<ideaId>/<revNum>', methods=['GET'])
 @jwt_required(optional=True)
 def get_idea(ideaId, revNum):
 	revNum = int(revNum)

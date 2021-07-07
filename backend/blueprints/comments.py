@@ -5,8 +5,7 @@ from ..db import db
 from ..tools import serialize, format_ldl, serialize_comment_thread, format_idea
 import datetime
 
-comments = Blueprint('comments', __name__)
-
+comments_bp = Blueprint('comments', __name__)
 
 def comments_push_query_creator(parent_ids):
     push_location = "comments.$[comment1].replies"
@@ -17,7 +16,7 @@ def comments_push_query_creator(parent_ids):
     return push_location, array_filters
 
 
-@comments.route('/add_comment', methods=['POST'])
+@comments_bp.route('/add_comment', methods=['POST'])
 @jwt_required()
 def add_comment():
     data = request.get_json(silent=True)
@@ -66,7 +65,7 @@ def get_comment_obj(idea_id, ids_list):
     return comment
 
 
-@comments.route('/delete_comment', methods=['POST'])
+@comments_bp.route('/delete_comment', methods=['POST'])
 @jwt_required()
 def delete_comment():
     data = request.get_json(silent=True)

@@ -3,7 +3,7 @@ from flask_cors import CORS
 from flask_jwt_extended import create_access_token, create_refresh_token, get_jwt_identity, jwt_required, JWTManager
 from flask_bcrypt import Bcrypt
 import datetime, json
-from backend.blueprints import auth, comments, idea, list, misc, voting
+from backend.blueprints import auth_bp, comments_bp, idea_bp, list_bp, misc_bp, voting_bp
 
 with open('config.json') as config_file:
 		config = json.load(config_file)
@@ -11,7 +11,7 @@ with open('config.json') as config_file:
 cors = CORS()
 
 app = Flask(__name__, static_folder='./build', static_url_path='/')
-api = Blueprint('api', __name__)
+api_bp = Blueprint('api', __name__)
 app.config['SECRET_KEY'] = config.get('SECRET_KEY')
 
 #initialize jwt
@@ -32,14 +32,14 @@ def index():
 def not_found(e):
   return app.send_static_file('index.html')
 
-api.register_blueprint(auth)
-api.register_blueprint(comments)
-api.register_blueprint(idea)
-api.register_blueprint(list)
-api.register_blueprint(misc)
-api.register_blueprint(voting)
+api_bp.register_blueprint(auth_bp)
+api_bp.register_blueprint(comments_bp)
+api_bp.register_blueprint(idea_bp)
+api_bp.register_blueprint(list_bp)
+api_bp.register_blueprint(misc_bp)
+api_bp.register_blueprint(voting_bp)
 
-app.register_blueprint(api, url_prefix='/api')
+app.register_blueprint(api_bp, url_prefix='/api')
 
 if __name__ == "__main__":
 	app.run(port=5001, debug=True)

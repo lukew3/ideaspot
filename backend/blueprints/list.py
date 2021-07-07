@@ -5,10 +5,9 @@ from ..db import db
 from ..tools import serialize, format_ldl, serialize_comment_thread, format_idea
 import datetime
 
-list = Blueprint('list', __name__)
+list_bp = Blueprint('list', __name__)
 
-
-@list.route('/get_ideas', methods=['GET'])
+@list_bp.route('/get_ideas', methods=['GET'])
 @jwt_required(optional=True)
 def get_ideas():
 	try:
@@ -29,7 +28,7 @@ def get_ideas():
 	ideas = [format_idea(item, get_jwt_identity()) for item in ideascur]
 	return jsonify({'ideas': ideas})
 
-@list.route('/get_my_ideas', methods=['GET'])
+@list_bp.route('/get_my_ideas', methods=['GET'])
 @jwt_required()
 def get_my_ideas():
 	current_user = get_jwt_identity()
@@ -38,7 +37,7 @@ def get_my_ideas():
 	ideas.reverse()
 	return jsonify({'ideas': ideas})
 
-@list.route('/get_trash', methods=['GET'])
+@list_bp.route('/get_trash', methods=['GET'])
 @jwt_required()
 def get_trash():
 	current_user = get_jwt_identity()

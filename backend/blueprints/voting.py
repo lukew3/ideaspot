@@ -4,10 +4,9 @@ from bson.objectid import ObjectId
 from ..db import db
 from ..tools import serialize, format_ldl, serialize_comment_thread, format_idea
 
-voting = Blueprint('voting', __name__)
+voting_bp = Blueprint('voting', __name__)
 
-
-@voting.route('/like_idea', methods=['POST'])
+@voting_bp.route('/like_idea', methods=['POST'])
 @jwt_required()
 def like_idea():
 	data = request.get_json(silent=True)
@@ -18,7 +17,7 @@ def like_idea():
 					   {'$addToSet': {'likes': get_jwt_identity() }})
 	return jsonify(status="liked successfully")
 
-@voting.route('/remove_idea_like', methods=['POST'])
+@voting_bp.route('/remove_idea_like', methods=['POST'])
 @jwt_required()
 def remove_idea_like():
 	idea_id = request.get_json(silent=True).get('ideaId')
@@ -26,7 +25,7 @@ def remove_idea_like():
 					   {'$pull': {'likes': get_jwt_identity() }})
 	return jsonify(status="like removed successfully")
 
-@voting.route('/dislike_idea', methods=['POST'])
+@voting_bp.route('/dislike_idea', methods=['POST'])
 @jwt_required()
 def dislike_idea():
 	data = request.get_json(silent=True)
@@ -38,7 +37,7 @@ def dislike_idea():
 					   {'$addToSet': {'dislikes': get_jwt_identity() }})
 	return jsonify(status="disliked successfully")
 
-@voting.route('/remove_idea_dislike', methods=['POST'])
+@voting_bp.route('/remove_idea_dislike', methods=['POST'])
 @jwt_required()
 def remove_idea_dislike():
 	idea_id = request.get_json(silent=True).get('ideaId')

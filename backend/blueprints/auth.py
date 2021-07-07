@@ -6,12 +6,12 @@ from ..tools import serialize, format_ldl, serialize_comment_thread, format_idea
 import datetime
 import smtplib
 
-auth = Blueprint('auth', __name__)
+auth_bp = Blueprint('auth', __name__)
 bcrypt = Bcrypt()
 
 
 blocked_usernames = ['myIdeas','idea','login','register','newIdea','editIdea','trash','settings','<Deleted>']
-@auth.route('/register', methods=['POST'])
+@auth_bp.route('/register', methods=['POST'])
 def register():
 	data = request.get_json(silent=True)
 	username = data.get('username')
@@ -27,7 +27,7 @@ def register():
 	refresh_token = create_refresh_token(identity=username)
 	return jsonify(access_token=access_token, refresh_token=refresh_token,username=username)
 
-@auth.route('/login', methods=['POST'])
+@auth_bp.route('/login', methods=['POST'])
 def login():
 	data = request.get_json(silent=True)
 	username = data.get('username')
@@ -41,7 +41,7 @@ def login():
 	else:
 		return jsonify({"msg": "Bad username or password"}), 422
 
-@auth.route('/request_password_reset', methods=['POST'])
+@auth_bp.route('/request_password_reset', methods=['POST'])
 def request_password_reset():
 	data = request.get_json(silent=True)
 	email = data.get('email')
@@ -65,7 +65,7 @@ def send_email(recipient, subject, body):
 	email_server.sendmail(GMAIL_USER, recipient, email_text)
 	email_server.close()
 
-@auth.route('/password_reset', methods=['POST'])
+@auth_bp.route('/password_reset', methods=['POST'])
 @jwt_required()
 def password_reset():
 	data = request.get_json(silent=True)
@@ -76,7 +76,7 @@ def password_reset():
 	refresh_token = create_refresh_token(identity=identity)
 	return jsonify(access_token=access_token, refresh_token=refresh_token,username=identity)
 
-@auth.route("/refresh", methods=["POST"])
+@auth_bp.route("/refresh", methods=["POST"])
 @jwt_required(refresh=True)
 def refresh():
 	identity = get_jwt_identity()
