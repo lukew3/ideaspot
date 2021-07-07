@@ -1,12 +1,15 @@
 .viewIdeaMainContainer {
   display: flex;
 }
+
 .viewIdeaLeft {
-  flex-grow: 2;
+  flex-grow: 1;
 }
+
 .viewIdeaRight {
-  width: 25vw;
-  /* width: 400px */
+  /*width: 25vw;*/
+  min-width: 300px;
+  width: 20%;
   float: right;
   margin-right: 25px;
 }
