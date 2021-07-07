@@ -5,9 +5,9 @@ from ..db import db
 from ..tools import serialize, format_ldl, serialize_comment_thread, format_idea
 import datetime
 
-misc_bp = Blueprint('misc', __name__)
+user_bp = Blueprint('misc', __name__)
 
-@misc_bp.route('/get_user/<username>', methods=['GET'])
+@user_bp.route('/get_user/<username>', methods=['GET'])
 @jwt_required(optional=True)
 def get_user(username):
 	user = serialize(db.user.find_one({"username": username}))

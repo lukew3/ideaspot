@@ -3,7 +3,7 @@ from flask_cors import CORS
 from flask_jwt_extended import create_access_token, create_refresh_token, get_jwt_identity, jwt_required, JWTManager
 from flask_bcrypt import Bcrypt
 import datetime, json
-from backend.blueprints import auth_bp, comments_bp, idea_bp, list_bp, misc_bp, voting_bp
+from backend.blueprints import auth_bp, comments_bp, idea_bp, list_bp, user_bp, voting_bp
 
 with open('config.json') as config_file:
 		config = json.load(config_file)
@@ -36,7 +36,7 @@ api_bp.register_blueprint(auth_bp)
 api_bp.register_blueprint(comments_bp)
 api_bp.register_blueprint(idea_bp)
 api_bp.register_blueprint(list_bp)
-api_bp.register_blueprint(misc_bp)
+api_bp.register_blueprint(user_bp)
 api_bp.register_blueprint(voting_bp)
 
 app.register_blueprint(api_bp, url_prefix='/api')
