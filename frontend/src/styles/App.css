@@ -58,6 +58,17 @@ h2 {
   border-radius: 5px;
 }
 
+.normalSelect {
+  height: 30px;
+  margin-top: 5px;
+  background-color: #151515;
+  border: .5px solid #686868;
+  border-radius: 3px;
+  color: #d6d6d6;
+  position: relative;
+  margin-left: auto;
+}
+
 .standardBorder {
   color: white;
   background-color: rgba(26,26,27,0.8);

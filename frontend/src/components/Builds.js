@@ -55,6 +55,9 @@ class IdeaBuilds extends Component {
           <h2>Builds</h2>
           <img className="addBuildButton" src={addButton} alt="submit build"/>
         </div>
+        <BuildStatusSelector
+          ideaId={this.state.ideaId}
+          builds={this.state.builds} />
         {renderInput()}
         {renderExistingList()}
         {renderBuildList()}
@@ -63,6 +66,68 @@ class IdeaBuilds extends Component {
           <h4>{0} users building</h4>
           <h4>{0} users want to build</h4>
         </div>
+      </div>
+    )
+  }
+}
+
+class BuildStatusSelector extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      ideaId: props.ideaId,
+      builds: props.builds,
+      myStatus: "not_building",
+      builtLink: "",
+      selectedStatus: "not_building"
+    }
+    this.switchSelectedStatus = this.switchSelectedStatus.bind(this);
+    this.setBuildStatus = this.setBuildStatus.bind(this);
+  }
+
+  switchSelectedStatus(event) {
+    this.setState({selectedStatus: event.target.value});
+  }
+
+  setBuildStatus(event) {
+    axiosApiInstance.post('/api/set_build_status', {
+      ideaId: this.state.ideaId,
+      status: this.state.selectedStatus,
+      link: this.state.builtLink
+    }).then((response) => {
+      console.log(response);
+      this.setState({myStatus: this.state.selectedStatus})
+    })
+  }
+
+  render() {
+    //should there be a submit button beside the selector?
+    //this would prevent accidental changes to status, but leaving it without might be better for ease of use
+    const renderInput = () => {
+      //if selector selected "built", create form with link to build
+    }
+    const isLocked = () => {
+      if (this.state.selectedStatus === this.state.myStatus) {
+        return "locked"
+      } else {
+        return ""
+      }
+    }
+    return(
+      <div className="buildsStatus buildsSubBox">
+        <p className="buildStatusLabel">My Status:</p>
+        <select className="buildStatusSelector normalSelect" onChange={this.switchSelectedStatus}>
+          <option value="not_building">not building</option>
+          <option value="plan_to_build">plan to build</option>
+          <option value="building">building</option>
+          <option value="built">built</option>
+        </select>
+        {
+          //button shoult be greyed out if the select field is not changed
+          // also greyed if status is built and no link is included
+          // add locked class to grey out
+        }
+        <button className={"buildStatusSelectButton normalSelect " + isLocked()} onClick={this.setBuildStatus}>Select</button>
       </div>
     )
   }

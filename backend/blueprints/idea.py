@@ -90,3 +90,25 @@ def add_build():
 	build_obj = {"user": get_jwt_identity(), "type": type, "link": link}
 	db.idea.update_one({"_id": ObjectId(idea_id)}, {'$push': {"builds": build_obj}})
 	return jsonify(status="Build added successfully")
+
+@idea_bp.route('/set_build_status', methods=['POST'])
+@jwt_required()
+def set_build_status():
+	data = request.get_json(silent=True)
+	idea_id = data.get('ideaId')
+	status = data.get('status')
+	link = data.get('link')
+	if status not in ['built', 'building', 'plan_to_build', 'not_building']:
+		return jsonify(status="Status invalid"), 500
+	# Remove old build statuses
+	db.idea.update_one({"_id": ObjectId(idea_id)}, {'$pull': {f"builders.building": get_jwt_identity()}})
+	db.idea.update_one({"_id": ObjectId(idea_id)}, {'$pull': {f"builders.plan_to_build": get_jwt_identity()}})
+	db.idea.update_one({"_id": ObjectId(idea_id)}, {'$pull': {f"builders.built": { 'user': get_jwt_identity() }}})
+	if status == 'not_building':
+		return jsonify(status='Build removed successfully')
+	if status == 'built':
+		build_obj = {"user": get_jwt_identity(), "link": link}
+	else:
+		build_obj = get_jwt_identity()
+	db.idea.update_one({"_id": ObjectId(idea_id)}, {'$push': {f"builders.{status}": build_obj}})
+	return jsonify(status="Build added successfully")

@@ -36,3 +36,26 @@
 .buildsCommStatus {
   margin: 0;
 }
+
+.buildStatusLabel {
+  margin: 0;
+  font-size: 11pt;
+  font-weight: bold;
+}
+
+.buildStatusSelectButton {
+  margin-left: 10px;
+}
+
+.buildStatusSelectButton:hover {
+  background-color: #282828;
+}
+
+.buildStatusSelectButton:active {
+  background-color: #353535;
+}
+
+.buildStatusSelectButton.locked {
+  background-color: #3c3c3c;
+  color: #757474;
+}
