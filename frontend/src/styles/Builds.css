@@ -1,0 +1,38 @@
+.viewIdeaBuilds {
+  color: #D6D6D6;
+  position: relative;
+  background-color: rgba(26,26,27,0.8);
+  margin: 0;
+  margin-top: 20px;
+  border-radius: 5px;
+  border: #686868 1px solid;
+  padding: 2vw;
+  display: block;
+}
+
+.viewIdeaRightBoxUpper {
+  display: flex;
+  justify-content: space-between;
+}
+
+.viewIdeaRightBoxUpper {
+  margin-bottom: 20px;
+}
+
+.buildsSubBox {
+  margin: 0;
+  margin-bottom: 10px;
+}
+
+.buildsSubBox h4 {
+  margin: 0;
+}
+
+.buildsSubBox a {
+  margin: 0;
+  color: rgb(45, 125, 230);
+}
+
+.buildsCommStatus {
+  margin: 0;
+}

@@ -75,5 +75,18 @@ def get_idea(ideaId, revNum):
 			return "<h1>This idea has been deleted</h1>", 500
 	except Exception as e:
 		pass
-		#print(e);
 	return jsonify(idea=idea_obj)
+
+@idea_bp.route('/add_build', methods=['POST'])
+@jwt_required()
+def add_build():
+	data = request.get_json(silent=True)
+	idea_id = data.get('ideaId')
+	type = data.get('type')
+	#type must be existing or built
+	if type not in ['existing', 'built']:
+		return jsonify(status="Type invalid"), 500
+	link = data.get('link')
+	build_obj = {"user": get_jwt_identity(), "type": type, "link": link}
+	db.idea.update_one({"_id": ObjectId(idea_id)}, {'$push': {"builds": build_obj}})
+	return jsonify(status="Build added successfully")

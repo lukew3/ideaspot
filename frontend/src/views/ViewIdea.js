@@ -1,7 +1,6 @@
 import React, { Component } from "react";
-import { IdeaBox, Comments } from '../components/index.js';
+import { IdeaBox, Comments, Builds } from '../components/index.js';
 import axiosApiInstance from '../helper.js';
-import { addButton } from '../svg/index.js';
 import '../styles/ViewIdea.css';
 import '../styles/IdeaBox.css';
 
@@ -43,7 +42,9 @@ class ViewIdea extends Component {
             comments={idea.comments}/>
         </div>
         <div className="viewIdeaRight">
-          <IdeaBuilds />
+          <Builds
+            ideaId={this.state.ideaId}
+            idea={this.state.idea} />
           {
             /*
           <div className="viewIdeaTeams">
@@ -66,37 +67,6 @@ class ViewIdea extends Component {
       </div>
     );
   }
-}
-
-function IdeaBuilds(props) {
-  function renderBuildList() {
-    return(
-      <div>
-        <h4>built</h4>
-        <ul></ul>
-      </div>
-    )
-  }
-  function renderExistingList() {
-    return(
-      <div>
-        <h4>similar existing</h4>
-        <ul></ul>
-      </div>
-    )
-  }
-  return(
-    <div className="viewIdeaBuilds viewIdeaRightBox">
-      <div className="viewIdeaRightBoxUpper">
-        <h2>Builds</h2>
-        <img className="addBuildButton" src={addButton} alt="submit build"/>
-      </div>
-      {renderExistingList()}
-      {renderBuildList()}
-      <h4>{0} users building</h4>
-      <h4>{0} users want to build</h4>
-    </div>
-  )
 }
 
 
