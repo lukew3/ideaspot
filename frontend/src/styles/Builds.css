@@ -59,3 +59,7 @@
   background-color: #3c3c3c;
   color: #757474;
 }
+
+.buildStatusLinkInput {
+  margin-top: 5px;
+}

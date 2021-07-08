@@ -8,6 +8,11 @@ class IdeaBuilds extends Component {
     super(props);
     this.state = {
       ideaId: props.ideaId,
+      builders: props.idea.builders === undefined ? { built: [], building: [], plan_to_build: []} : {
+        built: props.idea.builders.built === undefined ? [] : props.idea.builders.built,
+        building: props.idea.builders.building === undefined ? [] : props.idea.builders.building,
+        plan_to_build: props.idea.builders.plan_to_build === undefined ? [] : props.idea.builders.plan_to_build,
+      },
       builds: props.idea.builds === undefined ? [] : props.idea.builds,
     }
   }
@@ -62,9 +67,9 @@ class IdeaBuilds extends Component {
         {renderExistingList()}
         {renderBuildList()}
         <div className="buildsSubBox buildsCommStatus">
-          <h4>{this.state.builds.length} users built</h4>
-          <h4>{0} users building</h4>
-          <h4>{0} users want to build</h4>
+          <h4>{this.state.builders.built.length} users built</h4>
+          <h4>{this.state.builders.building.length} users building</h4>
+          <h4>{this.state.builders.plan_to_build.length} users plan to build</h4>
         </div>
       </div>
     )
@@ -79,10 +84,23 @@ class BuildStatusSelector extends Component {
       builds: props.builds,
       myStatus: "not_building",
       builtLink: "",
+      currentBuiltLink: "",
       selectedStatus: "not_building"
     }
     this.switchSelectedStatus = this.switchSelectedStatus.bind(this);
     this.setBuildStatus = this.setBuildStatus.bind(this);
+    this.setCurrentBuiltLink = this.setCurrentBuiltLink.bind(this);
+    this.isLocked = this.isLocked.bind(this);
+  }
+
+  isLocked() {
+    if (this.state.selectedStatus === "built" && (this.state.currentBuiltLink !== this.state.builtLink)) {
+      return ""
+    } else if (this.state.selectedStatus === this.state.myStatus) {
+      return "locked";
+    } else {
+      return "";
+    }
   }
 
   switchSelectedStatus(event) {
@@ -90,27 +108,28 @@ class BuildStatusSelector extends Component {
   }
 
   setBuildStatus(event) {
+    if (this.isLocked() === "locked") return;
     axiosApiInstance.post('/api/set_build_status', {
       ideaId: this.state.ideaId,
       status: this.state.selectedStatus,
-      link: this.state.builtLink
+      link: this.state.currentBuiltLink
     }).then((response) => {
       console.log(response);
-      this.setState({myStatus: this.state.selectedStatus})
+      this.setState({myStatus: this.state.selectedStatus, builtLink: this.state.currentBuiltLink})
     })
   }
 
+  setCurrentBuiltLink(event) {
+    this.setState({currentBuiltLink: event.target.value});
+  }
+
   render() {
-    //should there be a submit button beside the selector?
-    //this would prevent accidental changes to status, but leaving it without might be better for ease of use
     const renderInput = () => {
       //if selector selected "built", create form with link to build
-    }
-    const isLocked = () => {
-      if (this.state.selectedStatus === this.state.myStatus) {
-        return "locked"
+      if (this.state.selectedStatus === 'built') {
+        return <input type="text" className="buildStatusLinkInput" value={this.state.currentBuiltLink} onChange={this.setCurrentBuiltLink}></input>
       } else {
-        return ""
+        return <div></div>
       }
     }
     return(
@@ -122,12 +141,9 @@ class BuildStatusSelector extends Component {
           <option value="building">building</option>
           <option value="built">built</option>
         </select>
-        {
-          //button shoult be greyed out if the select field is not changed
-          // also greyed if status is built and no link is included
-          // add locked class to grey out
-        }
-        <button className={"buildStatusSelectButton normalSelect " + isLocked()} onClick={this.setBuildStatus}>Select</button>
+        <button className={"buildStatusSelectButton normalSelect " + this.isLocked()} onClick={this.setBuildStatus}>Select</button>
+        <br></br>
+        {renderInput()}
       </div>
     )
   }
