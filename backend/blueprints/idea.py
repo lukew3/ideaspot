@@ -1,8 +1,8 @@
 from flask import Blueprint, jsonify, request
-from flask_jwt_extended import create_access_token, create_refresh_token, get_jwt_identity, jwt_required, JWTManager
+from flask_jwt_extended import get_jwt_identity, jwt_required, JWTManager
 from bson.objectid import ObjectId
 from ..db import db
-from ..tools import serialize, format_ldl, serialize_comment_thread, format_idea
+from ..tools import format_idea
 import datetime
 import validators
 
