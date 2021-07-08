@@ -1,6 +1,5 @@
 import React, { Component } from "react";
 import axiosApiInstance from '../helper.js';
-import { addButton } from '../svg/index.js';
 import '../styles/Builds.css';
 
 class IdeaBuilds extends Component {
@@ -97,7 +96,7 @@ class BuildStatusSelector extends Component {
   }
 
   isLocked() {
-    if (this.state.selectedStatus=== "built" && this.state.currentBuiltLink == "") {
+    if (this.state.selectedStatus=== "built" && this.state.currentBuiltLink === "") {
       return "locked";
     } else if (this.state.selectedStatus === "built" && this.state.currentBuiltLink !== this.state.builtLink) {
       return ""
