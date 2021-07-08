@@ -8,18 +8,29 @@ class Nav extends Component {
     return (
       <div className="navbar">
         <div className="innerNav">
-          <Link to={'/'}>
-            <img className="navLogo" src={logo} alt="Ideaspot" />
-          </Link>
-          <div className="navSearchBarGroup">
-            <img src={searchButton} alt="Search button" className="navSearchButton"/>
-            <input className="navSearchBar" type="text" placeholder="Search..." />
+          <div className="upperNav">
+            <Link to={'/'}>
+              <img className="navLogo" src={logo} alt="Ideaspot" />
+            </Link>
+            <div className="navSearchBarGroup">
+              <img src={searchButton} alt="Search button" className="navSearchButton"/>
+              <input className="navSearchBar" type="text" placeholder="Search..." />
+            </div>
+            <div className="navRight">
+              <LoginNav
+                isLoggedIn={this.props.isLoggedIn}
+                globalLogout={this.props.globalLogout}
+                username={this.props.username} />
+            </div>
           </div>
-          <div className="navRight">
-            <LoginNav
-              isLoggedIn={this.props.isLoggedIn}
-              globalLogout={this.props.globalLogout}
-              username={this.props.username} />
+          <div className="lowerNav">
+            <div className="innerLower">
+              <div className="lowerNavDivider"></div>
+              <Link to='/about'>About</Link>
+              <div className="lowerNavDivider"></div>
+              <a href="https://github.com/lukew3/ideaspot">Github</a>
+              <div className="lowerNavDivider"></div>
+            </div>
           </div>
         </div>
       </div>
