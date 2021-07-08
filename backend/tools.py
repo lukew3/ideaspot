@@ -22,6 +22,30 @@ def format_ldl(idea, username, ldl):
 		idea[ldl + "d"] = False
 	return idea
 
+def clean_list(ideas, username):
+	#cast to list in case ideas is a cursor
+	ideas = list(ideas)
+	for idea in ideas:
+		# Converts _id from ObjectId to string
+		idea = serialize(idea)
+		# Remove excessive like data and add user like/dislike status
+		idea = format_ldl(idea, username, "like")
+		idea = format_ldl(idea, username, "dislike")
+
+		# Handle revisions
+		idea["revisionTime"] = idea["revisions"][-1]["time"]
+		idea["title"] = idea["revisions"][-1]["title"]
+		idea["description"] = idea["revisions"][-1]["description"]
+		idea["revisionTimes"] = []
+		for revision in idea["revisions"]:
+			idea["revisionTimes"].append(revision["time"])
+
+		if "comments" in idea:
+			idea.pop("comments")
+		if "builders" in idea:
+			idea.pop("builders")
+	return ideas
+
 def serialize_comment_thread(comment):
 	comment["_id"] = str(comment["_id"])
 	try:
@@ -48,7 +72,7 @@ def format_idea(idea, username, revNum=-1):
 		idea["revisionTimes"].append(revision["time"])
 
 	# Set build status
-	try:
+	if "builders" in idea:
 		for k in idea['builders']:
 			if k == 'built':
 				for item in idea['builders'][k]:
@@ -59,13 +83,11 @@ def format_idea(idea, username, revNum=-1):
 				if username in idea['builders'][k]:
 					idea["myBuildStatus"] = k
 		print(idea['myBuildStatus'])
-	except Exception:
+	else:
 		idea['myBuildStatus'] = 'not_building'
 
 	# Turn comment _ids from ObjectIds to strings
-	try:
+	if "comments" in idea:
 		for i in range(len(idea["comments"])):
 			idea["comments"][i] = serialize_comment_thread(idea["comments"][i])
-	except Exception:
-		pass
 	return idea
