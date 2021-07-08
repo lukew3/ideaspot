@@ -10,9 +10,9 @@ list_bp = Blueprint('list', __name__)
 @list_bp.route('/get_ideas', methods=['GET'])
 @jwt_required(optional=True)
 def get_ideas():
-	try:
+	if 'page' in request.args:
 		page = int(request.args['page'])
-	except Exception:
+	else:
 		page = 1
 
 	per_page = 10

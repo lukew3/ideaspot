@@ -2,7 +2,7 @@ from flask import Blueprint, jsonify, request
 from flask_jwt_extended import get_jwt_identity, jwt_required, JWTManager
 from bson.objectid import ObjectId
 from ..db import db
-from ..tools import serialize, format_idea, clean_list
+from ..tools import serialize, clean_list
 import datetime
 
 user_bp = Blueprint('user', __name__)
