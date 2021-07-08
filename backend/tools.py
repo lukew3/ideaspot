@@ -32,11 +32,14 @@ def serialize_comment_thread(comment):
 	return comment
 
 def format_idea(idea, username, revNum=-1):
-	#formats the idea before it is sent
+	""" Format idea before it is sent """
+	# Converts _id from ObjectId to string
 	idea = serialize(idea)
+	# Remove excessive like data and add user like/dislike status
 	idea = format_ldl(idea, username, "like")
 	idea = format_ldl(idea, username, "dislike")
 
+	# Handle revisions
 	idea["revisionTime"] = idea["revisions"][revNum]["time"]
 	idea["title"] = idea["revisions"][revNum]["title"]
 	idea["description"] = idea["revisions"][revNum]["description"]
@@ -44,6 +47,22 @@ def format_idea(idea, username, revNum=-1):
 	for revision in idea["revisions"]:
 		idea["revisionTimes"].append(revision["time"])
 
+	# Set build status
+	try:
+		for k in idea['builders']:
+			if k == 'built':
+				for item in idea['builders'][k]:
+					if item['user'] == username:
+						idea["myBuildStatus"] = k
+						idea["myBuildLink"] = item['link']
+			else:
+				if username in idea['builders'][k]:
+					idea["myBuildStatus"] = k
+		print(idea['myBuildStatus'])
+	except Exception:
+		idea['myBuildStatus'] = 'not_building'
+
+	# Turn comment _ids from ObjectIds to strings
 	try:
 		for i in range(len(idea["comments"])):
 			idea["comments"][i] = serialize_comment_thread(idea["comments"][i])

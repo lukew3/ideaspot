@@ -8,6 +8,8 @@ class IdeaBuilds extends Component {
     super(props);
     this.state = {
       ideaId: props.ideaId,
+      myBuildStatus: props.idea.myBuildStatus === undefined ? "not_building": props.idea.myBuildStatus,
+      myBuildLink: props.idea.myBuildLink === undefined ? "" : props.idea.myBuildLink,
       builders: props.idea.builders === undefined ? { built: [], building: [], plan_to_build: []} : {
         built: props.idea.builders.built === undefined ? [] : props.idea.builders.built,
         building: props.idea.builders.building === undefined ? [] : props.idea.builders.building,
@@ -62,7 +64,9 @@ class IdeaBuilds extends Component {
         </div>
         <BuildStatusSelector
           ideaId={this.state.ideaId}
-          builds={this.state.builds} />
+          builds={this.state.builds}
+          myBuildLink={this.state.myBuildLink}
+          myStatus={this.state.myBuildStatus} />
         {renderInput()}
         {renderExistingList()}
         {renderBuildList()}
@@ -82,10 +86,10 @@ class BuildStatusSelector extends Component {
     this.state = {
       ideaId: props.ideaId,
       builds: props.builds,
-      myStatus: "not_building",
-      builtLink: "",
-      currentBuiltLink: "",
-      selectedStatus: "not_building"
+      myStatus: props.myStatus,
+      builtLink: props.myBuildLink,
+      currentBuiltLink: props.myBuildLink,
+      selectedStatus: props.myStatus,
     }
     this.switchSelectedStatus = this.switchSelectedStatus.bind(this);
     this.setBuildStatus = this.setBuildStatus.bind(this);
@@ -94,7 +98,9 @@ class BuildStatusSelector extends Component {
   }
 
   isLocked() {
-    if (this.state.selectedStatus === "built" && (this.state.currentBuiltLink !== this.state.builtLink)) {
+    if (this.state.selectedStatus=== "built" && this.state.currentBuiltLink == "") {
+      return "locked";
+    } else if (this.state.selectedStatus === "built" && this.state.currentBuiltLink !== this.state.builtLink) {
       return ""
     } else if (this.state.selectedStatus === this.state.myStatus) {
       return "locked";
@@ -135,7 +141,7 @@ class BuildStatusSelector extends Component {
     return(
       <div className="buildsStatus buildsSubBox">
         <p className="buildStatusLabel">My Status:</p>
-        <select className="buildStatusSelector normalSelect" onChange={this.switchSelectedStatus}>
+        <select className="buildStatusSelector normalSelect" onChange={this.switchSelectedStatus} value={this.state.selectedStatus}>
           <option value="not_building">not building</option>
           <option value="plan_to_build">plan to build</option>
           <option value="building">building</option>
