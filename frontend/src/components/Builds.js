@@ -60,7 +60,6 @@ class IdeaBuilds extends Component {
       <div className="viewIdeaBuilds">
         <div className="viewIdeaRightBoxUpper">
           <h2>Builds</h2>
-          <img className="addBuildButton" src={addButton} alt="submit build"/>
         </div>
         <BuildStatusSelector
           ideaId={this.state.ideaId}
@@ -135,7 +134,7 @@ class BuildStatusSelector extends Component {
       if (this.state.selectedStatus === 'built') {
         return <input type="text" className="buildStatusLinkInput" value={this.state.currentBuiltLink} onChange={this.setCurrentBuiltLink}></input>
       } else {
-        return <div></div>
+        return
       }
     }
     return(
@@ -147,9 +146,8 @@ class BuildStatusSelector extends Component {
           <option value="building">building</option>
           <option value="built">built</option>
         </select>
-        <button className={"buildStatusSelectButton normalSelect " + this.isLocked()} onClick={this.setBuildStatus}>Select</button>
-        <br></br>
         {renderInput()}
+        <button className={"buildStatusSelectButton normalSelect " + this.isLocked()} onClick={this.setBuildStatus}>Select</button>
       </div>
     )
   }

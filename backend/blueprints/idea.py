@@ -4,6 +4,7 @@ from bson.objectid import ObjectId
 from ..db import db
 from ..tools import serialize, format_ldl, serialize_comment_thread, format_idea
 import datetime
+import validators
 
 idea_bp = Blueprint('idea', __name__)
 
@@ -107,6 +108,10 @@ def set_build_status():
 	if status == 'not_building':
 		return jsonify(status='Build removed successfully')
 	if status == 'built':
+		if not validators.url(link):
+			link = "https://" + link
+			if not validators.url(link):
+				return jsonify(status="Invalid link")
 		build_obj = {"user": get_jwt_identity(), "link": link}
 	else:
 		build_obj = get_jwt_identity()
