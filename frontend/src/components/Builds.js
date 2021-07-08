@@ -19,7 +19,7 @@ class IdeaBuilds extends Component {
 
   render() {
     const renderExistingList = () => {
-      const existingList = this.state.builds.filter(build => build.type === "existing");
+      const existingList = [];
       if (existingList.length > 0) {
         return(
           <div className="buildsSubBox">
@@ -34,7 +34,7 @@ class IdeaBuilds extends Component {
       }
     }
     const renderBuildList = () => {
-      const builtList = this.state.builds.filter(build => build.type === "built");
+      const builtList = this.state.builders.built;
       if (builtList.length > 0) {
         return(
           <div className="buildsSubBox">
