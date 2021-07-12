@@ -85,6 +85,16 @@ def format_idea(idea, username, revNum=-1):
 	else:
 		idea['myBuildStatus'] = 'not_building'
 
+	# Clean builders data
+	if "builders" in idea:
+		if "built" in idea['builders']:
+			idea['builds'] = idea['builders']['built']
+		if "building" in idea['builders']:
+			idea['buildingCount'] = len(idea['builders']['building'])
+		if "plan_to_build" in idea['builders']:
+			idea['planToBuildCount'] = len(idea['builders']['plan_to_build'])
+		idea.pop('builders')
+
 	# Turn comment _ids from ObjectIds to strings
 	if "comments" in idea:
 		for i in range(len(idea["comments"])):
