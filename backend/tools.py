@@ -82,7 +82,6 @@ def format_idea(idea, username, revNum=-1):
 			else:
 				if username in idea['builders'][k]:
 					idea["myBuildStatus"] = k
-		print(idea['myBuildStatus'])
 	else:
 		idea['myBuildStatus'] = 'not_building'
 
