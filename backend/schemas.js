@@ -65,4 +65,15 @@
   email: String,
   username: String,
   password: String, // password hash
+  .>builds: {
+    built: [
+      String //objectId of idea
+    ],
+    building: [
+      String //objectId of idea
+    ],
+    plan_to_build: [
+      String //objectId of idea
+    ]
+  }
 }

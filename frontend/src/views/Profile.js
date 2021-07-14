@@ -16,7 +16,7 @@ class Profile extends Component {
   }
 
   componentDidMount() {
-    axiosApiInstance.get(`/api/get_user/${this.props.match.params.username}`).then(response => {
+    axiosApiInstance.get(`/api/user/${this.props.match.params.username}`).then(response => {
       if (response.data.bio === undefined) response.data.bio = "";
       if (response.data.buildCount === undefined) response.data.buildCount = 0;
       this.setState({ user: response.data });

@@ -7,12 +7,14 @@ import datetime
 
 user_bp = Blueprint('user', __name__)
 
-@user_bp.route('/get_user/<username>', methods=['GET'])
+@user_bp.route('/user/<username>', methods=['GET'])
 @jwt_required(optional=True)
 def get_user(username):
 	user = serialize(db.user.find_one({"username": username}))
 	user.pop("password")
 	user.pop("email")
+	if "builds" in user:
+		user.pop("builds")
 	current_user = get_jwt_identity()
 	if current_user == username:
 			ideascur = db.idea.find({"creator": current_user, "delete_date": { "$exists": False }})
@@ -22,3 +24,12 @@ def get_user(username):
 	user["ideas"].reverse()
 	user["ideasCount"] = len(user["ideas"])
 	return jsonify(user)
+
+@user_bp.route('/user/<username>/builds', methods=['GET'])
+@jwt_required(optional=True)
+def get_user_builds(username):
+	try:
+		builds = db.user.find_one({"username": username})["builds"]
+	except Exception:
+		builds = {}
+	return jsonify(builds)

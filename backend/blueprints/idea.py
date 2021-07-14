@@ -78,6 +78,8 @@ def get_idea(ideaId, revNum):
 		pass
 	return jsonify(idea=idea_obj)
 
+"""
+# Not in use
 @idea_bp.route('/add_build', methods=['POST'])
 @jwt_required()
 def add_build():
@@ -91,6 +93,7 @@ def add_build():
 	build_obj = {"user": get_jwt_identity(), "type": type, "link": link}
 	db.idea.update_one({"_id": ObjectId(idea_id)}, {'$push': {"builds": build_obj}})
 	return jsonify(status="Build added successfully")
+"""
 
 @idea_bp.route('/set_build_status', methods=['POST'])
 @jwt_required()
@@ -105,15 +108,22 @@ def set_build_status():
 	db.idea.update_one({"_id": ObjectId(idea_id)}, {'$pull': {f"builders.building": get_jwt_identity()}})
 	db.idea.update_one({"_id": ObjectId(idea_id)}, {'$pull': {f"builders.plan_to_build": get_jwt_identity()}})
 	db.idea.update_one({"_id": ObjectId(idea_id)}, {'$pull': {f"builders.built": { 'user': get_jwt_identity() }}})
+	# Remove old build from user object
+	db.user.update_one({"username": get_jwt_identity()}, {'$pull': {f"builds.building": idea_id}})
+	db.user.update_one({"username": get_jwt_identity()}, {'$pull': {f"builds.plan_to_build": idea_id}})
+	db.user.update_one({"username": get_jwt_identity()}, {'$pull': {f"builds.built": idea_id}})
 	if status == 'not_building':
 		return jsonify(status='Build removed successfully')
-	if status == 'built':
+	elif status == 'built':
 		if not validators.url(link):
 			link = "https://" + link
 			if not validators.url(link):
 				return jsonify(status="Invalid link")
+		# Add build to user object
+		# Should objectId of idea or string be stored in array?
 		build_obj = {"user": get_jwt_identity(), "link": link}
 	else:
 		build_obj = get_jwt_identity()
+	db.user.update_one({"username": get_jwt_identity()}, {"$push": {f"builds.{status}": idea_id}})
 	db.idea.update_one({"_id": ObjectId(idea_id)}, {'$push': {f"builders.{status}": build_obj}})
 	return jsonify(status="Build added successfully")
