@@ -78,7 +78,7 @@
   border-bottom: 3px solid #686868;
 }
 
-.profileSelectorItem.selActive {
+.profileSelectorItem.activeTab {
   border-bottom: 3px solid #FABD2F;
 }
 
