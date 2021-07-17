@@ -19,8 +19,11 @@ def get_ideas():
 	offset = (page-1) * per_page
 
 	starting_id = db.idea.find().sort('_id', -1)
-	last_id = starting_id[offset]['_id']
-
+	try:
+		last_id = starting_id[offset]['_id']
+	except Exception:
+		return jsonify(status="No ideas")
+		
 	ideascur =  db.idea.find(
 		{'_id': {'$lte': last_id}, "private": False, "delete_date": { "$exists": False}}
 	).sort('_id', -1).limit(per_page)
