@@ -56,7 +56,7 @@ class Profile extends Component {
           </div>
         )
       } else if (this.state.activeTab === "builds") {
-        return <div>Builds data</div>
+        return <div>Your builds will appear here</div>
         /*
         axiosApiInstance.get(`/api/user/${this.props.match.params.username}/builds`).then(response => {
           this.setState({builds: response.data});
@@ -76,12 +76,23 @@ class Profile extends Component {
           <div className="profileOverview standardBorder">
             <h1 className="profileUsername">{this.state.user.username}</h1>
             <p>{this.state.user.bio}</p>
-            <EditProfile user={this.state.user.username}/>
+            {
+              /*
+              <EditProfile user={this.state.user.username}/>
+              */
+            }
             <div className="profileStats">
-              <p className="profileStat"><strong>{this.state.user.ideasCount}</strong> reputation earned</p>
+              {
+                /*
+                <p className="profileStat"><strong>{this.state.user.ideasCount}</strong> reputation earned</p>
+                */
+              }
               <p className="profileStat"><strong>{this.state.user.ideasCount}</strong> ideas written</p>
-              <p className="profileStat"><strong>{this.state.user.buildCount}</strong> ideas built</p>
-
+              {
+                /*
+                <p className="profileStat"><strong>{this.state.user.buildCount}</strong> ideas built</p>
+                */
+              }
               {//should be a rep breakdown that shows on hover(possibly click for mobile)
                 //how much is earned from created ideas, built ideas, suggestions, etc.
                 //could have public rep to show contributions to the platform and private rep for how the user uses the platform for themselves
@@ -97,7 +108,12 @@ class Profile extends Component {
               <div id="buildsTab" className="profileSelectorItem" onClick={() => {
                 this.setActiveTab("builds")
               }}>Builds ({this.state.user.buildCount})</div>
-              <div id="teamsTab" className="profileSelectorItem" onClick={() => { this.setActiveTab("teams")}}>Teams</div>
+              {
+                // more tabs to be implemented later
+                /*
+                <div id="teamsTab" className="profileSelectorItem" onClick={() => { this.setActiveTab("teams")}}>Teams</div>
+                */
+              }
             </div>
             {renderTabContent()}
           </div>
