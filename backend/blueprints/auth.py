@@ -2,6 +2,7 @@ from flask import Blueprint, jsonify, request
 from flask_jwt_extended import create_access_token, create_refresh_token, get_jwt_identity, jwt_required, JWTManager
 from flask_bcrypt import Bcrypt
 from ..db import db
+from ..tools import serialize
 import datetime
 import smtplib
 

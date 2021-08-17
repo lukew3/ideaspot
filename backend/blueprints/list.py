@@ -23,9 +23,9 @@ def get_ideas():
 		last_id = starting_id[offset]['_id']
 	except Exception:
 		return jsonify(status="No ideas")
-		
+
 	ideascur =  db.idea.find(
-		{'_id': {'$lte': last_id}, "private": False, "delete_date": { "$exists": False}}
+		{'_id': {'$lte': last_id}, "mod_ruling": "accepted", "private": False, "delete_date": { "$exists": False}}
 	).sort('_id', -1).limit(per_page)
 
 	ideas = clean_list(ideascur, get_jwt_identity())

@@ -17,6 +17,7 @@ def create_idea():
 					"title": data.get('title'),
 					"description": data.get('description'),
 				}],
+				"mod_ruling": "pending",
 				"creator": get_jwt_identity(),
 				"private": data.get('private') }
 	new_id = str(db.idea.insert_one(new_idea).inserted_id)
