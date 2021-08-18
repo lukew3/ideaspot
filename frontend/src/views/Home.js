@@ -39,7 +39,7 @@ class Home extends Component {
     if (pageNum < 1) return;
     if (pageNum > this.state.maxPage) return;
     axiosApiInstance.get(`/api/get_ideas?page=${pageNum}`).then((response) => {
-      this.setState({page: pageNum, ideasList: response.data.ideasList});
+      this.setState({page: pageNum, ideasList: response.data.ideas});
     })
   }
 
