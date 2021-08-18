@@ -99,3 +99,24 @@ h2 {
   text-decoration: none;
   color: #c64747;
 }
+
+.pageControl {
+  margin-top: 10px;
+  display: flex;
+  justify-content: center;
+}
+.pageControl p {
+  font-size: 18px;
+  padding: 4px;
+}
+.pageButton {
+  height: 20px;
+  width: 20px;
+  background-color: #444;
+  margin: 0 3px;
+  padding: 4px;
+  border-radius: 2px;
+}
+.reverse {
+   transform: scaleX(-1);
+}

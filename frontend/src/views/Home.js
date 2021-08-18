@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import axiosApiInstance from '../helper.js';
 import { IdeaBox, ControlBar } from '../components/index.js';
+import { pageArrowRight, doublePageArrowRight} from '../svg/index.js';
 
 
 class Home extends Component {
@@ -9,6 +10,7 @@ class Home extends Component {
     this.state = {
       ideasList: [],
       page: 1,
+      maxPage: 1
     }
     this.loadMoreIdeas = this.loadMoreIdeas.bind(this);
 
@@ -16,7 +18,7 @@ class Home extends Component {
   // on mount, load subscriptions
   componentDidMount() {
     axiosApiInstance.get(`/api/get_ideas`, {}).then(response => {
-      this.setState({ ideasList: response.data.ideas });
+      this.setState({ ideasList: response.data.ideas, maxPage: response.data.maxPage });
     });
   }
 
@@ -30,6 +32,14 @@ class Home extends Component {
     }).catch((e) => {
       console.log(e);
       document.getElementById("loadMoreButton").style.display = "none";
+    })
+  }
+
+  setPage(pageNum) {
+    if (pageNum < 1) return;
+    if (pageNum > this.state.maxPage) return;
+    axiosApiInstance.get(`/api/get_ideas?page=${pageNum}`).then((response) => {
+      this.setState({page: pageNum, ideasList: response.data.ideasList});
     })
   }
 
@@ -51,10 +61,33 @@ class Home extends Component {
         {this.state.ideasList.map((idea, index) => (
           <IdeaBox key={idea._id} idea={idea} boxStyle="normal"/>
         ))}
-        <button className="loadMoreButton"
-                id="loadMoreButton"
-                style={{"margin-left": "calc(50vw - 50px)"}}
-                onClick={this.loadMoreIdeas}>Load More</button>
+        <div className="pageControl">
+          <img
+            src={doublePageArrowRight}
+            className="a reverse pageButton"
+            alt="firstPage"
+            onClick={() => {this.setPage(1)}}
+          />
+          <img
+            src={pageArrowRight}
+            className="a reverse pageButton"
+            alt="previousPage"
+            onClick={() => {this.setPage(this.state.page-1)}}
+          />
+          <p className='a'>{this.state.page}</p>
+          <img
+            src={pageArrowRight}
+            className="a pageButton"
+            alt="nextPage"
+            onClick={() => {this.setPage(this.state.page+1)}}
+          />
+          <img
+            src={doublePageArrowRight}
+            className="a pageButton"
+            alt="lastPage"
+            onClick={() => {this.setPage(10)}}
+          />
+        </div>
       </div>
     );
   }

@@ -4,6 +4,7 @@ from bson.objectid import ObjectId
 from ..db import db
 from ..tools import clean_list
 import datetime
+import math
 
 list_bp = Blueprint('list', __name__)
 
@@ -29,7 +30,8 @@ def get_ideas():
 	).sort('_id', -1).limit(per_page)
 
 	ideas = clean_list(ideascur, get_jwt_identity())
-	return jsonify({'ideas': ideas})
+	maxPage = math.ceil(db.idea.count_documents({}) / per_page)
+	return jsonify({'ideas': ideas, 'maxPage': maxPage})
 
 @list_bp.route('/get_my_ideas', methods=['GET'])
 @jwt_required()
