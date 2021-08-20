@@ -2,37 +2,24 @@ import React, { Component } from "react";
 import axiosApiInstance from '../helper.js';
 import { IdeaBox, ControlBar } from '../components/index.js';
 import { pageArrowRight, doublePageArrowRight} from '../svg/index.js';
+import queryString from 'query-string';
 
 
 class Home extends Component {
   constructor(props){
     super(props);
+    let qsPage = queryString.parse(this.props.location.search).page;
     this.state = {
       ideasList: [],
-      page: 1,
+      page: qsPage === undefined ? 1 : qsPage,
       maxPage: 1
     }
-    this.loadMoreIdeas = this.loadMoreIdeas.bind(this);
-
   }
   // on mount, load subscriptions
   componentDidMount() {
-    axiosApiInstance.get(`/api/get_ideas`, {}).then(response => {
+    axiosApiInstance.get(`/api/get_ideas?page=${this.state.page}`, {}).then(response => {
       this.setState({ ideasList: response.data.ideas, maxPage: response.data.maxPage });
     });
-  }
-
-  loadMoreIdeas() {
-    axiosApiInstance.get(`/api/get_ideas?page=${this.state.page+1}`).then((response) => {
-      let tempIdeasList = this.state.ideasList;
-      response.data.ideas.forEach((idea) => {
-        tempIdeasList.push(idea);
-      });
-      this.setState({ ideasList: tempIdeasList, page: this.state.page+1 });
-    }).catch((e) => {
-      console.log(e);
-      document.getElementById("loadMoreButton").style.display = "none";
-    })
   }
 
   setPage(pageNum) {
@@ -41,6 +28,7 @@ class Home extends Component {
     axiosApiInstance.get(`/api/get_ideas?page=${pageNum}`).then((response) => {
       this.setState({page: pageNum, ideasList: response.data.ideas});
     })
+    this.props.history.push(`/?page=${pageNum}`)
     window.scrollTo(0, 0);
   }
 
