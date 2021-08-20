@@ -85,7 +85,7 @@ class Home extends Component {
             src={doublePageArrowRight}
             className="a pageButton"
             alt="lastPage"
-            onClick={() => {this.setPage(10)}}
+            onClick={() => {this.setPage(this.state.maxPage)}}
           />
         </div>
       </div>
