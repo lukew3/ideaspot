@@ -12,11 +12,9 @@ idea_bp = Blueprint('idea', __name__)
 @jwt_required()
 def create_idea():
 	data = request.get_json(silent=True)
-	new_idea = {"revisions": [{
-					"time": datetime.datetime.now(),
-					"title": data.get('title'),
-					"description": data.get('description'),
-				}],
+	new_idea = {"history": [],
+				"title": data.get('title'),
+				"description": data.get('description'),
 				"mod_ruling": "pending",
 				"creator": get_jwt_identity(),
 				"private": data.get('private'),
@@ -33,14 +31,16 @@ def edit_idea(ideaId):
 	current_user = get_jwt_identity()
 	old_idea = db.idea.find_one({"_id": ObjectId(ideaId), "creator": current_user})
 	revision = {
-		"time": datetime.datetime.now(),
-		"title": data.get('title'),
-		"description": data.get('description')
+		"time": old_idea["last_updated_at"],
+		"title": old_idea["title"],
+		"description": old_idea["description"]
 	}
-	data.pop('title')
-	data.pop('description')
-	db.idea.update_one(old_idea, {'$set': data})
-	db.idea.update_one(old_idea, {'$push': {"revisions": revision}, "$set": { 'last_updated_at': datetime.datetime.now() } })
+	db.idea.update_one(old_idea, {
+		'$push': {"history": revision},
+		"$set": {'last_updated_at': datetime.datetime.now(),
+				'title': data.get('title'),
+				'description': data.get('description')}
+	})
 	new_idea = format_idea(db.idea.find_one({"_id": ObjectId(ideaId), "creator": current_user}), current_user)
 	return new_idea
 

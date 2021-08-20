@@ -33,12 +33,10 @@ def clean_list(ideas, username):
 		idea = format_ldl(idea, username, "dislike")
 
 		# Handle revisions
-		idea["revisionTime"] = idea["revisions"][-1]["time"]
-		idea["title"] = idea["revisions"][-1]["title"]
-		idea["description"] = idea["revisions"][-1]["description"]
 		idea["revisionTimes"] = []
-		for revision in idea["revisions"]:
+		for revision in idea["history"]:
 			idea["revisionTimes"].append(revision["time"])
+		idea["revisionTimes"].append(idea["last_updated_at"])
 
 		if "comments" in idea:
 			idea.pop("comments")
@@ -64,12 +62,14 @@ def format_idea(idea, username, revNum=-1):
 	idea = format_ldl(idea, username, "dislike")
 
 	# Handle revisions
-	idea["revisionTime"] = idea["revisions"][revNum]["time"]
-	idea["title"] = idea["revisions"][revNum]["title"]
-	idea["description"] = idea["revisions"][revNum]["description"]
+	if revNum != -1 and revNum < len(idea["history"]):
+		idea["title"] = idea["history"][revNum]["title"]
+		idea["description"] = idea["history"][revNum]["description"]
+
 	idea["revisionTimes"] = []
-	for revision in idea["revisions"]:
+	for revision in idea["history"]:
 		idea["revisionTimes"].append(revision["time"])
+	idea["revisionTimes"].append(idea["last_updated_at"])
 
 	# Set build status
 	if "builders" in idea:
