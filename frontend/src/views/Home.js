@@ -41,6 +41,7 @@ class Home extends Component {
     axiosApiInstance.get(`/api/get_ideas?page=${pageNum}`).then((response) => {
       this.setState({page: pageNum, ideasList: response.data.ideas});
     })
+    window.scrollTo(0, 0);
   }
 
   render() {
