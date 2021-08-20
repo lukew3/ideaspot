@@ -9,9 +9,10 @@ class Home extends Component {
   constructor(props){
     super(props);
     let qsPage = parseInt(queryString.parse(this.props.location.search).page);
+    console.log(qsPage);
     this.state = {
       ideasList: [],
-      page: qsPage === undefined ? 1 : qsPage,
+      page: isNaN(qsPage) ? 1 : qsPage,
       maxPage: 1
     }
   }
