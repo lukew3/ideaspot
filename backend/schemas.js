@@ -6,13 +6,17 @@
 //IDEA SCHEMA
 {
   _id: ObjectId,
-  revisions: [
+  past_versions: [
     {
       time: Datetime,
       title: String,
       description: String
     }
   ],
+  title: String,
+  description: String,
+  updated_at: Date,
+  created_at: Date,
   creator: String, //the username of the creator
   >likes: [
     String //names of the people who have liked this idea

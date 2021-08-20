@@ -11,4 +11,4 @@ config.json
 #server tools
 cli.py
 deploy
-migrate.py
+update_schema.py

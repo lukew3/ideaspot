@@ -19,7 +19,8 @@ def get_ideas():
 	per_page = 10
 	offset = (page-1) * per_page
 
-	starting_id = db.idea.find().sort('_id', -1)
+	# Should sort by created date
+	starting_id = db.idea.find().sort('created_at', -1)
 	try:
 		last_id = starting_id[offset]['_id']
 	except Exception:
@@ -27,7 +28,7 @@ def get_ideas():
 
 	ideascur =  db.idea.find(
 		{'_id': {'$lte': last_id}, "mod_ruling": "accepted", "private": False, "delete_date": { "$exists": False}}
-	).sort('_id', -1).limit(per_page)
+	).sort('created_at', -1).limit(per_page)
 
 	ideas = clean_list(ideascur, get_jwt_identity())
 	maxPage = math.ceil(db.idea.count_documents({}) / per_page)

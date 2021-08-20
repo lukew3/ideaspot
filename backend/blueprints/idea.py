@@ -19,7 +19,9 @@ def create_idea():
 				}],
 				"mod_ruling": "pending",
 				"creator": get_jwt_identity(),
-				"private": data.get('private') }
+				"private": data.get('private'),
+				"created_at": datetime.datetime.now(),
+				"last_updated_at": datetime.datetime.now() }
 	new_id = str(db.idea.insert_one(new_idea).inserted_id)
 	return jsonify(id=new_id)
 
@@ -38,7 +40,7 @@ def edit_idea(ideaId):
 	data.pop('title')
 	data.pop('description')
 	db.idea.update_one(old_idea, {'$set': data})
-	db.idea.update_one(old_idea, {'$push': {"revisions": revision}})
+	db.idea.update_one(old_idea, {'$push': {"revisions": revision}, "$set": { 'last_updated_at': datetime.datetime.now() } })
 	new_idea = format_idea(db.idea.find_one({"_id": ObjectId(ideaId), "creator": current_user}), current_user)
 	return new_idea
 
