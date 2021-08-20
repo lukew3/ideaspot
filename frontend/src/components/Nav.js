@@ -29,6 +29,10 @@ class Nav extends Component {
 
 class LoginNav extends Component {
   render() {
+    document.addEventListener('click', function(e){
+      if (!document.getElementById('navAccountMenu').contains(e.target) && document.getElementById('navAccountMenu').style.display != 'none')
+        document.getElementById('navAccountMenu').style.display = 'none';
+    });
     if (this.props.isLoggedIn) {
       return (
         <div>
