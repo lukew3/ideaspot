@@ -8,7 +8,7 @@ import queryString from 'query-string';
 class Home extends Component {
   constructor(props){
     super(props);
-    let qsPage = queryString.parse(this.props.location.search).page;
+    let qsPage = parseInt(queryString.parse(this.props.location.search).page);
     this.state = {
       ideasList: [],
       page: qsPage === undefined ? 1 : qsPage,
@@ -68,7 +68,7 @@ class Home extends Component {
             src={pageArrowRight}
             className="a pageButton"
             alt="nextPage"
-            onClick={() => {this.setPage(this.state.page+1)}}
+            onClick={() => {console.log(this.state.page+1); this.setPage(this.state.page+1)}}
           />
           <img
             src={doublePageArrowRight}
