@@ -24,7 +24,7 @@ def get_ideas():
 	).sort('created_at', -1).skip(offset).limit(per_page)
 
 	ideas = clean_list(ideascur, get_jwt_identity())
-	maxPage = math.ceil(db.idea.count_documents({}) / per_page)
+	maxPage = math.ceil(db.idea.count_documents({"mod_ruling": "accepted", "private": False, "delete_date": { "$exists": False}}) / per_page)
 	return jsonify({'ideas': ideas, 'maxPage': maxPage})
 
 @list_bp.route('/get_my_ideas', methods=['GET'])
