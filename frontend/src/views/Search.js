@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import axiosApiInstance from '../helper.js';
-import { IdeaBox, ControlBar, PageNav } from '../components/index.js';
+import { IdeaBox, ControlBar } from '../components/index.js';
 import { pageArrowRight, doublePageArrowRight} from '../svg/index.js';
 import queryString from 'query-string';
 
@@ -23,7 +23,7 @@ class Home extends Component {
     });
   }
 
-  setPage = (pageNum) => {
+  setPage(pageNum) {
     if (pageNum < 1) return;
     if (pageNum > this.state.maxPage) return;
     axiosApiInstance.get(`/api/get_ideas?page=${pageNum}`).then((response) => {
@@ -51,7 +51,6 @@ class Home extends Component {
         {this.state.ideasList.map((idea, index) => (
           <IdeaBox key={idea._id} idea={idea} boxStyle="normal"/>
         ))}
-        <PageNav page={this.state.page} setPage={this.setPage} />
       </div>
     );
   }
