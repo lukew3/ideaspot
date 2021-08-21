@@ -120,3 +120,15 @@ h2 {
 .reverse {
    transform: scaleX(-1);
 }
+.settingsPage {
+  margin: auto;
+  margin-top: 20px;
+  width: 600px;
+  padding: 30px;
+  padding-bottom: 150px;
+}
+@media only screen and (max-width: 600px) {
+  .settingsPage {
+    width: calc(100% - 10px);
+  }
+}
