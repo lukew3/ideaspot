@@ -94,7 +94,8 @@ class Comment extends Component {
     const renderCommentOwnerOptions = () => {
       if (comment.user === Cookie.get("username")) {
         return <div>
-          <p className="a">Edit</p>
+          {//<p className="a">Edit</p>
+          }
           <p className="a" onClick={() => {
             axiosApiInstance.post(`/api/delete_comment`, {
               ideaId: this.state.ideaId,

@@ -47,6 +47,7 @@
 .newCommentInput {
   padding: 8px;
   margin-bottom: 10px;
+  width: calc(100% - 18px);
 }
 
 .commentActions {
