@@ -26,7 +26,7 @@ def get_ideas():
 	return paginate(page, 10, query, 'created_at', -1)
 
 @list_bp.route('/search', methods=['GET'])
-@jwt_required(optional=True) #If jwt is included, include private ideas
+@jwt_required(optional=True) #If jwt is included, private ideas should be included
 def search():
 	if 'q' in request.args:
 		search_query = request.args['q']

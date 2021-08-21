@@ -1,15 +1,11 @@
 import React, { Component } from "react";
 import axiosApiInstance from '../helper.js';
-import { IdeaBox, ControlBar } from '../components/index.js';
-import { pageArrowRight, doublePageArrowRight} from '../svg/index.js';
-import queryString from 'query-string';
+import { ControlBar, IdeaBox, List } from '../components/index.js';
 
 
 class Home extends Component {
   constructor(props){
     super(props);
-    let qsPage = parseInt(queryString.parse(this.props.location.search).page);
-    console.log(qsPage);
     this.state = {
       ideasList: [],
       page: isNaN(qsPage) ? 1 : qsPage,
@@ -44,41 +40,7 @@ class Home extends Component {
       )
     }
     return (
-      <div className="ideaFeed">
-        {
-          //<ControlBar />
-        }
-        {this.state.ideasList.map((idea, index) => (
-          <IdeaBox key={idea._id} idea={idea} boxStyle="normal"/>
-        ))}
-        <div className="pageControl">
-          <img
-            src={doublePageArrowRight}
-            className="a reverse pageButton"
-            alt="firstPage"
-            onClick={() => {this.setPage(1)}}
-          />
-          <img
-            src={pageArrowRight}
-            className="a reverse pageButton"
-            alt="previousPage"
-            onClick={() => {this.setPage(this.state.page-1)}}
-          />
-          <p className='a'>{this.state.page}</p>
-          <img
-            src={pageArrowRight}
-            className="a pageButton"
-            alt="nextPage"
-            onClick={() => {console.log(this.state.page+1); this.setPage(this.state.page+1)}}
-          />
-          <img
-            src={doublePageArrowRight}
-            className="a pageButton"
-            alt="lastPage"
-            onClick={() => {this.setPage(this.state.maxPage)}}
-          />
-        </div>
-      </div>
+      <List ideasList={this.state.ideasList} route="/api/get_ideas"/>
     );
   }
 }
