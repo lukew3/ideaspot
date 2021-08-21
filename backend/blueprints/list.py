@@ -26,17 +26,17 @@ def get_ideas():
 	return paginate(page, 10, query, 'created_at', -1)
 
 @list_bp.route('/search', methods=['GET'])
-#@jwt_required(optional=True) #If jwt is included, include private ideas
+@jwt_required(optional=True) #If jwt is included, include private ideas
 def search():
 	if 'q' in request.args:
-		query = request.args['q']
+		search_query = request.args['q']
 	else:
 		return jsonify(status="No query")
 	if 'page' in request.args:
 		page = int(request.args['page'])
 	else:
 		page = 1
-	query = {"$text": { "$search": "java coffee shop" }, "mod_ruling": "accepted", "private": False, "delete_date": { "$exists": False}}
+	query = {"$text": { "$search": search_query }, "mod_ruling": "accepted", "private": False, "delete_date": { "$exists": False}}
 	return paginate(page, 10, query, 'created_at', -1)
 
 @list_bp.route('/get_my_ideas', methods=['GET'])

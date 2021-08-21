@@ -29,8 +29,8 @@ def main():
 
 def handle_idea(idea):
     print("--------------------------------")
-    print("TITLE: " + idea["revisions"][-1]["title"])
-    print("DESCRIPTION: " + idea["revisions"][-1]["description"])
+    print("TITLE: " + idea["title"])
+    print("DESCRIPTION: " + idea["description"])
     ruling = input('>')
     if ruling == '1':
         db.idea.update_one({"_id": idea["_id"]}, {"$set": {"mod_ruling": "accepted"}})
