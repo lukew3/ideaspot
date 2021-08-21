@@ -13,8 +13,8 @@ class Nav extends Component {
     this.handleSearch = this.handleSearch.bind(this);
   }
 
-  handleSearch(event) {
-    event.preventDefault();
+  handleSearch(event=undefined) {
+    if (event) event.preventDefault();
     // Can't get this.props.history to work, so this is my alternative
       // Must switch the commented line when testing
     //window.location.href = `http://localhost:3000/search/?q=${this.state.searchQuery}`;
@@ -36,8 +36,10 @@ class Nav extends Component {
             <img className="navLogo" src={logo} alt="Ideaspot" />
           </Link>
           <div className="navSearchBarGroup">
-            <form onSubmit={this.handleSearch}>
-              <img src={searchButton} alt="Search button" className="navSearchButton"/>
+            <form id="navSearchForm" onSubmit={this.handleSearch}>
+              <img src={searchButton} alt="Search button" className="navSearchButton" onClick={() => {
+                this.handleSearch()
+              }}/>
               <input
                 className="navSearchBar"
                 name="searchQuery"
