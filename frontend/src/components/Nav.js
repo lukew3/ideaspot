@@ -4,6 +4,30 @@ import {Link} from 'react-router-dom';
 import { logo, searchButton } from '../svg/index.js';
 
 class Nav extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      searchQuery: "",
+    }
+    this.handleInputChange = this.handleInputChange.bind(this);
+    this.handleSearch = this.handleSearch.bind(this);
+  }
+
+  handleSearch(event) {
+    event.preventDefault();
+    // Can't get this.props.history to work, so this is my alternative
+      // Must switch the commented line when testing
+    //window.location.href = `http://localhost:3000/search/?q=${this.state.searchQuery}`;
+    window.location.href = `https://ideaspot.org/search/?q=${this.state.searchQuery}`;
+  }
+
+  handleInputChange(event) {
+    const target = event.target;
+    const value = target.type === 'checkbox' ? target.checked : target.value;
+    const name = target.name;
+    this.setState({ [name]: value });
+  }
+
   render() {
     return (
       <div className="navbar">
@@ -12,8 +36,16 @@ class Nav extends Component {
             <img className="navLogo" src={logo} alt="Ideaspot" />
           </Link>
           <div className="navSearchBarGroup">
-            <img src={searchButton} alt="Search button" className="navSearchButton"/>
-            <input className="navSearchBar" type="text" placeholder="Search..." />
+            <form onSubmit={this.handleSearch}>
+              <img src={searchButton} alt="Search button" className="navSearchButton"/>
+              <input
+                className="navSearchBar"
+                name="searchQuery"
+                value={this.state.searchQuery}
+                type="text"
+                placeholder="Search..."
+                onChange={this.handleInputChange}/>
+            </form>
           </div>
           <div className="navRight">
             <LoginNav

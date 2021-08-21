@@ -1,5 +1,5 @@
 import './styles/App.css';
-import { About, Home, ViewIdea, CreateIdea, Login, SignUp, MyIdeas, EditIdea,
+import { About, Home, ViewIdea, CreateIdea, Login, Search, SignUp, MyIdeas, EditIdea,
   Profile, RequestPassReset, PasswordReset, Trash } from './views/index.js';
 import { Nav } from './components/index.js';
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
@@ -64,9 +64,11 @@ class App extends Component {
     return (
       <Router>
         <div className="App">
+        { console.log("HISTORY: ")}
           <Nav isLoggedIn={this.state.isLoggedIn} globalLogout={this.globalLogout} username={this.state.username}/>
           <Switch>
             <Route path="/" exact component={Home} />
+            <Route path="/search" exact component={Search} />
             <Route path="/myIdeas" exact component={MyIdeas} />
             <Route path="/idea/:ideaId" exact component={ViewIdea} />
             <Route path="/login" exact component={LoginIntermediate} />
