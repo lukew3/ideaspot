@@ -28,14 +28,18 @@ class Login extends Component {
       { username: this.state.username,
         password: this.state.password }
     ).then(response => {
-      this.props.globalLogin(
-        response.data.access_token,
-        response.data.refresh_token,
-        response.data.username
-      );
-      this.props.history.push(`/`);
+      if (response.data.success == true) {
+        this.props.globalLogin(
+          response.data.access_token,
+          response.data.refresh_token,
+          response.data.username
+        );
+        this.props.history.push(`/`);
+      } else {
+        document.getElementById('loginMessage').innerHTML = response.data.message;
+        document.getElementById('loginMessage').style.display = 'block';
+      }
     }).catch(error => {
-      console.log(error)
       console.log("Login invalid");
     });
   }
@@ -74,6 +78,7 @@ class Login extends Component {
         </div>
         <input type="submit" value="Submit" />
         <br/>
+        <p id="loginMessage"></p>
         <p className="loginSignUpSwitch">Don't have an account? <Link to="/register">Sign Up</Link></p>
       </form>
       <p>{this.state.status}</p>

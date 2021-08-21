@@ -39,7 +39,7 @@ def login():
 		refresh_token = create_refresh_token(identity=user["username"])
 		return jsonify(access_token=access_token, refresh_token=refresh_token,username=user["username"])
 	else:
-		return jsonify({"msg": "Bad username or password"}), 422
+		return jsonify({"message": "Incorrect username/email or password"})
 
 @auth_bp.route('/request_password_reset', methods=['POST'])
 def request_password_reset():

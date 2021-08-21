@@ -46,6 +46,14 @@
   margin-top: 20px;
 }
 
+#loginMessage {
+  display: none;
+  text-align: center;
+  margin: auto;
+  color: #f74646;
+  font-size: 11pt;
+}
+
 @media only screen and (max-width: 600px) {
   .authBox {
     width: 80vw;
