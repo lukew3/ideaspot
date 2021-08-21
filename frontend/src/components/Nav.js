@@ -13,7 +13,7 @@ class Nav extends Component {
           </Link>
           <div className="navSearchBarGroup">
             <img src={searchButton} alt="Search button" className="navSearchButton"/>
-            <input className="navSearchBar" type="text" placeholder="Search coming soon..." />
+            <input className="navSearchBar" type="text" placeholder="Search..." />
           </div>
           <div className="navRight">
             <LoginNav
