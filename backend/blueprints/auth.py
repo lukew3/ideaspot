@@ -37,7 +37,7 @@ def login():
 	if user and bcrypt.check_password_hash(user["password"], data.get('password')):
 		access_token = create_access_token(identity=user["username"])
 		refresh_token = create_refresh_token(identity=user["username"])
-		return jsonify(access_token=access_token, refresh_token=refresh_token,username=user["username"])
+		return jsonify(success=True, access_token=access_token, refresh_token=refresh_token,username=user["username"])
 	else:
 		return jsonify({"message": "Incorrect username/email or password"})
 
