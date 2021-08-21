@@ -17,8 +17,8 @@ class Nav extends Component {
     if (event) event.preventDefault();
     // Can't get this.props.history to work, so this is my alternative
       // Must switch the commented line when testing
-    //window.location.href = `http://localhost:3000/search/?q=${this.state.searchQuery}`;
-    window.location.href = `https://ideaspot.org/search/?q=${this.state.searchQuery}`;
+    window.location.href = `http://localhost:3000/search/?q=${this.state.searchQuery.replace(' ', '+')}`;
+    //window.location.href = `https://ideaspot.org/search/?q=${this.state.searchQuery.replace(' ', '+')}`;
   }
 
   handleInputChange(event) {

@@ -22,10 +22,11 @@ class IdeaForm extends Component {
     if (this.state.formType === "edit") {
       axiosApiInstance.get(`/api/get_idea/${this.state.ideaId}`
       ).then(response => {
-        this.setState({ title: response.data.idea.title,
-                        description: response.data.idea.description,
-                        private: response.data.idea.private,
-                      });
+        this.setState({
+          title: response.data.idea.title,
+          description: response.data.idea.description,
+          private: response.data.idea.private,
+        });
       });
     }
   }
