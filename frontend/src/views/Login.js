@@ -28,7 +28,7 @@ class Login extends Component {
       { username: this.state.username,
         password: this.state.password }
     ).then(response => {
-      if (response.data.success == true) {
+      if (response.data.success === true) {
         this.props.globalLogin(
           response.data.access_token,
           response.data.refresh_token,

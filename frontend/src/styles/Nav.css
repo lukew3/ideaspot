@@ -69,7 +69,7 @@
   margin-top: 7px;
 }
 
-#accountDropdownContiner {
+#accountDropdownContainer {
   display: flex;
   z-index: 3;
   position: relative;

@@ -65,6 +65,21 @@ class Nav extends Component {
 
 class LoginNav extends Component {
   render() {
+    document.addEventListener("click", (evt) => {
+        //listen for clicks outside of dropdown
+        const flyoutEl = document.getElementById("accountDropdownContainer");
+        let targetEl = evt.target; // clicked element
+        do {
+          if(targetEl === flyoutEl) {
+            // This is a click inside, does nothing, just return.
+            return;
+          }
+          // Go up the DOM
+          targetEl = targetEl.parentNode;
+        } while (targetEl);
+        // This is a click outside.
+        document.getElementById('navAccountMenu').style.display = 'none';
+      });
     if (this.props.isLoggedIn) {
       return (
         <div>
@@ -73,7 +88,7 @@ class LoginNav extends Component {
             <p>New Idea</p>
           </Link>
 
-          <div id="accountDropdownContiner" onClick={() => {
+          <div id="accountDropdownContainer" onClick={() => {
             if (document.getElementById("navAccountMenu").style.display === 'none') {
               document.getElementById("navAccountMenu").style.display = 'grid';
             } else {
