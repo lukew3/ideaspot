@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import '../styles/Nav.css';
 import {Link} from 'react-router-dom';
 import { logo, searchButton } from '../svg/index.js';
+import ghCorner from '../svg/ghCorner.png';
 
 class Nav extends Component {
   constructor(props) {
@@ -31,8 +32,9 @@ class Nav extends Component {
   render() {
     return (
       <div className="navbar">
+        <a className="ghCornerContainer" href="https://github.com/lukew3/ideaspot"><img className="ghCorner" src={ghCorner} alt="ghCorner" /></a>
         <div className="innerNav">
-          <Link to={'/'}>
+          <Link to={'/'} className="navLink">
             <img className="navLogo" src={logo} alt="Ideaspot" />
           </Link>
           <div className="navSearchBarGroup">
@@ -67,7 +69,7 @@ class LoginNav extends Component {
       return (
         <div>
 
-          <Link to={'/newIdea'}>
+          <Link to={'/newIdea'} className="navLink">
             <p>New Idea</p>
           </Link>
 
@@ -78,7 +80,7 @@ class LoginNav extends Component {
               document.getElementById("navAccountMenu").style.display = 'none';
             }
           }}>
-            <p className="a" style={{"display": "flex"}}>
+            <p className="a navLink" style={{"display": "flex"}}>
               <p>Account</p>
               <p id="accountDropdownArrow">▼</p>
             </p>
@@ -101,11 +103,11 @@ class LoginNav extends Component {
     } else {
       return(
         <div>
-        <Link to={'/login'}>
+        <Link to={'/login'} className="navLink">
           <p>Login</p>
         </Link>
 
-        <Link to={'/register'}>
+        <Link to={'/register'} className="navLink">
           <p className="signUpText">Sign Up</p>
         </Link>
         </div>

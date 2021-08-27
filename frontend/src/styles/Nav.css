@@ -13,8 +13,7 @@
   justify-content: space-between;
 }
 
-.navbar a,
-.navbar .a {
+.navLink {
   color: #D6D6D6;
   text-decoration: none;
   float: left;
@@ -154,5 +153,31 @@
   .navbar a,
   .navbar .a {
     padding: 5px;
+  }
+}
+.ghCornerContainer {
+  margin-left: -8px;
+  margin-top: -8px;
+  float: none;
+  position: absolute;
+}
+.ghCorner {
+  position: absolute;
+  width: 60px;
+  height: 60px;
+  margin: 0;
+  padding: 0;
+}
+@media only screen and (max-width: 600px) {
+  .ghCornerContainer {
+    margin-left: -13px;
+    margin-top: -13px;
+  }
+  .ghCorner {
+    width: 50px;
+    height: 50px;
+  }
+  .navLogo {
+    margin-left: 15px;
   }
 }
