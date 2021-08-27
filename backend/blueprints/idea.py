@@ -30,17 +30,22 @@ def edit_idea(ideaId):
 	data = request.get_json(silent=True)
 	current_user = get_jwt_identity()
 	old_idea = db.idea.find_one({"_id": ObjectId(ideaId), "creator": current_user})
-	revision = {
-		"time": old_idea["last_updated_at"],
-		"title": old_idea["title"],
-		"description": old_idea["description"]
-	}
-	db.idea.update_one(old_idea, {
-		'$push': {"history": revision},
-		"$set": {'last_updated_at': datetime.datetime.now(),
+	# if privacy is the only thing that changed, don't create a duplicate revision
+	if (data.get('title') == old_idea['title'] and data.get('description') == old_idea['description']):
+		db.idea.update_one(old_idea, {"$set": { 'private': data.get('private') }})
+	else:
+		revision = {
+			"time": old_idea["last_updated_at"],
+			"title": old_idea["title"],
+			"description": old_idea["description"]
+		}
+		db.idea.update_one(old_idea, {
+			'$push': {"history": revision},
+			"$set": {'last_updated_at': datetime.datetime.now(),
 				'title': data.get('title'),
-				'description': data.get('description')}
-	})
+				'description': data.get('description'),
+				'private': data.get('private')}
+		})
 	new_idea = format_idea(db.idea.find_one({"_id": ObjectId(ideaId), "creator": current_user}), current_user)
 	return new_idea
 
