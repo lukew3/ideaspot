@@ -1,0 +1,19 @@
+Ways to earn reputation
+=======================
++1 - Idea is upvoted
+-1 - Idea is downvoted
++3 - User plans to build idea
++5 - User is currently building idea
++30 - Approved build is added to your idea
+
+Ways to use reputation
+======================
+Set bounty on ideas by using your reputation
+* One number of available reputation is shown on your profile and another number shows total reputation
+  * Make a field for spent reputation and unspent reputation. Add them when showing total earned
+Tip user with reputation
+* If you think that a user has come up with good ideas, you can tip them with reputation
+  * Could create a loophole where users just upvote each others posts and give each other reputation
+    * Or one person with two accounts does this
+    * This could happen even without donations
+      * One safeguard for this is approving ideas, so users cannot spam lazy ideas and upvote all of them

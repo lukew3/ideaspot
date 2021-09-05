@@ -3,12 +3,14 @@ import '../styles/Nav.css';
 import {Link} from 'react-router-dom';
 import { logo, searchButton } from '../svg/index.js';
 import ghCorner from '../svg/ghCorner.png';
+import queryString from 'query-string';
 
 class Nav extends Component {
   constructor(props) {
     super(props);
+    let qq = queryString.parse(window.location.search).q;
     this.state = {
-      searchQuery: "",
+      searchQuery: isNaN(qq) ? "" : qq,
     }
     this.handleInputChange = this.handleInputChange.bind(this);
     this.handleSearch = this.handleSearch.bind(this);
@@ -37,7 +39,7 @@ class Nav extends Component {
           <Link to={'/'} className="navLink">
             <img className="navLogo" src={logo} alt="Ideaspot" />
           </Link>
-          <div className="navSearchBarGroup">
+          <div className="navSearchBarGroup" >
             <form id="navSearchForm" onSubmit={this.handleSearch}>
               <img src={searchButton} alt="Search button" className="navSearchButton" onClick={() => {
                 this.handleSearch()

@@ -12,3 +12,4 @@ config.json
 cli.py
 deploy
 update_schema.py
+brainstorm.txt
