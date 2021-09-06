@@ -10,7 +10,7 @@ class Nav extends Component {
     super(props);
     let qq = queryString.parse(window.location.search).q;
     this.state = {
-      searchQuery: isNaN(qq) ? "" : qq,
+      searchQuery: isNaN(qq) ? qq : "",
     }
     this.handleInputChange = this.handleInputChange.bind(this);
     this.handleSearch = this.handleSearch.bind(this);
