@@ -34,6 +34,8 @@ def handle_idea(idea):
     ruling = input('>')
     if ruling == '1':
         db.idea.update_one({"_id": idea["_id"]}, {"$set": {"mod_ruling": "accepted"}})
+        creator = db.idea.find_one({"_id": idea["_id"]})["creator"]
+        db.user.update_one({"username": creator, {"$inc": {"reputation": 5}}})
         print("Marked as accepted")
     elif ruling == '2':
         db.idea.update_one({"_id": idea["_id"]}, {"$set": {"mod_ruling": "off-topic"}})
