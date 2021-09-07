@@ -100,3 +100,6 @@ def format_idea(idea, username, revNum=-1):
 		for i in range(len(idea["comments"])):
 			idea["comments"][i] = serialize_comment_thread(idea["comments"][i])
 	return idea
+
+def update_rep(username, score_change):
+	db.user.update_one({"username": username}, {"$inc":{"reputation":score_change}})
