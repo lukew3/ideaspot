@@ -21,7 +21,8 @@ def register():
 	hashed_pwd = bcrypt.generate_password_hash(password).decode('utf-8')
 	new_user = {"email": data.get('email'),
 				"username": username,
-				"password": hashed_pwd }
+				"password": hashed_pwd,
+				"reputation": 0 }
 	db.user.insert_one(new_user)
 	access_token = create_access_token(identity=username)
 	refresh_token = create_refresh_token(identity=username)

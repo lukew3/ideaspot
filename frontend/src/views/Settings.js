@@ -30,10 +30,15 @@ class Settings extends Component {
           <h4>Change email</h4>
           <input type="text" placeholder="new email"></input>
         </div>
-        <div className="settingsGroup">
-          <h4>Delete all ideas</h4>
-          <button>Delete</button>
-        </div>
+        {
+          /*
+          <div className="settingsGroup">
+            <h4>Delete all ideas</h4>
+            <button>Delete</button>
+          </div>
+          */
+        }
+
       </div>
     )
   }
