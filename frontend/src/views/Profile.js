@@ -93,6 +93,7 @@ class Profile extends Component {
                 <p className="profileStat"><strong>{this.state.user.buildCount}</strong> ideas built</p>
                 */
               }
+              <p className="profileStat"><strong>{this.state.user.reputation}</strong> reputation earned</p>
               {//should be a rep breakdown that shows on hover(possibly click for mobile)
                 //how much is earned from created ideas, built ideas, suggestions, etc.
                 //could have public rep to show contributions to the platform and private rep for how the user uses the platform for themselves
