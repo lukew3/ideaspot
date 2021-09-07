@@ -1,4 +1,5 @@
 from bson.objectid import ObjectId
+from .db import db
 
 def serialize(dct):
 	#turns object id fields to strings
@@ -103,3 +104,6 @@ def format_idea(idea, username, revNum=-1):
 
 def update_rep(username, score_change):
 	db.user.update_one({"username": username}, {"$inc":{"reputation":score_change}})
+
+def update_idea_creator_rep(idea_id, score_change):
+	update_rep(db.idea.find_one({"_id": ObjectId(idea_id)})["creator"], score_change)
