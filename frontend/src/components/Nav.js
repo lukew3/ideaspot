@@ -80,7 +80,8 @@ class LoginNav extends Component {
           targetEl = targetEl.parentNode;
         } while (targetEl);
         // This is a click outside.
-        document.getElementById('navAccountMenu').style.display = 'none';
+        if (document.getElementById('navAccountMenu'))
+          document.getElementById('navAccountMenu').style.display = 'none';
       });
     if (this.props.isLoggedIn) {
       return (
