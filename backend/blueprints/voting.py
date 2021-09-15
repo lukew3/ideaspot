@@ -16,7 +16,7 @@ def like_idea():
 		db.idea.update_one({"_id": ObjectId(idea_id)},
 			{'$pull': {'dislikes': get_jwt_identity() }})
 		update_idea_creator_rep(idea_id, 1)
-	if "likes" in idea and get_jwt_identity() not in idea["likes"]:
+	if get_jwt_identity() not in idea["likes"]:
 		db.idea.update_one({"_id": ObjectId(idea_id)},
 			{'$addToSet': {'likes': get_jwt_identity() }})
 		update_idea_creator_rep(idea_id, 1)
@@ -43,7 +43,7 @@ def dislike_idea():
 		db.idea.update_one({"_id": ObjectId(idea_id)},
 			{'$pull': {'likes': get_jwt_identity() }})
 		update_idea_creator_rep(idea_id, -1)
-	if "dislikes" in idea and get_jwt_identity() not in idea["dislikes"]:
+	if get_jwt_identity() not in idea["dislikes"]:
 		db.idea.update_one({"_id": ObjectId(idea_id)},
 			{'$addToSet': {'dislikes': get_jwt_identity() }})
 		update_idea_creator_rep(idea_id, -1)
