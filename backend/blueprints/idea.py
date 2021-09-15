@@ -19,7 +19,9 @@ def create_idea():
 				"creator": get_jwt_identity(),
 				"private": data.get('private'),
 				"created_at": datetime.datetime.now(),
-				"last_updated_at": datetime.datetime.now() }
+				"last_updated_at": datetime.datetime.now(),
+				"likes": [],
+				"dislikes": [] }
 	new_id = str(db.idea.insert_one(new_idea).inserted_id)
 	return jsonify(id=new_id)
 
