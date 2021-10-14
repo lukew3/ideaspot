@@ -45,6 +45,7 @@ class IdeaBox extends Component {
             </Link>
             <RevisionSelect revs={idea.revisionTimes} switchRevision={this.switchRevision}/>
             <OwnerOptions idea={idea} creator={idea.creator} ideaId={idea._id} hideOptions={this.state.hideOptions}/>
+            <ModRemove idea={idea}/>
           </div>
           <ReactMarkdown className="ideaDescription">
             {idea.description}
@@ -112,6 +113,29 @@ function OwnerOptions(props) {
   } else {
     return(
       <div className="ownerOptionsContainer"></div>
+    );
+  }
+}
+
+
+function ModRemove(props) {
+  function modRemove() {
+    axiosApiInstance.patch(`/api/mod_remove/${props.idea._id}`
+    ).then(response => {
+      //if success, hide the ideaBox
+      document.getElementById(props.idea._id).innerHTML = "Idea \"" + props.idea._id + "\" removed by mod.";
+    }).catch(error => {
+      console.log("Removal failed");
+    });
+  }
+  const username = Cookie.get("username") ? Cookie.get("username") : null;
+  if (username === 'lukew3') {
+    return(
+      <p className="a modRemoveLink" onClick={() => {modRemove()}}>Mod Remove</p>
+    );
+  } else {
+    return(
+      <div></div>
     );
   }
 }

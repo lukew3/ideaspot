@@ -15,7 +15,6 @@ def create_idea():
 	new_idea = {"history": [],
 				"title": data.get('title'),
 				"description": data.get('description'),
-				"mod_ruling": "pending",
 				"creator": get_jwt_identity(),
 				"private": data.get('private'),
 				"created_at": datetime.datetime.now(),
@@ -51,6 +50,19 @@ def edit_idea(ideaId):
 	new_idea = format_idea(db.idea.find_one({"_id": ObjectId(ideaId), "creator": current_user}), current_user)
 	return new_idea
 
+
+@idea_bp.route('/mod_remove/<ideaId>', methods=['PATCH'])
+@jwt_required()
+def mod_remove_idea(ideaId):
+	current_user = get_jwt_identity()
+	if current_user == 'lukew3':
+		idea = db.idea.find_one({"_id": ObjectId(ideaId)})
+		db.idea.update_one(idea, {"$set": { 'mod_removed': True }})
+		return jsonify(status="success")
+	else:
+		return jsonify(status="not a moderator")
+
+
 @idea_bp.route('/trash_idea/<ideaId>', methods=['POST'])
 @jwt_required()
 def recycle_idea(ideaId):
@@ -59,6 +71,7 @@ def recycle_idea(ideaId):
 	db.idea.update_one({"_id": ObjectId(ideaId)}, { "$set": {"delete_date": datetime.datetime.now() + datetime.timedelta(30)}})
 	return jsonify(status="idea recycled")
 
+
 @idea_bp.route('/delete_idea/<ideaId>', methods=['DELETE'])
 @jwt_required()
 def delete_idea(ideaId):
@@ -66,12 +79,14 @@ def delete_idea(ideaId):
 	db.idea.delete_one({"_id": ObjectId(ideaId), "creator": current_user})
 	return jsonify(status="idea deleted")
 
+
 @idea_bp.route('/restore_idea/<ideaId>', methods=['POST'])
 @jwt_required()
 def restore_idea(ideaId):
 	current_user = get_jwt_identity()
 	db.idea.update_one({"_id": ObjectId(ideaId)}, { '$unset': { "delete_date": '' } })
 	return jsonify(status="idea restored")
+
 
 @idea_bp.route('/get_idea/<ideaId>', defaults={'revNum': -1}, methods=['GET'])
 @idea_bp.route('/get_idea/<ideaId>/<revNum>', methods=['GET'])

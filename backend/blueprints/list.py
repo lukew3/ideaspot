@@ -22,7 +22,7 @@ def get_ideas():
 		page = int(request.args['page'])
 	else:
 		page = 1
-	query = {"mod_ruling": "accepted", "private": False, "delete_date": { "$exists": False}}
+	query = {"mod_removed": { "$exists": False }, "private": False, "delete_date": { "$exists": False }}
 	return paginate(page, 10, query, 'created_at', -1)
 
 @list_bp.route('/search', methods=['GET'])
@@ -40,15 +40,13 @@ def search():
 		"$text": { "$search": search_query },
 		"$or": [
 			{"$and": [
-				{"creator": get_jwt_identity()},
+				{ "creator": get_jwt_identity()},
 				{ "private": True}
 			]},
-			{"$and": [
-				{"private": False},
-				{"mod_ruling": "accepted"}
-			]},
+			{"private": False},
 		],
-		"delete_date": { "$exists": False}
+		"delete_date": { "$exists": False },
+		"mod_removed": { "$exists": False }
 	}
 	return paginate(page, 10, query, 'created_at', -1)
 
