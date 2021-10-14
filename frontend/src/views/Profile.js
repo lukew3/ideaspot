@@ -23,7 +23,6 @@ class Profile extends Component {
   componentDidMount() {
     axiosApiInstance.get(`/api/user/${this.props.match.params.username}`).then(response => {
       if (response.data.bio === undefined) response.data.bio = "";
-      if (response.data.buildCount === undefined) response.data.buildCount = 0;
       this.setState({ user: response.data });
     }).then(() => {
       this.setActiveTab(this.state.activeTab);
@@ -103,18 +102,10 @@ class Profile extends Component {
               */
             }
             <div className="profileStats">
-              {
-                /*
-                <p className="profileStat"><strong>{this.state.user.ideasCount}</strong> reputation earned</p>
-                */
-              }
-              <p className="profileStat"><strong>{this.state.user.ideasCount}</strong> ideas written</p>
-              {
-                /*
-                <p className="profileStat"><strong>{this.state.user.buildCount}</strong> ideas built</p>
-                */
-              }
               <p className="profileStat"><strong>{this.state.user.reputation}</strong> reputation earned</p>
+              <hr></hr>
+              <p className="profileStat"><strong>{this.state.user.ideas.length}</strong> ideas written</p>
+              <p className="profileStat"><strong>{this.state.user.built.length}</strong> ideas built</p>
               {//should be a rep breakdown that shows on hover(possibly click for mobile)
                 //how much is earned from created ideas, built ideas, suggestions, etc.
                 //could have public rep to show contributions to the platform and private rep for how the user uses the platform for themselves
