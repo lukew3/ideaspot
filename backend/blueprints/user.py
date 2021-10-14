@@ -22,14 +22,4 @@ def get_user(username):
 			ideascur = db.idea.find({"creator": username, "private": False, "delete_date": { "$exists": False }})
 	user["ideas"] = clean_list(ideascur, username)
 	user["ideas"].reverse()
-	user["ideasCount"] = len(user["ideas"])
 	return jsonify(user)
-
-@user_bp.route('/user/<username>/builds', methods=['GET'])
-@jwt_required(optional=True)
-def get_user_builds(username):
-	try:
-		builds = db.user.find_one({"username": username})["builds"]
-	except Exception:
-		builds = {}
-	return jsonify(builds)

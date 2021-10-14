@@ -22,7 +22,10 @@ def register():
 	new_user = {"email": data.get('email'),
 				"username": username,
 				"password": hashed_pwd,
-				"reputation": 0 }
+				"reputation": 0,
+				"building": [],
+				"plan_to_build": [],
+				"built": [] }
 	db.user.insert_one(new_user)
 	access_token = create_access_token(identity=username)
 	refresh_token = create_refresh_token(identity=username)

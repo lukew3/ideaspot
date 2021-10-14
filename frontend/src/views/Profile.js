@@ -12,9 +12,11 @@ class Profile extends Component {
     this.state = {
       user: {
         "ideas": [],
+        "built": [],
+        "building": [],
+        "plan_to_build": [],
       },
       activeTab: tab === undefined ? "ideas" : tab,
-      builds: {},
     }
   }
 
@@ -55,17 +57,36 @@ class Profile extends Component {
             ))}
           </div>
         )
-      } else if (this.state.activeTab === "builds") {
-        return <div>Your builds will appear here</div>
-        /*
-        axiosApiInstance.get(`/api/user/${this.props.match.params.username}/builds`).then(response => {
-          this.setState({builds: response.data});
-        }).then(() => {
-          return (
-            <div>Test</div>
-          )
-        })
-        */
+      } else if (this.state.activeTab === "built") {
+        return (
+          <div className="ideaFeed">
+            {this.state.user.built.map((build, index) => (
+              <div className="standardBorder profileIdea">
+                <Link to={`/idea/${build._id}`}><h3>{build.title} - {build.build}</h3></Link>
+              </div>
+            ))}
+          </div>
+        )
+      } else if (this.state.activeTab === "building") {
+        return (
+          <div className="ideaFeed">
+            {this.state.user.building.map((build, index) => (
+              <div className="standardBorder profileIdea">
+                <Link to={`/idea/${build._id}`}><h3>{build.title}</h3></Link>
+              </div>
+            ))}
+          </div>
+        )
+      } else if (this.state.activeTab === "plan_to_build") {
+        return (
+          <div className="ideaFeed">
+            {this.state.user.plan_to_build.map((build, index) => (
+              <div className="standardBorder profileIdea">
+                <Link to={`/idea/${build._id}`}><h3>{build.title}</h3></Link>
+              </div>
+            ))}
+          </div>
+        )
       } else if (this.state.activeTab === "teams") {
         return <div>Teams data</div>
       }
@@ -105,16 +126,16 @@ class Profile extends Component {
             <div className="profileSectionSelector">
               <div id="ideasTab" className="profileSelectorItem" onClick={() => {
                 this.setActiveTab("ideas");
-              }}>Ideas ({this.state.user.ideasCount})</div>
-              <div id="buildsTab" className="profileSelectorItem" onClick={() => {
-                this.setActiveTab("builds")
-              }}>Builds ({this.state.user.buildCount})</div>
-              {
-                // more tabs to be implemented later
-                /*
-                <div id="teamsTab" className="profileSelectorItem" onClick={() => { this.setActiveTab("teams")}}>Teams</div>
-                */
-              }
+              }}>Ideas ({this.state.user.ideas.length})</div>
+              <div id="builtTab" className="profileSelectorItem" onClick={() => {
+                this.setActiveTab("built")
+              }}>Built ({this.state.user.built.length})</div>
+              <div id="buildingTab" className="profileSelectorItem" onClick={() => {
+                this.setActiveTab("building")
+              }}>Building ({this.state.user.building.length})</div>
+              <div id="plan_to_buildTab" className="profileSelectorItem" onClick={() => {
+                this.setActiveTab("plan_to_build")
+              }}>Plan To Build ({this.state.user.plan_to_build.length})</div>
             </div>
             {renderTabContent()}
           </div>

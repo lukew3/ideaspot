@@ -113,14 +113,16 @@ def set_build_status():
 	link = data.get('link')
 	if status not in ['built', 'building', 'plan_to_build', 'not_building']:
 		return jsonify(status="Status invalid"), 500
+	# Get idea
+	idea = db.idea.find_one({"_id": ObjectId(idea_id)})
 	# Remove old build statuses
 	db.idea.update_one({"_id": ObjectId(idea_id)}, {'$pull': {f"builders.building": get_jwt_identity()}})
 	db.idea.update_one({"_id": ObjectId(idea_id)}, {'$pull': {f"builders.plan_to_build": get_jwt_identity()}})
 	db.idea.update_one({"_id": ObjectId(idea_id)}, {'$pull': {f"builders.built": { 'user': get_jwt_identity() }}})
 	# Remove old build from user object
-	db.user.update_one({"username": get_jwt_identity()}, {'$pull': {f"builds.building": idea_id}})
-	db.user.update_one({"username": get_jwt_identity()}, {'$pull': {f"builds.plan_to_build": idea_id}})
-	db.user.update_one({"username": get_jwt_identity()}, {'$pull': {f"builds.built": idea_id}})
+	db.user.update_one({"username": get_jwt_identity()}, {'$pull': {"building": { "_id": idea_id }}})
+	db.user.update_one({"username": get_jwt_identity()}, {'$pull': {"plan_to_build": { "_id": idea_id }}})
+	db.user.update_one({"username": get_jwt_identity()}, {'$pull': {"built": { "_id": idea_id }}})
 	if status == 'not_building':
 		return jsonify(status='Build removed successfully')
 	elif status == 'built':
@@ -131,8 +133,10 @@ def set_build_status():
 		# Add build to user object
 		# Should objectId of idea or string be stored in array?
 		build_obj = {"user": get_jwt_identity(), "link": link}
+		user_build_obj = {"_id": idea_id, "title": idea['title'], "build": link}
 	else:
 		build_obj = get_jwt_identity()
-	db.user.update_one({"username": get_jwt_identity()}, {"$push": {f"builds.{status}": idea_id}})
+		user_build_obj = {"_id": idea_id, "title": idea['title']}
+	db.user.update_one({"username": get_jwt_identity()}, {"$push": {f"{status}": user_build_obj}})
 	db.idea.update_one({"_id": ObjectId(idea_id)}, {'$push': {f"builders.{status}": build_obj}})
 	return jsonify(status="Build added successfully")
