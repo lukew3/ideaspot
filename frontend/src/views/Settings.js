@@ -72,7 +72,7 @@ class Settings extends Component {
             value={this.state.newPassword}
             onChange={this.handleInputChange} />
           <br></br>
-          <input type="submit" value="Submit"/>
+          <button type="submit" className="submitButton">Submit</button>
           <p id="passwordUpdateStatus"></p>
         </form>
         <form className="settingsGroup" onSubmit={this.handleSubmitEmailUpdate}>
@@ -84,7 +84,7 @@ class Settings extends Component {
             value={this.state.newEmail}
             onChange={this.handleInputChange} />
           <br></br>
-          <input type="submit" value="Submit"/>
+          <button type="submit" className="submitButton">Submit</button>
           <p id="emailUpdateStatus"></p>
         </form>
         {
