@@ -81,7 +81,7 @@ class SignUp extends Component {
           </label>
           <br/>
         </div>
-        <input type="submit" value="Submit" />
+        <button type="submit" className="authFormSubmit">Submit</button>
         <p className="loginSignUpSwitch">Already have an account? <Link to="/login">Login</Link></p>
       </form>
       <p>{this.state.status}</p>

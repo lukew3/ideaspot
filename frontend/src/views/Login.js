@@ -76,7 +76,7 @@ class Login extends Component {
           <Link to="/requestPasswordReset" className="forgotPasswordLink">Forgot password?</Link>
           <br/>
         </div>
-        <input type="submit" value="Submit" />
+        <button type="submit" className="authFormSubmit">Submit</button>
         <br/>
         <p id="loginMessage"></p>
         <p className="loginSignUpSwitch">Don't have an account? <Link to="/register">Sign Up</Link></p>

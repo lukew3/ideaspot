@@ -200,7 +200,7 @@ class NewComment extends Component {
             value={this.state.commentInput}
             onChange={this.handleInputChange}/>
           <div className="newCommentFormBottom">
-            <input type="submit" value="Submit" />
+            <button type="submit" className="commentFormSubmit">Submit</button>
             {renderCancel()}
           </div>
         </form>

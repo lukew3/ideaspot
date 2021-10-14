@@ -76,6 +76,15 @@
   margin-bottom: auto;
 }
 
+.commentFormSubmit {
+  color: lightgrey;
+  border-radius: 5px;
+  border: 1px solid #595757;
+  padding: 5px 15px;
+  background-color: #2d2d2d;
+  cursor: pointer;
+}
+
 @media only screen and (max-width: 600px) {
   .comments {
     margin-left: 5px;
