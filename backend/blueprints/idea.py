@@ -12,6 +12,8 @@ idea_bp = Blueprint('idea', __name__)
 @jwt_required()
 def create_idea():
 	data = request.get_json(silent=True)
+	if data.get('title') == '':
+		return jsonify(status="idea must have a title")
 	new_idea = {"history": [],
 				"title": data.get('title'),
 				"description": data.get('description'),

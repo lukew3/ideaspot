@@ -31,6 +31,7 @@ def register():
 	refresh_token = create_refresh_token(identity=username)
 	return jsonify(access_token=access_token, refresh_token=refresh_token,username=username)
 
+
 @auth_bp.route('/login', methods=['POST'])
 def login():
 	data = request.get_json(silent=True)
@@ -45,6 +46,7 @@ def login():
 	else:
 		return jsonify({"message": "Incorrect username/email or password"})
 
+
 @auth_bp.route('/request_password_reset', methods=['POST'])
 def request_password_reset():
 	data = request.get_json(silent=True)
@@ -58,6 +60,7 @@ def request_password_reset():
 	send_email(email, "Password reset", body)
 	return jsonify(message="Email sent")
 
+
 def send_email(recipient, subject, body):
 	GMAIL_USER = "buildmyidea.tk@gmail.com"
 	GMAIL_PASSWORD = "bbfpmkgnqabocyzm"
@@ -68,6 +71,7 @@ def send_email(recipient, subject, body):
 	email_text = "From: %s\nTo: %s\nSubject: %s\n\n%s" % (GMAIL_USER, recipient, subject, body)
 	email_server.sendmail(GMAIL_USER, recipient, email_text)
 	email_server.close()
+
 
 @auth_bp.route('/password_reset', methods=['POST'])
 @jwt_required()
@@ -80,9 +84,31 @@ def password_reset():
 	refresh_token = create_refresh_token(identity=identity)
 	return jsonify(access_token=access_token, refresh_token=refresh_token,username=identity)
 
+
 @auth_bp.route("/refresh", methods=["POST"])
 @jwt_required(refresh=True)
 def refresh():
 	identity = get_jwt_identity()
 	access_token = create_access_token(identity=identity)
 	return jsonify(access_token=access_token)
+
+
+@auth_bp.route('/changePassword', methods=['PATCH'])
+@jwt_required()
+def change_password():
+	data = request.get_json(silent=True)
+	pwd_hash = bcrypt.generate_password_hash(data.get('newPassword')).decode('utf-8')
+	user = serialize(db.user.find_one({"username": get_jwt_identity()}))
+	if user and bcrypt.check_password_hash(user["password"], data.get('oldPassword')):
+		db.user.update_one({"username": user["username"]}, {'$set': {"password": pwd_hash} })
+		return jsonify(success=True)
+	else:
+		return jsonify({"message": "Error occurred, check your old password"}), 500
+
+
+@auth_bp.route('/changeEmail', methods=['PATCH'])
+@jwt_required()
+def change_email():
+	data = request.get_json(silent=True)
+	db.user.update_one({"username": get_jwt_identity()}, {'$set': {'email': data.get('newEmail')} })
+	return jsonify({"message": "New email set"})
