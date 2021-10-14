@@ -37,3 +37,9 @@
   color: lightgrey;
   margin-top: 10px;
 }
+
+.ideaFormSubmit {
+  border: 1px solid #595757;
+  padding: 5px 15px;
+  background-color: #2d2d2d;
+}

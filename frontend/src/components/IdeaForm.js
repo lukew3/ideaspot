@@ -122,7 +122,7 @@ class IdeaForm extends Component {
           {
             //add up to 3 tags
           }
-          <input type="submit" value="Submit"/>
+          <input type="submit" className="ideaFormSubmit" value="Submit"/>
         </form>
       </div>
       </div>
