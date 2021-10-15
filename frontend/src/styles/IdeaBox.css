@@ -143,6 +143,7 @@
   color: #d6d6d6;
   position: relative;
   margin-left: auto;
+  -webkit-appearance: none;
 }
 
 .ownerOptionsContainer {
