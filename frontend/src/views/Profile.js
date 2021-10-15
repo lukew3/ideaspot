@@ -61,7 +61,7 @@ class Profile extends Component {
           <div className="ideaFeed">
             {this.state.user.built.map((build, index) => (
               <div className="standardBorder profileIdea">
-                <Link to={`/idea/${build._id}`}><h3>{build.title} - {build.build}</h3></Link>
+                <h3><Link to={`/idea/${build._id}`}>{build.title}</Link> - <a href={build.build}>{build.build}</a></h3>
               </div>
             ))}
           </div>
