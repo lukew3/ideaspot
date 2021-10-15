@@ -47,8 +47,10 @@ class IdeaBox extends Component {
               <RevisionSelect revs={idea.revisionTimes} switchRevision={this.switchRevision}/>
               <div id="revisionSelectArrow">v</div>
             </div>
-            <OwnerOptions idea={idea} creator={idea.creator} ideaId={idea._id} hideOptions={this.state.hideOptions}/>
-            <ModRemove idea={idea}/>
+            <div style={{display: "flex"}}>
+              <OwnerOptions idea={idea} creator={idea.creator} ideaId={idea._id} hideOptions={this.state.hideOptions}/>
+              <ModRemove idea={idea}/>
+            </div>
           </div>
           <ReactMarkdown className="ideaDescription">
             {idea.description}
