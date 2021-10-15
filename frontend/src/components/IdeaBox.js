@@ -5,7 +5,7 @@ import { Link } from 'react-router-dom';
 import Cookie from 'js-cookie';
 import '../styles/IdeaBox.css';
 import axiosApiInstance from '../helper.js';
-import { optionsButton } from '../svg/index.js';
+import { modRemoveButton, optionsButton } from '../svg/index.js';
 
 class IdeaBox extends Component {
   constructor(props){
@@ -136,7 +136,7 @@ function ModRemove(props) {
   const username = Cookie.get("username") ? Cookie.get("username") : null;
   if (username === 'lukew3') {
     return(
-      <p className="a modRemoveLink" onClick={() => {modRemove()}}>Mod Remove</p>
+      <img src={modRemoveButton} alt="Mod Remove" className="ownerOptionsButton" onClick={() => {modRemove()}}/>
     );
   } else {
     return(
