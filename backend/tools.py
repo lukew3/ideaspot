@@ -2,10 +2,7 @@ from bson.objectid import ObjectId
 from .db import db
 
 def serialize(dct):
-	#turns object id fields to strings
-	for k in dct:
-		if isinstance(dct[k], ObjectId):
-			dct[k] = str(dct[k])
+	dct['_id'] = str(dct['_id'])
 	return dct
 
 def format_ldl(idea, username, ldl):
@@ -28,7 +25,9 @@ def clean_list(ideas, username):
 	ideas = list(ideas)
 	for idea in ideas:
 		# Converts _id from ObjectId to string
-		idea = serialize(idea)
+		#idea = serialize(idea)
+		idea['_id'] = str(idea['_id'])
+
 		# Remove excessive like data and add user like/dislike status
 		idea = format_ldl(idea, username, "like")
 		idea = format_ldl(idea, username, "dislike")
@@ -47,17 +46,29 @@ def clean_list(ideas, username):
 
 def serialize_comment_thread(comment):
 	comment["_id"] = str(comment["_id"])
-	try:
+	if "replies" in comment:
 		for i in range(len(comment["replies"])):
 			comment["replies"][i] = serialize_comment_thread(comment["replies"][i])
-	except Exception:
-		pass
 	return comment
+
+def get_my_build_status(idea, username):
+	if "builders" in idea:
+		for k in idea['builders']:
+			if k == 'built':
+				for item in idea['builders'][k]:
+					if item['user'] == username:
+						return(k, item['link'])
+			else:
+				if username in idea['builders'][k]:
+					return(k, '')
+	else:
+		return('not_building', '')
+	return('not_building', '')
 
 def format_idea(idea, username, revNum=-1):
 	""" Format idea before it is sent """
 	# Converts _id from ObjectId to string
-	idea = serialize(idea)
+	idea['_id'] = str(idea['_id'])
 	# Remove excessive like data and add user like/dislike status
 	idea = format_ldl(idea, username, "like")
 	idea = format_ldl(idea, username, "dislike")
@@ -73,18 +84,7 @@ def format_idea(idea, username, revNum=-1):
 	idea["revisionTimes"].append(idea["last_updated_at"])
 
 	# Set build status
-	if "builders" in idea:
-		for k in idea['builders']:
-			if k == 'built':
-				for item in idea['builders'][k]:
-					if item['user'] == username:
-						idea["myBuildStatus"] = k
-						idea["myBuildLink"] = item['link']
-			else:
-				if username in idea['builders'][k]:
-					idea["myBuildStatus"] = k
-	else:
-		idea['myBuildStatus'] = 'not_building'
+	idea['myBuildStatus'], idea["myBuildLink"] = get_my_build_status(idea, username)
 
 	# Clean builders data
 	if "builders" in idea:
