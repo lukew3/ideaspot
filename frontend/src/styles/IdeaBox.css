@@ -137,6 +137,7 @@
 .revisionSelectGroup {
   margin-left: auto;
   display: flex;
+  cursor: pointer;
 }
 
 .revisionSelect {
@@ -152,12 +153,14 @@
   -webkit-appearance:none;
   appearance:none;
   padding-right: 17px;
+  padding-left: 2px;
+  cursor: pointer;
 }
 
 #revisionSelectArrow {
   font-size: .6rem;
   margin-top: 14px;
-  left: -12px;
+  left: -14px;
   position: relative;
   -webkit-transform: scale(2.1, 1);
   -moz-transform: scale(2.1, 1);
