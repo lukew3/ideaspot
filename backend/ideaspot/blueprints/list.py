@@ -8,12 +8,14 @@ import math
 
 list_bp = Blueprint('list', __name__)
 
+
 def paginate(page, per_page, query, sort_field, sort_direction):
 	offset = (page-1) * per_page
 	ideascur =  db.idea.find(query).sort(sort_field, sort_direction).skip(offset).limit(per_page)
 	ideas = clean_list(ideascur, get_jwt_identity())
 	maxPage = math.ceil(db.idea.count_documents(query) / per_page)
 	return jsonify({'ideas': ideas, 'maxPage': maxPage})
+
 
 @list_bp.route('/get_ideas', methods=['GET'])
 @jwt_required(optional=True)
@@ -24,6 +26,7 @@ def get_ideas():
 		page = 1
 	query = {"mod_removed": { "$exists": False }, "private": False, "delete_date": { "$exists": False }}
 	return paginate(page, 10, query, 'created_at', -1)
+
 
 @list_bp.route('/search', methods=['GET'])
 @jwt_required(optional=True) #If jwt is included, include private ideas
@@ -50,6 +53,7 @@ def search():
 	}
 	return paginate(page, 10, query, 'created_at', -1)
 
+
 @list_bp.route('/get_my_ideas', methods=['GET'])
 @jwt_required()
 def get_my_ideas():
@@ -58,6 +62,7 @@ def get_my_ideas():
 	ideas = clean_list(ideascur, current_user)
 	ideas.reverse()
 	return jsonify({'ideas': ideas})
+
 
 @list_bp.route('/get_trash', methods=['GET'])
 @jwt_required()

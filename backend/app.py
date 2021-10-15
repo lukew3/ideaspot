@@ -3,14 +3,14 @@ from flask_cors import CORS
 from flask_jwt_extended import create_access_token, create_refresh_token, get_jwt_identity, jwt_required, JWTManager
 from flask_bcrypt import Bcrypt
 import datetime, json
-from backend.blueprints import auth_bp, comments_bp, idea_bp, list_bp, user_bp, voting_bp
+from ideaspot.blueprints import auth_bp, comments_bp, idea_bp, list_bp, user_bp, voting_bp
 
 with open('config.json') as config_file:
 		config = json.load(config_file)
 
 cors = CORS()
 
-app = Flask(__name__, static_folder='./build', static_url_path='/')
+app = Flask(__name__, static_folder='../build', static_url_path='/')
 api_bp = Blueprint('api', __name__)
 app.config['SECRET_KEY'] = config.get('SECRET_KEY')
 
