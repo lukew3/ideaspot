@@ -11,6 +11,7 @@ class Home extends Component {
     let qsPage = parseInt(queryString.parse(this.props.location.search).page);
     console.log(qsPage);
     this.state = {
+      loaded: false,
       ideasList: [],
       page: isNaN(qsPage) ? 1 : qsPage,
       maxPage: 1
@@ -19,7 +20,7 @@ class Home extends Component {
   // on mount, load subscriptions
   componentDidMount() {
     axiosApiInstance.get(`/api/get_ideas?page=${this.state.page}`, {}).then(response => {
-      this.setState({ ideasList: response.data.ideas, maxPage: response.data.maxPage });
+      this.setState({ ideasList: response.data.ideas, maxPage: response.data.maxPage, loaded: true });
     });
   }
 
@@ -34,11 +35,19 @@ class Home extends Component {
   }
 
   render() {
-    if (this.state.ideasList.length === 0) {
+    if (this.state.loaded === false) {
       return (
         <div className="blankPageTextContainer">
           <h2>
             Loading Ideas...
+          </h2>
+        </div>
+      )
+    } else if (this.state.ideasList.length === 0) {
+      return (
+        <div className="blankPageTextContainer">
+          <h2>
+            No ideas found
           </h2>
         </div>
       )

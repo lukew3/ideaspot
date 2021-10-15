@@ -12,6 +12,7 @@ class Search extends Component {
     let qsSearchQuery = queryString.parse(this.props.location.search).q;
     console.log(qsSearchQuery);
     this.state = {
+      loaded: false,
       ideasList: [],
       page: isNaN(qsPage) ? 1 : qsPage,
       searchQuery: qsSearchQuery,
@@ -21,7 +22,7 @@ class Search extends Component {
   // on mount, load subscriptions
   componentDidMount() {
     axiosApiInstance.get(`/api/search?q=${this.state.searchQuery}&page=${this.state.page}`).then(response => {
-      this.setState({ ideasList: response.data.ideas, maxPage: response.data.maxPage });
+      this.setState({ ideasList: response.data.ideas, maxPage: response.data.maxPage, loaded: true });
     });
   }
 
@@ -36,11 +37,19 @@ class Search extends Component {
   }
 
   render() {
-    if (this.state.ideasList.length === 0) {
+    if (this.state.loaded === false) {
       return (
         <div className="blankPageTextContainer">
           <h2>
             Loading Ideas...
+          </h2>
+        </div>
+      )
+    } else if (this.state.ideasList.length === 0) {
+      return (
+        <div className="blankPageTextContainer">
+          <h2>
+            No ideas found
           </h2>
         </div>
       )
