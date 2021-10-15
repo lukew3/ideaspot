@@ -43,7 +43,10 @@ class IdeaBox extends Component {
             <Link to={`/idea/${idea._id}`} id="titleLink">
               <h1 className="ideaBoxTitle">{idea.title}</h1>
             </Link>
-            <RevisionSelect revs={idea.revisionTimes} switchRevision={this.switchRevision}/>
+            <div className="revisionSelectGroup">
+              <RevisionSelect revs={idea.revisionTimes} switchRevision={this.switchRevision}/>
+              <div id="revisionSelectArrow">v</div>
+            </div>
             <OwnerOptions idea={idea} creator={idea.creator} ideaId={idea._id} hideOptions={this.state.hideOptions}/>
             <ModRemove idea={idea}/>
           </div>
@@ -70,11 +73,11 @@ function RevisionSelect(props) {
       )*/
     }
     return (
-      <select className="revisionSelect" onChange={props.switchRevision}>
-        {props.revs.slice(0).reverse().map((rev, index) => {
-          return <option value={props.revs.length-1-index}>{rev}</option>;
-        })}
-      </select>
+        <select className="revisionSelect" onChange={props.switchRevision}>
+          {props.revs.slice(0).reverse().map((rev, index) => {
+            return <option value={props.revs.length-1-index}>{rev}</option>;
+          })}
+        </select>
     )
   } catch (e) {
     return "";
