@@ -10,7 +10,7 @@ auth_bp = Blueprint('auth', __name__)
 bcrypt = Bcrypt()
 
 
-blocked_usernames = ['myIdeas','idea','login','register','newIdea','editIdea','trash','settings','<Deleted>']
+blocked_usernames = ['about', 'donate', 'myIdeas','idea','login','register','newIdea','editIdea','trash','settings','<Deleted>']
 @auth_bp.route('/register', methods=['POST'])
 def register():
 	data = request.get_json(silent=True)

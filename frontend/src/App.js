@@ -1,5 +1,5 @@
 import './styles/App.css';
-import { About, Home, ViewIdea, CreateIdea, Login, Search, SignUp, MyIdeas, EditIdea,
+import { About, Donate, Home, ViewIdea, CreateIdea, Login, Search, SignUp, MyIdeas, EditIdea,
   Profile, RequestPassReset, PasswordReset, Settings, Trash } from './views/index.js';
 import { InfoBar, Nav } from './components/index.js';
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
@@ -78,6 +78,7 @@ class App extends Component {
             <Route path="/newIdea" exact component={CreateIdea} />
             <Route path="/trash" exact component={Trash} />
             <Route path="/about" exact component={About} />
+            <Route path="/donate" exact component={Donate} />
             <Route path="/editIdea/:ideaId" exact component={EditIdea} />
             <Route path="/requestPasswordReset" exact component={RequestPassReset} />
             <Route path="/passwordReset/:jwt" exact component={PasswordResetIntermediate} />

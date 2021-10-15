@@ -15,7 +15,7 @@ class InfoBar extends Component {
         <Link to={'/about'}>About</Link>
         <a href="mailto: lukew25073@gmail.com">Contact</a>
         <a href="https://github.com/lukew3/ideaspot">Github</a>
-        <a>Donate</a>
+        <Link to={'/donate'}>Donate</Link>
       </div>
     );
   }

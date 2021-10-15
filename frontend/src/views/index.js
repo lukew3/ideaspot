@@ -1,5 +1,6 @@
 import About from './About.js';
 import CreateIdea from './CreateIdea.js';
+import Donate from './Donate.js';
 import EditIdea from './EditIdea.js';
 import Home from './Home.js';
 import Login from './Login.js';
@@ -13,5 +14,5 @@ import SignUp from './SignUp.js';
 import Trash from './Trash.js';
 import ViewIdea from './ViewIdea.js';
 
-export { About, CreateIdea, EditIdea, Home, Login, MyIdeas, PasswordReset, Profile,
-  RequestPassReset, Search, Settings, SignUp, Trash, ViewIdea };
+export { About, CreateIdea, Donate, EditIdea, Home, Login, MyIdeas, PasswordReset,
+  Profile, RequestPassReset, Search, Settings, SignUp, Trash, ViewIdea };
