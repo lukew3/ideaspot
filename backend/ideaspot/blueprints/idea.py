@@ -97,10 +97,10 @@ def get_idea(ideaId, revNum):
 	revNum = int(revNum)
 	idea_obj = format_idea(db.idea.find_one({"_id": ObjectId(ideaId)}), get_jwt_identity(), revNum=revNum)
 	if idea_obj["private"] == True and idea_obj["creator"] != get_jwt_identity():
-		return "<h1>This idea is private, you must sign in as owner to access</h1>", 500
+		return jsonify(idea="unauthorized")
 	try:
 		if idea_obj["delete_date"] and idea_obj["creator"] != get_jwt_identity():
-			return "<h1>This idea has been deleted</h1>", 500
+			return jsonify(idea="deleted")
 	except Exception as e:
 		pass
 	return jsonify(idea=idea_obj)

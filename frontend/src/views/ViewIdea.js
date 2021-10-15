@@ -24,6 +24,23 @@ class ViewIdea extends Component {
 
   render() {
     const idea = this.state.idea;
+    if (idea === "unauthorized") {
+      return (
+        <div className="blankPageTextContainer">
+          <h2>
+            You are unauthorized to view this idea
+          </h2>
+        </div>
+      )
+    } else if (idea === "deleted") {
+      return (
+        <div className="blankPageTextContainer">
+          <h2>
+            This idea has been deleted
+          </h2>
+        </div>
+      )
+    }
     return (
       <div className="viewIdeaMainContainer" key={idea._id}>
         <div className="viewIdeaLeft">
