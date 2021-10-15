@@ -1,7 +1,7 @@
 import './styles/App.css';
 import { About, Home, ViewIdea, CreateIdea, Login, Search, SignUp, MyIdeas, EditIdea,
   Profile, RequestPassReset, PasswordReset, Settings, Trash } from './views/index.js';
-import { Nav } from './components/index.js';
+import { InfoBar, Nav } from './components/index.js';
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 import React, { Component } from "react";
 import Cookie from 'js-cookie';
@@ -65,6 +65,7 @@ class App extends Component {
       <Router>
         <div className="App">
         { console.log("HISTORY: ")}
+          <InfoBar />
           <Nav isLoggedIn={this.state.isLoggedIn} globalLogout={this.globalLogout} username={this.state.username}/>
           <Switch>
             <Route path="/" exact component={Home} />

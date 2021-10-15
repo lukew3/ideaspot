@@ -1,0 +1,13 @@
+.infoBar {
+  display: flex;
+  width: 300px;
+  padding: 0 calc(50% - 150px);
+  padding-bottom: 7px;
+  justify-content: space-between;
+  margin-bottom: -7px;
+  border-bottom: 1px solid darkgrey;
+}
+.infoBar a {
+  color: lightgrey;
+  font-size: .8rem;
+}
