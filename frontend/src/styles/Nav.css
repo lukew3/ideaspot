@@ -60,7 +60,13 @@
   font-size: 11pt;
   padding: 8px;
   padding-left: 35px;
-  -webkit-appearance: none;
+}
+::placeholder { /* Chrome, Firefox, Opera, Safari 10.1+ */
+  color: grey;
+  opacity: 1; /* Firefox */
+}
+::-ms-input-placeholder { /* Microsoft Edge */
+  color: grey;
 }
 
 .navSearchButton {
