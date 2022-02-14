@@ -1,10 +1,10 @@
 backend() {
-	cd backend
+	cd server 
 	source venv/bin/activate
 	python3 app.py
 }
 frontend() {
-	cd frontend
+	cd client 
 	npm start
 }
 backend & frontend
