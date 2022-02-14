@@ -136,7 +136,7 @@ function ModRemove(props) {
   const username = Cookie.get("username") ? Cookie.get("username") : null;
   if (username === 'lukew3') {
     return(
-      <img src={modRemoveButton} alt="Mod Remove" className="ownerOptionsButton" onClick={() => {modRemove()}}/>
+      <img id="modRemoveButton" src={modRemoveButton} alt="Mod Remove" className="ownerOptionsButton" onClick={() => {modRemove()}}/>
     );
   } else {
     return(

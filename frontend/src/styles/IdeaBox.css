@@ -205,6 +205,12 @@
   background-color: #686868;
 }
 
+#modRemoveButton {
+	width: 30px;
+	height: 30px;
+	margin-top: 5px;
+}
+
 @media only screen and (max-width: 600px) {
   .ideaBox {
     margin-left: 5px;
