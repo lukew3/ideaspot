@@ -1,45 +1,72 @@
-from flask import Flask, Blueprint, flash, request
-from flask_cors import CORS
-from flask_jwt_extended import create_access_token, create_refresh_token, get_jwt_identity, jwt_required, JWTManager
-from flask_bcrypt import Bcrypt
-import datetime, json
-from ideaspot.blueprints import auth_bp, comments_bp, idea_bp, list_bp, user_bp, voting_bp
+from flask import Flask
+from flask_sqlalchemy import SQLAlchemy
 
-with open('config.json') as config_file:
-		config = json.load(config_file)
-
-cors = CORS()
-
-app = Flask(__name__, static_folder='../build', static_url_path='/')
-api_bp = Blueprint('api', __name__)
-app.config['SECRET_KEY'] = config.get('SECRET_KEY')
-
-#initialize jwt
-app.config["JWT_SECRET_KEY"] = config.get('JWT_SECRET_KEY')
-app.config["JWT_ACCESS_TOKEN_EXPIRES"] = datetime.timedelta(hours=1)
-app.config["JWT_REFRESH_TOKEN_EXPIRES"] = datetime.timedelta(weeks=26)
-jwt = JWTManager(app)
-
-#initialize cors
-cors.init_app(app)
+app = Flask(__name__)
+app.config['SECRET_KEY'] = '57916234ab0b13ce0c676dfde280ba245'
+app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///site.db'
+db = SQLAlchemy(app)
 
 
-@app.route('/')
-def index():
-	return app.send_static_file('index.html')
+class User(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    email = db.Column(db.String(120), unique=True, nullable=False)
+    username = db.Column(db.String(80), unique=True, nullable=False)
+    password = db.Column(db.String(120), nullable=False)
+    join_date = db.Column(db.DateTime, nullable=False, default=datetime.utcnow)
+    
+    ideas = db.relationship('Idea', backref='author', lazy=True)
+    votes = db.relationship('IdeaVote', backref='voter', lazy=True)
+    comments = db.relationship('Comment', backref='commenter', lazy=True)
+    buildsComplete = db.relationship('BuildComplete', backref='builder', lazy=True)
+    buildsInProgress = db.relationship('BuildInProgress', backref='builder', lazy=True)
+    buildsPlanned = db.relationship('BuildPlanned', backref='builder', lazy=True)
 
-@app.errorhandler(404)
-def not_found(e):
-  return app.send_static_file('index.html')
+class Idea(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    creator_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
+    private = db.Column(db.Boolean, default=False)
+    
+    versions = db.relationship('IdeaVersion', backref='idea', lazy=True)
+    votes = db.relationship('IdeaVote', backref='idea', lazy=True)
+    comments = db.relationship('Comment', backref='idea', lazy=True)
+    buildsComplete = db.relationship('BuildComplete', backref='idea', lazy=True)
+    buildsInProgress = db.relationship('BuildInProgress', backref='idea', lazy=True)
+    buildsPlanned = db.relationship('BuildPlanned', backref='idea', lazy=True)
 
-api_bp.register_blueprint(auth_bp)
-api_bp.register_blueprint(comments_bp)
-api_bp.register_blueprint(idea_bp)
-api_bp.register_blueprint(list_bp)
-api_bp.register_blueprint(user_bp)
-api_bp.register_blueprint(voting_bp)
+class IdeaVersion(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    idea_id = db.Column(db.Integer, db.ForeignKey('idea.id'), nullable=False)
+    title = db.Column(db.String(50), nullable=False)
+    description = db.Column(db.String(1000), nullable=False)
+    created_at = db.Column(db.DateTime, nullable=False, default=datetime.utcnow)
 
-app.register_blueprint(api_bp, url_prefix='/api')
+class IdeaVote(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    voter_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
+    idea_id = db.Column(db.Integer, db.ForeignKey('idea.id'), nullable=False)
+    is_positive = db.Column(db.Boolean, nullable=False, default=True)
 
-if __name__ == "__main__":
-	app.run(port=5001, debug=True)
+class Comment(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    poster_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
+    reply_to = db.Column(db.Integer, db.ForeignKey('comment.id'), nullable=True)
+    content = db.Column(db.String(1000), nullable=False)
+
+    replies = db.relationship('Comment', backref='parent', lazy=True)
+
+class BuildComplete(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    idea_id = db.Column(db.Integer, db.ForeignKey('idea.id'), nullable=False)
+    user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
+    url = db.Column(db.String(256), nullable=False)
+
+class BuildInProgress(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    idea_id = db.Column(db.Integer, db.ForeignKey('idea.id'), nullable=False)
+    user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
+
+class BuildPlanned(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    idea_id = db.Column(db.Integer, db.ForeignKey('idea.id'), nullable=False)
+    user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
+
