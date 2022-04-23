@@ -70,3 +70,86 @@ class BuildPlanned(db.Model):
     idea_id = db.Column(db.Integer, db.ForeignKey('idea.id'), nullable=False)
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
 
+
+# Auth routes
+blocked_usernames = ['about', 'donate', 'myIdeas','idea','login','register','newIdea','editIdea','trash','settings','<Deleted>']
+@auth_bp.route('/register', methods=['POST'])
+def register():
+    data = request.get_json(silent=True)
+    username = data.get('username')
+    if username in blocked_usernames:
+        return "<p>Invalid username</p>"
+    password = data.get('password')
+    new_user = User(username=username, password=password, email=email)
+    db.add(new_user)
+    db.commit()
+    access_token = create_access_token(identity=username)
+    refresh_token = create_refresh_token(identity=username)
+    return jsonify(access_token=access_token, refresh_token=refresh_token, username=username)
+
+@auth_bp.route('/login', methods=['POST'])
+def login():
+    data = request.get_json(silent=True)
+    username = data.get('username')
+    user = User.query.filter_by(username=username).first()
+    if not user:
+        user = User.query.filter_by(email=username).first()
+    if user and data.get('password') == user.password:
+        access_token = create_access_token(identity=user.username)
+        refresh_token = create_refresh_token(identity=user.username)
+        return jsonify(success=True, access_token=access_token, refresh_token=refresh_token,username=user.username)
+    else:
+        return jsonify({"message": "Incorrect username/email or password"})
+
+@auth_bp.route("/refresh", methods=["POST"])
+@jwt_required(refresh=True)
+def refresh():
+    identity = get_jwt_identity()
+    access_token = create_access_token(identity=identity)
+    return jsonify(access_token=access_token)
+
+@user_bp.route('/user/<username>', methods=['GET'])
+@jwt_required(optional=True)
+def get_user(username):
+    user = User.query.filter_by(username=username).first()
+    user_ideas = Idea.query.filter_by(creator_id=User.id).all()
+    user_json = {username: user.username, ideas:[]}
+    for idea in user_ideas:
+        ideav = IdeaVersions.query.filter_by(idea_id=idea.id).first() #private?
+        title = ideav.title
+        description = ideav.description
+        user_json['ideas'].append({'id':idea.id, 'title':title, 'description':description})
+    return jsonify(user_json)
+
+@idea_bp.route('/create_idea', methods=['POST'])
+@jwt_required()
+def create_idea():
+    data = request.get_json(silent=True)
+    if data.get('title') == '':
+        return jsonify(status="idea must have a title")
+    creator = User.query.filter_by(username=get_jwt_identity()).first()
+    new_idea = Idea(creator_id=creator.id, private=data.get('private'))
+    db.add(new_idea)
+    db.commit()
+    new_idea_version = IdeaVersion(idea_id=new_idea.id, title=data.get('title'), description=data.get('description'))
+    auto_upvote = IdeaVote(voter_id=creator.id, idea_id=new_idea.id)#, is_positive=True)
+    db.add(new_idea_version)
+    db.add(auto_upvote)
+    db.commit()
+    return jsonify(id=new_idea.id)
+
+@idea_bp.route('/edit_idea/<ideaId>', methods=['PATCH'])
+@jwt_required()
+def edit_idea(ideaId):
+    data = request.get_json(silent=True)
+    current_user = get_jwt_identity()
+    idea = Idea.query.filter_by(id=ideaId)
+	# if privacy is the only thing that changed, don't create a duplicate revision
+    if (data.get('title') == idea.title and data.get('description') == idea.description):
+        idea.update(private=data.get('private'))
+    else:
+        new_version = IdeaVersion(idea_id=idea.id, title=data.get('title'), description=data.get('description'))
+        db.add(new_version)
+    db.commit()
+    idea_json = {'id':idea.id, 'title':new_version.title, 'description':new_version.description, 'creator':current_user}
+    return jsonify(idea_json)
