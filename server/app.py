@@ -1,8 +1,8 @@
-from flask import Flask, Blueprint, request
+from flask import Flask, Blueprint, request, jsonify
 from flask_sqlalchemy import SQLAlchemy
 from flask_jwt_extended import create_access_token, create_refresh_token, get_jwt_identity, jwt_required, JWTManager
 import datetime
-from flask_cors import CORS 
+from flask_cors import CORS
 import json
 
 """
@@ -36,7 +36,7 @@ class User(db.Model):
     username = db.Column(db.String(80), unique=True, nullable=False)
     password = db.Column(db.String(120), nullable=False)
     join_date = db.Column(db.DateTime, nullable=False, default=datetime.datetime.utcnow)
-    
+
     ideas = db.relationship('Idea', backref='author', lazy=True)
     votes = db.relationship('IdeaVote', backref='voter', lazy=True)
     comments = db.relationship('Comment', backref='commenter', lazy=True)
@@ -48,7 +48,7 @@ class Idea(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     creator_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
     private = db.Column(db.Boolean, default=False)
-    
+
     versions = db.relationship('IdeaVersion', backref='idea', lazy=True)
     votes = db.relationship('IdeaVote', backref='idea', lazy=True)
     comments = db.relationship('Comment', backref='idea', lazy=True)
@@ -72,11 +72,11 @@ class IdeaVote(db.Model):
 class Comment(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     poster_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
-    idea_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
-    reply_to = db.Column(db.Integer, db.ForeignKey('comment.id'), nullable=True)
+    idea_id = db.Column(db.Integer, db.ForeignKey('idea.id'), nullable=False)
+    #reply_to = db.Column(db.Integer, db.ForeignKey('comment.id'), nullable=True)
     content = db.Column(db.String(1000), nullable=False)
 
-    replies = db.relationship('Comment', backref='parent', lazy=True)
+    #replies = db.relationship('Comment', backref='parent', lazy=True)
 
 class BuildComplete(db.Model):
     id = db.Column(db.Integer, primary_key=True)
@@ -112,12 +112,13 @@ blocked_usernames = ['about', 'donate', 'myIdeas','idea','login','register','new
 def register():
     data = request.get_json(silent=True)
     username = data.get('username')
+    email = data.get('email') # Need to check if email is email-like
     if username in blocked_usernames:
         return "<p>Invalid username</p>"
     password = data.get('password')
     new_user = User(username=username, password=password, email=email)
-    db.add(new_user)
-    db.commit()
+    db.session.add(new_user)
+    db.session.commit()
     access_token = create_access_token(identity=username)
     refresh_token = create_refresh_token(identity=username)
     return jsonify(access_token=access_token, refresh_token=refresh_token, username=username)
@@ -168,13 +169,13 @@ def create_idea():
         return jsonify(status="idea must have a title")
     creator = User.query.filter_by(username=get_jwt_identity()).first()
     new_idea = Idea(creator_id=creator.id, private=data.get('private'))
-    db.add(new_idea)
-    db.commit()
+    db.session.add(new_idea)
+    db.session.commit()
     new_idea_version = IdeaVersion(idea_id=new_idea.id, title=data.get('title'), description=data.get('description'))
     auto_upvote = IdeaVote(voter_id=creator.id, idea_id=new_idea.id)#, is_positive=True)
-    db.add(new_idea_version)
-    db.add(auto_upvote)
-    db.commit()
+    db.session.add(new_idea_version)
+    db.session.add(auto_upvote)
+    db.session.commit()
     return jsonify(id=new_idea.id)
 
 @idea_bp.route('/edit_idea/<ideaId>', methods=['PATCH'])
@@ -188,21 +189,38 @@ def edit_idea(ideaId):
         idea.update(private=data.get('private'))
     else:
         new_version = IdeaVersion(idea_id=idea.id, title=data.get('title'), description=data.get('description'))
-        db.add(new_version)
-    db.commit()
+        db.session.add(new_version)
+    db.session.commit()
     idea_json = {'id':idea.id, 'title':new_version.title, 'description':new_version.description, 'creator':current_user}
     return jsonify(idea_json)
+
+@idea_bp.route('/get_idea/<ideaId>', defaults={'revNum': -1}, methods=['GET'])
+@idea_bp.route('/get_idea/<ideaId>/<revNum>', methods=['GET'])
+@jwt_required(optional=True)
+def get_idea(ideaId, revNum):
+    revNum = int(revNum)
+    idea = Idea.query.filter_by(id=ideaId).first()
+    idea_v = IdeaVersion.query.filter_by(idea_id=ideaId).first()
+    # idea_obj = format_idea(db.idea.find_one({"_id": ObjectId(ideaId)}), get_jwt_identity(), revNum=revNum)
+    """
+    if idea.private == True and idea_obj["creator"] != get_jwt_identity():
+        return jsonify(idea="unauthorized")
+    if "delete_date" in idea_obj and idea_obj["creator"] != get_jwt_identity():
+        return jsonify(idea="deleted")
+    """
+    return jsonify(title=idea_v.title, description=idea_v.description)
 
 
 @idea_bp.route('/get_ideas', methods=['GET'])
 @jwt_required(optional=True)
 def get_ideas():
+    print("INSIDE")
     if 'page' in request.args:
         page = int(request.args['page'])
     else:
         page = 1
     page = 1
-    ideas = Idea.query.paginate(page, 10, False)
+    ideas = Idea.query.paginate(page, 10, False).items
     ideas_json = []
     for idea in ideas:
         ideav = IdeaVersion.query.filter_by(idea_id=idea.id).first()
