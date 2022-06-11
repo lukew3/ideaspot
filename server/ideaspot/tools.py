@@ -1,16 +1,11 @@
 from bson.objectid import ObjectId
 from .db import db
 
-def serialize(dct):
-	dct['_id'] = str(dct['_id'])
-	return dct
-
 def clean_list(ideas, username):
 	#cast to list in case ideas is a cursor
 	ideas = list(ideas)
 	for idea in ideas:
 		# Converts _id from ObjectId to string
-		#idea = serialize(idea)
 		idea['_id'] = str(idea['_id'])
 
 		vote = db.vote.find_one({"ideaId": idea['_id'], "username": username})

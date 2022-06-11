@@ -2,7 +2,6 @@ from flask import Blueprint, jsonify, request
 from flask_jwt_extended import create_access_token, create_refresh_token, get_jwt_identity, jwt_required, JWTManager
 from flask_bcrypt import Bcrypt
 from ..db import db
-from ..tools import serialize
 import datetime
 import smtplib
 
@@ -36,9 +35,9 @@ def register():
 def login():
 	data = request.get_json(silent=True)
 	username = data.get('username')
-	user = serialize(db.user.find_one({"username": username}))
+	user = db.user.find_one({"username": username})
 	if user == None:
-		user = serialize(db.user.find_one({"email": username}))
+		user = db.user.find_one({"email": username})
 	if user and bcrypt.check_password_hash(user["password"], data.get('password')):
 		access_token = create_access_token(identity=user["username"])
 		refresh_token = create_refresh_token(identity=user["username"])
@@ -98,7 +97,7 @@ def refresh():
 def change_password():
 	data = request.get_json(silent=True)
 	pwd_hash = bcrypt.generate_password_hash(data.get('newPassword')).decode('utf-8')
-	user = serialize(db.user.find_one({"username": get_jwt_identity()}))
+	user = db.user.find_one({"username": get_jwt_identity()})
 	if user and bcrypt.check_password_hash(user["password"], data.get('oldPassword')):
 		db.user.update_one({"username": user["username"]}, {'$set': {"password": pwd_hash} })
 		return jsonify(success=True)

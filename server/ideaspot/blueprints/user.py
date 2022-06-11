@@ -2,7 +2,7 @@ from flask import Blueprint, jsonify, request
 from flask_jwt_extended import get_jwt_identity, jwt_required, JWTManager
 from bson.objectid import ObjectId
 from ..db import db
-from ..tools import serialize, clean_list
+from ..tools import clean_list
 import datetime
 
 user_bp = Blueprint('user', __name__)
@@ -10,7 +10,8 @@ user_bp = Blueprint('user', __name__)
 @user_bp.route('/user/<username>', methods=['GET'])
 @jwt_required(optional=True)
 def get_user(username):
-	user = serialize(db.user.find_one({"username": username}))
+	user = db.user.find_one({"username": username})
+	user['_id'] = str(user['_id'])
 	user.pop("password")
 	user.pop("email")
 	if "builds" in user:

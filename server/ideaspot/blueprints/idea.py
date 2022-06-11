@@ -24,7 +24,7 @@ def create_idea():
 				"likeCount": 1,
 				"dislikeCount": 0 }
 	new_id = str(db.idea.insert_one(new_idea).inserted_id)
-	db.votes.insert_one({"username": get_jwt_identity(), "ideaId": new_id, "positive": True})
+	db.vote.insert_one({"username": get_jwt_identity(), "ideaId": new_id, "positive": True})
 	return jsonify(id=new_id)
 
 
