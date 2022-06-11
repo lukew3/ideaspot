@@ -11,6 +11,7 @@ voting_bp = Blueprint('voting', __name__)
 def like_idea():
 	username = get_jwt_identity()
 	idea_id = request.get_json(silent=True).get('ideaId')
+	if not ObjectId.is_valid(idea_id): return jsonify(status="IdeaId must be a valid ObjectId")
 	idea = db.idea.find_one({"_id": ObjectId(idea_id)})
 	if not idea: return jsonify({'error': 'Idea not found'}), 404
 	elif not username: return jsonify({'error': 'User not found'}), 404
@@ -33,6 +34,7 @@ def like_idea():
 def remove_idea_like():
 	username = get_jwt_identity()
 	idea_id = request.get_json(silent=True).get('ideaId')
+	if not ObjectId.is_valid(idea_id): return jsonify(status="IdeaId must be a valid ObjectId")
 	idea = db.idea.find_one({"_id": ObjectId(idea_id)})
 	if not idea: return jsonify({'error': 'Idea not found'}), 404
 	elif not username: return jsonify({'error': 'User not found'}), 404
@@ -53,6 +55,7 @@ def remove_idea_like():
 def dislike_idea():
 	username = get_jwt_identity()
 	idea_id = request.get_json(silent=True).get('ideaId')
+	if not ObjectId.is_valid(idea_id): return jsonify(status="IdeaId must be a valid ObjectId")
 	idea = db.idea.find_one({"_id": ObjectId(idea_id)})
 	if not idea: return jsonify({'error': 'Idea not found'}), 404
 	elif not username: return jsonify({'error': 'User not found'}), 404
@@ -75,6 +78,7 @@ def dislike_idea():
 def remove_idea_dislike():
 	username = get_jwt_identity()
 	idea_id = request.get_json(silent=True).get('ideaId')
+	if not ObjectId.is_valid(idea_id): return jsonify(status="IdeaId must be a valid ObjectId")
 	idea = db.idea.find_one({"_id": ObjectId(idea_id)})
 	if not idea: return jsonify({'error': 'Idea not found'}), 404
 	elif not username: return jsonify({'error': 'User not found'}), 404

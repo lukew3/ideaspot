@@ -33,6 +33,7 @@ def create_idea():
 def edit_idea(ideaId):
 	data = request.get_json(silent=True)
 	current_user = get_jwt_identity()
+	if not ObjectId.is_valid(ideaId): return jsonify(status="IdeaId must be a valid ObjectId")
 	old_idea = db.idea.find_one({"_id": ObjectId(ideaId), "creator": current_user})
 	# if privacy is the only thing that changed, don't create a duplicate revision
 	if (data.get('title') == old_idea['title'] and data.get('description') == old_idea['description']):
@@ -59,6 +60,7 @@ def edit_idea(ideaId):
 def mod_remove_idea(ideaId):
 	current_user = get_jwt_identity()
 	if current_user == 'lukew3':
+		if not ObjectId.is_valid(ideaId): return jsonify(status="IdeaId must be a valid ObjectId")
 		idea = db.idea.find_one({"_id": ObjectId(ideaId)})
 		db.idea.update_one(idea, {"$set": { 'mod_removed': True }})
 		return jsonify(status="success")
@@ -72,6 +74,7 @@ def recycle_idea(ideaId):
 	#Set idea deletion date for 30 days in the future
 	current_user = get_jwt_identity()
 	# TODO: Ensure the user is the owner of the idea
+	if not ObjectId.is_valid(ideaId): return jsonify(status="IdeaId must be a valid ObjectId")
 	db.idea.update_one({"_id": ObjectId(ideaId)}, { "$set": {"delete_date": datetime.datetime.now() + datetime.timedelta(30)}})
 	return jsonify(status="idea recycled")
 
@@ -80,6 +83,7 @@ def recycle_idea(ideaId):
 @jwt_required()
 def delete_idea(ideaId):
 	current_user = get_jwt_identity()
+	if not ObjectId.is_valid(ideaId): return jsonify(status="IdeaId must be a valid ObjectId")
 	db.idea.delete_one({"_id": ObjectId(ideaId), "creator": current_user})
 	return jsonify(status="idea deleted")
 
@@ -89,6 +93,7 @@ def delete_idea(ideaId):
 def restore_idea(ideaId):
 	current_user = get_jwt_identity()
 	# TODO: Ensure the user is the owner of the idea
+	if not ObjectId.is_valid(ideaId): return jsonify(status="IdeaId must be a valid ObjectId")
 	db.idea.update_one({"_id": ObjectId(ideaId)}, { '$unset': { "delete_date": '' } })
 	return jsonify(status="idea restored")
 
@@ -97,7 +102,10 @@ def restore_idea(ideaId):
 @idea_bp.route('/get_idea/<ideaId>/<revNum>', methods=['GET'])
 @jwt_required(optional=True)
 def get_idea(ideaId, revNum):
-	idea_obj = format_idea(db.idea.find_one({"_id": ObjectId(ideaId)}), get_jwt_identity(), revNum=int(revNum))
+	if not ObjectId.is_valid(ideaId): return jsonify(status="IdeaId must be a valid ObjectId")
+	idea = db.idea.find_one({"_id": ObjectId(ideaId)})
+	if not idea: return jsonify(status="idea not found")
+	idea_obj = format_idea(idea, get_jwt_identity(), revNum=int(revNum))
 	if idea_obj["private"] == True and idea_obj["creator"] != get_jwt_identity():
 		return jsonify(idea="unauthorized")
 	if "delete_date" in idea_obj and idea_obj["creator"] != get_jwt_identity():
@@ -115,6 +123,7 @@ def set_build_status():
 	if status not in ['built', 'building', 'plan_to_build', 'not_building']:
 		return jsonify(status="Status invalid"), 500
 	# Get idea
+	if not ObjectId.is_valid(idea_id): return jsonify(status="IdeaId must be a valid ObjectId")
 	idea = db.idea.find_one({"_id": ObjectId(idea_id)})
 	# Remove old build statuses
 	db.idea.update_one({"_id": ObjectId(idea_id)}, {'$pull': {f"builders.building": get_jwt_identity()}})

@@ -19,6 +19,7 @@ def comments_push_query_creator(parent_ids):
 def add_comment():
     data = request.get_json(silent=True)
     idea_id = data.get('ideaId')
+    if not ObjectId.is_valid(idea_id): return jsonify(status="IdeaId must be a valid ObjectId")
     parent_ids = data.get('parentIds')
     comment_content = (data.get('commentContent')).strip()
     if comment_content == '':
