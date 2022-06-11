@@ -5,21 +5,6 @@ def serialize(dct):
 	dct['_id'] = str(dct['_id'])
 	return dct
 
-def format_ldl(idea, username, ldl):
-	#ldl stands for like-dislike
-	#ldl is either "like" or "dislike"
-	try:
-		idea[ldl + "Count"] = len(idea[ldl + "s"])
-		if username in idea[ldl + "s"]:
-			idea[ldl + "d"] = True
-		else:
-			idea[ldl + "d"] = False
-		idea.pop(ldl + "s")
-	except Exception as e:
-		idea[ldl + "Count"] = 0
-		idea[ldl + "d"] = False
-	return idea
-
 def clean_list(ideas, username):
 	#cast to list in case ideas is a cursor
 	ideas = list(ideas)
@@ -28,9 +13,13 @@ def clean_list(ideas, username):
 		#idea = serialize(idea)
 		idea['_id'] = str(idea['_id'])
 
-		# Remove excessive like data and add user like/dislike status
-		idea = format_ldl(idea, username, "like")
-		idea = format_ldl(idea, username, "dislike")
+		vote = db.vote.find_one({"ideaId": idea['_id'], "username": username})
+		if not vote:
+			idea['disliked'] = False
+			idea['liked'] = False
+		else:
+			idea['liked'] = vote['positive']
+			idea['disliked'] = not vote['positive']
 
 		# Handle revisions
 		idea["revisionTimes"] = []
@@ -70,8 +59,13 @@ def format_idea(idea, username, revNum=-1):
 	# Converts _id from ObjectId to string
 	idea['_id'] = str(idea['_id'])
 	# Remove excessive like data and add user like/dislike status
-	idea = format_ldl(idea, username, "like")
-	idea = format_ldl(idea, username, "dislike")
+	vote = db.vote.find_one({"ideaId": idea['_id'], "username": username})
+	if not vote:
+		idea['disliked'] = False
+		idea['liked'] = False
+	else:
+		idea['liked'] = vote['positive']
+		idea['disliked'] = not vote['positive']
 
 	# Handle revisions
 	if revNum != -1 and revNum < len(idea["history"]):

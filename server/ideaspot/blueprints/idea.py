@@ -21,9 +21,10 @@ def create_idea():
 				"private": data.get('private'),
 				"created_at": datetime.datetime.now(),
 				"last_updated_at": datetime.datetime.now(),
-				"likes": [get_jwt_identity()],
-				"dislikes": [] }
+				"likeCount": 1,
+				"dislikeCount": 0 }
 	new_id = str(db.idea.insert_one(new_idea).inserted_id)
+	db.votes.insert_one({"username": get_jwt_identity(), "ideaId": new_id, "positive": True})
 	return jsonify(id=new_id)
 
 
@@ -70,6 +71,7 @@ def mod_remove_idea(ideaId):
 def recycle_idea(ideaId):
 	#Set idea deletion date for 30 days in the future
 	current_user = get_jwt_identity()
+	# TODO: Ensure the user is the owner of the idea
 	db.idea.update_one({"_id": ObjectId(ideaId)}, { "$set": {"delete_date": datetime.datetime.now() + datetime.timedelta(30)}})
 	return jsonify(status="idea recycled")
 
@@ -86,6 +88,7 @@ def delete_idea(ideaId):
 @jwt_required()
 def restore_idea(ideaId):
 	current_user = get_jwt_identity()
+	# TODO: Ensure the user is the owner of the idea
 	db.idea.update_one({"_id": ObjectId(ideaId)}, { '$unset': { "delete_date": '' } })
 	return jsonify(status="idea restored")
 
@@ -94,8 +97,7 @@ def restore_idea(ideaId):
 @idea_bp.route('/get_idea/<ideaId>/<revNum>', methods=['GET'])
 @jwt_required(optional=True)
 def get_idea(ideaId, revNum):
-	revNum = int(revNum)
-	idea_obj = format_idea(db.idea.find_one({"_id": ObjectId(ideaId)}), get_jwt_identity(), revNum=revNum)
+	idea_obj = format_idea(db.idea.find_one({"_id": ObjectId(ideaId)}), get_jwt_identity(), revNum=int(revNum))
 	if idea_obj["private"] == True and idea_obj["creator"] != get_jwt_identity():
 		return jsonify(idea="unauthorized")
 	if "delete_date" in idea_obj and idea_obj["creator"] != get_jwt_identity():
