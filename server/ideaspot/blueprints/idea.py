@@ -1,8 +1,8 @@
 from flask import Blueprint, jsonify, request
-from flask_jwt_extended import get_jwt_identity, jwt_required, JWTManager
+from flask_jwt_extended import get_jwt_identity, jwt_required
 from bson.objectid import ObjectId
 from ..db import db
-from ..tools import format_idea, update_rep
+from ..tools import format_idea
 import datetime
 import validators
 

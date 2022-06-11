@@ -1,9 +1,7 @@
 from flask import Blueprint, jsonify, request
-from flask_jwt_extended import get_jwt_identity, jwt_required, JWTManager
-from bson.objectid import ObjectId
+from flask_jwt_extended import get_jwt_identity, jwt_required
 from ..db import db
 from ..tools import clean_list
-import datetime
 import math
 
 list_bp = Blueprint('list', __name__)

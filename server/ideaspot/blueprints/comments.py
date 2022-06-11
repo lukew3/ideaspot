@@ -1,8 +1,7 @@
 from flask import Blueprint, jsonify, request
-from flask_jwt_extended import get_jwt_identity, jwt_required, JWTManager
+from flask_jwt_extended import get_jwt_identity, jwt_required
 from bson.objectid import ObjectId
 from ..db import db
-import datetime
 
 comments_bp = Blueprint('comments', __name__)
 
