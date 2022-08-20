@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import ReactMarkdown from 'react-markdown';
-import { Tags, VotingSection } from './index.js';
+import { Tags, IdeaBoxLeft } from './index.js';
 import { Link } from 'react-router-dom';
 import Cookie from 'js-cookie';
 import '../styles/IdeaBox.css';
@@ -35,7 +35,7 @@ class IdeaBox extends Component {
     const idea = this.state.idea;
     return (
       <div id={idea._id} key={idea._id} className={`ideaBox ${this.state.boxStyle}`}>
-        <VotingSection
+        <IdeaBoxLeft
           idea={this.state.idea}
           hideScore={this.state.hideScore} />
         <div className="ideaBoxRight">

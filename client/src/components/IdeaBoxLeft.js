@@ -3,7 +3,7 @@ import axiosApiInstance from '../helper.js';
 import { arrowUp, arrowDown, arrowUpActive, arrowDownActive } from '../svg/index.js';
 
 
-class VotingSection extends Component {
+class IdeaBoxLeft extends Component {
   constructor(props){
     super(props);
     this.state = {
@@ -99,4 +99,4 @@ class VotingSection extends Component {
   }
 }
 
-export default VotingSection;
+export default IdeaBoxLeft;
