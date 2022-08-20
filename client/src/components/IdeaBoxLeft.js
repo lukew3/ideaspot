@@ -13,6 +13,7 @@ class IdeaBoxLeft extends Component {
       score: props.idea.likeCount-props.idea.dislikeCount,
       boost: 0,
       hideScore: props.hideScore,
+      buildCount: props.idea.builds ? props.idea.builds.length : 0
     }
     this.likeIdea = this.likeIdea.bind(this);
     this.dislikeIdea = this.dislikeIdea.bind(this);
@@ -83,6 +84,9 @@ class IdeaBoxLeft extends Component {
             <p className="ideaBoxScore">{this.state.score}</p>
             {renderUpArrow()}
           </div>
+          {this.state.buildCount !== 0 ? <div className="ideaBoxBuilds">
+            {this.state.buildCount}<br></br>built
+          </div> : null}
           {
             //<h3 className="boostLabel ideaBoxLeftLabel">Boost</h3>
             //<p>10</p>

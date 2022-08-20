@@ -25,6 +25,9 @@ def clean_list(ideas, username):
 		if "comments" in idea:
 			idea.pop("comments")
 		if "builders" in idea:
+			# send a fake list of builders so that you can show count on list pages
+			if "built" in idea['builders']:
+				idea['builds'] = [''] * len(idea['builders']['built'])
 			idea.pop("builders")
 	return ideas
 
