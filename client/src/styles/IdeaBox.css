@@ -241,6 +241,12 @@
 
   .voting {
     display: block;
+    width: 20px;
+    height: 70px;
+  }
+
+  .ideaBoxBuilds {
+    width: unset;
   }
 
   .ratingLabel {
